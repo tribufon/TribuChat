@@ -1,0 +1,1 @@
+../../../../Submodules/XMPPFramework/Extensions/XEP-0352/NSXMLElement+XEP_0352.h

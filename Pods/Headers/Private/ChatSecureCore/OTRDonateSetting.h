@@ -1,0 +1,1 @@
+../../../../ChatSecure/Classes/Model/Settings/OTRDonateSetting.h

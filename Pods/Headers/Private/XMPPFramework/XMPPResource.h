@@ -1,0 +1,1 @@
+../../../../Submodules/XMPPFramework/Extensions/Roster/XMPPResource.h

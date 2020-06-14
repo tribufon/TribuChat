@@ -1,0 +1,6 @@
+module OpenInChrome {
+  umbrella header "OpenInChrome-umbrella.h"
+
+  export *
+  module * { export * }
+}

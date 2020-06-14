@@ -1,0 +1,1 @@
+../../../../Submodules/XMPPFramework/Extensions/XEP-0147/XMPPURI.h

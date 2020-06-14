@@ -1,0 +1,1 @@
+../../../../ChatSecureCore/Public/OTRQRCodeReaderDelegate.h

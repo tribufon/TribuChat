@@ -1,0 +1,1 @@
+../../../../Submodules/XMPPFramework/Extensions/XEP-0115/CoreDataStorage/XMPPCapabilitiesCoreDataStorage.h

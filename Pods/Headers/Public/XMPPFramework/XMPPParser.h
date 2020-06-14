@@ -1,0 +1,1 @@
+../../../../Submodules/XMPPFramework/Core/XMPPParser.h

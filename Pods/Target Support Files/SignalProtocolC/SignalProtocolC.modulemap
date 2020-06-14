@@ -1,0 +1,6 @@
+module SignalProtocolC {
+  umbrella header "SignalProtocolC-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,1 @@
+../../../../Submodules/XMPPFramework/Extensions/XEP-0048/NSXMLElement+XEP_0048.h

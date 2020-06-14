@@ -1,0 +1,6 @@
+module ProxyKit {
+  umbrella header "ProxyKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,6 @@
+module OTRAssets {
+  umbrella header "OTRAssets-umbrella.h"
+
+  export *
+  module * { export * }
+}

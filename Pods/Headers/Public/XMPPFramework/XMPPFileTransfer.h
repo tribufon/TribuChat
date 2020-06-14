@@ -1,0 +1,1 @@
+../../../../Submodules/XMPPFramework/Extensions/FileTransfer/XMPPFileTransfer.h

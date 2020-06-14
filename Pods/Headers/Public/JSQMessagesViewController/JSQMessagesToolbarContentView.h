@@ -1,0 +1,1 @@
+../../../../Submodules/JSQMessagesViewController/JSQMessagesViewController/Views/JSQMessagesToolbarContentView.h

@@ -1,0 +1,1 @@
+../../../../Submodules/JSQMessagesViewController/JSQMessagesViewController/Layout/JSQMessagesCollectionViewFlowLayoutInvalidationContext.h

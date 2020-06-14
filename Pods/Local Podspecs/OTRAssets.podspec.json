@@ -1,0 +1,25 @@
+{
+  "name": "OTRAssets",
+  "version": "0.1.0",
+  "summary": "A short description of OTRAssets.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/ChatSecure/ChatSecure-iOS",
+  "license": {
+    "type": "GPLv3",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Chris Ballinger": "chris@chatsecure.org"
+  },
+  "source": {
+    "git": "https://github.com/ChatSecure/ChatSecureCore.git",
+    "tag": "0.1.0"
+  },
+  "social_media_url": "https://twitter.com/ChatSecure",
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source_files": "OTRAssets/**/*.{h,m,swift}",
+  "private_header_files": "OTRAssets/OTRLanguageManager_Private.h",
+  "frameworks": "UIKit"
+}

@@ -1,0 +1,1 @@
+../../../../ChatSecure/Classes/Controllers/XMPP/OTRXMPPBuddyManager.h
