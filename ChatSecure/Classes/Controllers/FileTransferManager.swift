@@ -815,7 +815,7 @@ extension OTRDownloadMessage {
 
 extension OTRMessageProtocol {
     public var downloadableURLs: [URL] {
-        return self.messageText?.downloadableURLs ?? []
+        return self.messageText?.downloadableURLs.filter { !$0.absoluteString.lowercased().contains("dioshare.com") } ?? []
     }
 }
 

@@ -41,7 +41,8 @@ const CGFloat OTRBuddyInfoCellHeight = 80.0;
         self.accountLabel.textColor = [UIColor lightGrayColor];
         self.accountLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
         
-        NSArray<UILabel*> *labels = @[self.nameLabel, self.identifierLabel, self.accountLabel];
+//        NSArray<UILabel*> *labels = @[self.nameLabel, self.identifierLabel, self.accountLabel];
+        NSArray<UILabel*> *labels = @[self.nameLabel];
         [labels enumerateObjectsUsingBlock:^(UILabel * _Nonnull label, NSUInteger idx, BOOL * _Nonnull stop) {
             label.adjustsFontSizeToFitWidth = YES;
             [self.contentView addSubview:label];
@@ -89,7 +90,7 @@ const CGFloat OTRBuddyInfoCellHeight = 80.0;
         [super updateConstraints];
         return;
     }
-    NSArray<UILabel*> *textLabelsArray = @[self.nameLabel,self.identifierLabel,self.accountLabel];
+    NSArray<UILabel*> *textLabelsArray = @[self.nameLabel];
     
     //same horizontal contraints for all labels
     for(UILabel *label in textLabelsArray) {
@@ -99,9 +100,10 @@ const CGFloat OTRBuddyInfoCellHeight = 80.0;
     
     [self.nameLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:OTRBuddyImageCellPadding];
     
-    [self.accountLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.nameLabel withOffset:3];
-    
-    [self.identifierLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:OTRBuddyImageCellPadding];
+//    [self.accountLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.nameLabel withOffset:3];
+//
+//    [self.identifierLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:OTRBuddyImageCellPadding];
+    [self.nameLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:OTRBuddyImageCellPadding];
     [super updateConstraints];
 }
 

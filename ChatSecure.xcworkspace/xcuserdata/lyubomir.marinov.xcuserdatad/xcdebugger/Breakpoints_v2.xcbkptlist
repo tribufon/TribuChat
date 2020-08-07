@@ -18,16 +18,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "ABA69DFF-EA53-4943-84B9-EE5C44C7D45E"
+            uuid = "964F9965-B1F2-4C8F-B40B-8E42E220979B"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ChatSecure/Classes/View Controllers/OTRSettingsViewController.m"
+            filePath = "ChatSecure/Classes/View Controllers/Login View Controllers/OTRXLFormCreator.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "374"
-            endingLineNumber = "374"
-            landmarkName = "-otrSetting:showDetailViewControllerClass:"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
+            landmarkName = "+usernameTextFieldRowDescriptorWithValue:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "16C9308A-ECF4-48E9-90F2-89B68DF676DC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ChatSecure/Classes/View Controllers/Login View Controllers/OTRXLFormCreator.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "213"
+            endingLineNumber = "213"
+            landmarkName = "+jidTextFieldRowDescriptorWithValue:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

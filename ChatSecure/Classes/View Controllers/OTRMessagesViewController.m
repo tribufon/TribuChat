@@ -2185,6 +2185,12 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
         return NO;
     }
     
+    if ([URL isDioshareLink]) {
+        [[UIApplication sharedApplication] openURL: URL options:@{} completionHandler:nil];
+        
+        return NO;
+    }
+    
     UIActivityViewController *activityViewController = [UIActivityViewController otr_linkActivityViewControllerWithURLs:@[URL]];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {

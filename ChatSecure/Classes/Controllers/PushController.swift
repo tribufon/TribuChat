@@ -621,31 +621,42 @@ open class PushController: NSObject, PushControllerProtocol {
         }
         var pubsubEndpoint: String?
         var pushPermitted = false
-        let group = DispatchGroup()
-        group.enter()
+        
         PushController.canReceivePushNotifications({ value in
             pushPermitted = value
-        }) 
-        group.enter()
-        group.leave()
-        getPubsubEndpoint { (endpoint, error) in
-            pubsubEndpoint = endpoint
-            group.leave()
-        }
-        group.notify(queue: DispatchQueue.global(qos: .default)) {
-            let device = storage.thisDevice()
-            let newPushInfo = PushInfo(
-                pushAPIURL: self.apiClient.baseUrl,
-                hasPushAccount: storage.hasPushAccount(),
-                numUsedTokens: storage.numberUsedTokens(),
-                numUnusedTokens: storage.numberUnusedTokens(),
-                pushPermitted: pushPermitted,
-                pubsubEndpoint: pubsubEndpoint,
-                device: device)
-            callbackQueue.async {
-                completion(newPushInfo)
+            
+            self.getPubsubEndpoint { (endpoint, error) in
+                pubsubEndpoint = endpoint
+                
+                let device = storage.thisDevice()
+                let newPushInfo = PushInfo(
+                    pushAPIURL: self.apiClient.baseUrl,
+                    hasPushAccount: storage.hasPushAccount(),
+                    numUsedTokens: storage.numberUsedTokens(),
+                    numUnusedTokens: storage.numberUnusedTokens(),
+                    pushPermitted: pushPermitted,
+                    pubsubEndpoint: pubsubEndpoint,
+                    device: device)
+                callbackQueue.async {
+                    completion(newPushInfo)
+                }
             }
-        }
+        })
+        
+//        let group = DispatchGroup()
+//        group.enter()
+//        PushController.canReceivePushNotifications({ value in
+//            pushPermitted = value
+//        })
+//        group.enter()
+//        group.leave()
+//        getPubsubEndpoint { (endpoint, error) in
+//            pubsubEndpoint = endpoint
+//            group.leave()
+//        }
+//        group.notify(queue: DispatchQueue.global(qos: .default)) {
+//
+//        }
     }
     
     @objc public static func registerForPushNotifications() {

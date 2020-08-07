@@ -272,7 +272,7 @@
 		633105C61A16D1A300C17BAE /* OTRXMPPTorAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTRXMPPTorAccount.h; sourceTree = "<group>"; };
 		633105C71A16D1A300C17BAE /* OTRXMPPTorAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OTRXMPPTorAccount.m; sourceTree = "<group>"; };
 		633105CA1A16D1A300C17BAE /* OTRBuddy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTRBuddy.h; sourceTree = "<group>"; };
-		633105CB1A16D1A300C17BAE /* OTRBuddy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = OTRBuddy.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		633105CB1A16D1A300C17BAE /* OTRBuddy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = OTRBuddy.m; sourceTree = "<group>"; };
 		633105CC1A16D1A300C17BAE /* OTRMessage+JSQMessageData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OTRMessage+JSQMessageData.h"; sourceTree = "<group>"; };
 		633105CD1A16D1A300C17BAE /* OTRMessage+JSQMessageData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OTRMessage+JSQMessageData.m"; sourceTree = "<group>"; };
 		633105CE1A16D1A300C17BAE /* OTRBaseMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OTRBaseMessage.h; sourceTree = "<group>"; };
@@ -432,7 +432,7 @@
 		639120921D8CA1E200F4100E /* OTROmemoStorageTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTROmemoStorageTest.swift; sourceTree = "<group>"; };
 		63917C3D1DFA20D900341D96 /* OTRModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTRModelTest.swift; sourceTree = "<group>"; };
 		63929C951C7D32D9008DB2E3 /* MessagesViewControllerState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewControllerState.swift; sourceTree = "<group>"; };
-		6396AF9A1A169D54009F3E6C /* Diofon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diofon.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6396AF9A1A169D54009F3E6C /* Tribu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tribu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6396AF9E1A169D54009F3E6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6396AFB31A169D54009F3E6C /* ChatSecureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatSecureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6396AFB81A169D54009F3E6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1289,7 +1289,7 @@
 		6396AF9B1A169D54009F3E6C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6396AF9A1A169D54009F3E6C /* Diofon.app */,
+				6396AF9A1A169D54009F3E6C /* Tribu.app */,
 				6396AFB31A169D54009F3E6C /* ChatSecureTests.xctest */,
 				D93027561BAA381F000CC975 /* OTRResources.bundle */,
 				6365CEFC1E2453F6009E213F /* ChatSecureUITests.xctest */,
@@ -1595,7 +1595,7 @@
 			);
 			name = ChatSecure;
 			productName = ChatSecure;
-			productReference = 6396AF9A1A169D54009F3E6C /* Diofon.app */;
+			productReference = 6396AF9A1A169D54009F3E6C /* Tribu.app */;
 			productType = "com.apple.product-type.application";
 		};
 		6396AFB21A169D54009F3E6C /* ChatSecureTests */ = {
@@ -2334,6 +2334,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E509B9597D90E4125440145B /* Pods-ChatSecureCorePods-ChatSecure.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUNDLE_DISPLAY_NAME_SUFFIX = "";
 				BUNDLE_ID_SUFFIX = "";
@@ -2344,8 +2345,9 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 11;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = L92UU5TPQZ;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -2356,9 +2358,9 @@
 				INFOPLIST_FILE = ChatSecure/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.diomerc.diofon;
-				PRODUCT_NAME = Diofon;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tribumonster.ios;
+				PRODUCT_NAME = Tribu;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2370,6 +2372,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1788ADD9CACECB85CAB87B85 /* Pods-ChatSecureCorePods-ChatSecure.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUNDLE_DISPLAY_NAME_SUFFIX = "";
 				BUNDLE_ID_SUFFIX = "";
@@ -2380,8 +2383,9 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 11;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = L92UU5TPQZ;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -2392,9 +2396,9 @@
 				INFOPLIST_FILE = ChatSecure/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.diomerc.diofon;
-				PRODUCT_NAME = Diofon;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tribumonster.ios;
+				PRODUCT_NAME = Tribu;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;

@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,29 +13,26 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="89"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DYO-6Z-WMD">
-                        <rect key="frame" x="16" y="12" width="65.5" height="65.5"/>
+                        <rect key="frame" x="23" y="15" width="60" height="60"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="DYO-6Z-WMD" secondAttribute="height" multiplier="1:1" id="gTM-HF-ARw"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Display Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZeB-bE-luI">
-                        <rect key="frame" x="89.5" y="12" width="222.5" height="27"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="27" id="jvt-8s-WCt"/>
-                        </constraints>
+                        <rect key="frame" x="91" y="15" width="214" height="60"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="user@example.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QUP-qI-Us6">
-                        <rect key="frame" x="89.5" y="47" width="222.5" height="27"/>
+                        <rect key="frame" x="91" y="75" width="214" height="0.0"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="27" id="mYy-LV-e67"/>
+                            <constraint firstAttribute="height" id="ARQ-OU-KVD"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
@@ -47,15 +40,16 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="QUP-qI-Us6" firstAttribute="top" secondItem="ZeB-bE-luI" secondAttribute="bottom" constant="8" id="6aB-se-t87"/>
-                    <constraint firstItem="DYO-6Z-WMD" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" constant="-4" id="BBl-TQ-67H"/>
-                    <constraint firstItem="ZeB-bE-luI" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="JWL-eX-q3o"/>
-                    <constraint firstItem="ZeB-bE-luI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="4" id="KGK-vF-DIF"/>
-                    <constraint firstItem="QUP-qI-Us6" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="LrE-1x-ejH"/>
-                    <constraint firstItem="QUP-qI-Us6" firstAttribute="leading" secondItem="DYO-6Z-WMD" secondAttribute="trailing" constant="8" id="RlV-fB-ycw"/>
-                    <constraint firstItem="DYO-6Z-WMD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="VlK-9M-Svr"/>
-                    <constraint firstItem="ZeB-bE-luI" firstAttribute="leading" secondItem="DYO-6Z-WMD" secondAttribute="trailing" constant="8" id="b7G-uH-MFI"/>
-                    <constraint firstItem="DYO-6Z-WMD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="4" id="ibH-xs-Pry"/>
+                    <constraint firstItem="QUP-qI-Us6" firstAttribute="leading" secondItem="DYO-6Z-WMD" secondAttribute="trailing" constant="8" id="1mc-z5-0fy"/>
+                    <constraint firstAttribute="trailing" secondItem="ZeB-bE-luI" secondAttribute="trailing" constant="15" id="5Jf-M6-yJT"/>
+                    <constraint firstItem="ZeB-bE-luI" firstAttribute="leading" secondItem="DYO-6Z-WMD" secondAttribute="trailing" constant="8" id="6dB-UW-CIj"/>
+                    <constraint firstItem="DYO-6Z-WMD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="CAo-KS-cey"/>
+                    <constraint firstItem="DYO-6Z-WMD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="23" id="I7o-fj-u3w"/>
+                    <constraint firstAttribute="trailing" secondItem="QUP-qI-Us6" secondAttribute="trailing" constant="15" id="JrQ-y0-OgE"/>
+                    <constraint firstItem="ZeB-bE-luI" firstAttribute="bottom" secondItem="DYO-6Z-WMD" secondAttribute="bottom" id="OvD-86-Ixh"/>
+                    <constraint firstAttribute="bottom" secondItem="DYO-6Z-WMD" secondAttribute="bottom" constant="15" id="bIn-f5-BnZ"/>
+                    <constraint firstItem="QUP-qI-Us6" firstAttribute="bottom" secondItem="DYO-6Z-WMD" secondAttribute="bottom" id="daS-qk-1us"/>
+                    <constraint firstItem="ZeB-bE-luI" firstAttribute="top" secondItem="DYO-6Z-WMD" secondAttribute="top" id="vyx-3f-I1O"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -63,7 +57,7 @@
                 <outlet property="displayNameLabel" destination="ZeB-bE-luI" id="D4X-xR-dGf"/>
                 <outlet property="usernameLabel" destination="QUP-qI-Us6" id="SVF-qh-x5I"/>
             </connections>
-            <point key="canvasLocation" x="-11" y="45"/>
+            <point key="canvasLocation" x="-11.199999999999999" y="44.977511244377816"/>
         </tableViewCell>
     </objects>
 </document>

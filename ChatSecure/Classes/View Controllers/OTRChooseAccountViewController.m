@@ -87,6 +87,7 @@
     OTRXMPPAccount *account = (OTRXMPPAccount*)[self.accounts objectAtIndex:indexPath.row];
     [cell setAppearanceWithAccount:account];
     cell.infoButton.hidden = YES;
+    cell.accountNameLabel.hidden = YES;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 }
 

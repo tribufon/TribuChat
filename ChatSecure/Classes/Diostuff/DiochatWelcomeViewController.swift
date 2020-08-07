@@ -8,6 +8,7 @@
 import UIKit
 import MaterialComponents
 import QRCodeReaderViewController
+import SAMKeychain
 
 class DiochatWelcomeViewController: OTRBaseLoginViewController {
     
@@ -18,11 +19,17 @@ class DiochatWelcomeViewController: OTRBaseLoginViewController {
     @IBOutlet weak var qrButton: UIButton!
     @IBOutlet weak var qrScanLabel: UILabel!
     
+    @IBOutlet var bottomConstraint: NSLayoutConstraint!
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
     fileprivate let placeholderColor = UIColor.init(white: 200.0/255.0, alpha: 0.8)
+    
+    fileprivate let keychain = KeychainSwift()
+    
+    fileprivate let deviceIdKey = "lezilezibubulezi"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,11 +67,27 @@ class DiochatWelcomeViewController: OTRBaseLoginViewController {
         self.loginButton.addTarget(self, action: #selector(loginAction), for: .touchUpInside)
         
         self.qrButton.addTarget(self, action: #selector(qrCodeScan), for: .touchUpInside)
-    }
-    
-    override open func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
+            
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:UIResponder.keyboardWillShowNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:UIResponder.keyboardWillHideNotification, object: nil)
+        }
+        
+        override open func viewWillAppear(_ animated: Bool) {
+            self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        }
+        
+        @objc func keyboardWillShow(notification:NSNotification){
+
+            let userInfo = notification.userInfo!
+            var keyboardFrame:CGRect = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+            keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+            
+            bottomConstraint.constant = keyboardFrame.size.height
+        }
+
+        @objc func keyboardWillHide(notification:NSNotification){
+            bottomConstraint.constant = 0
+        }
     
     @objc private func loginAction() {
         processFormLogin(self.nameTextField.text, password: self.passwordTextField.text)
@@ -97,8 +120,10 @@ class DiochatWelcomeViewController: OTRBaseLoginViewController {
         guard let _value = value,
             let components = _value.removingPercentEncoding?.components(separatedBy: ":"),
             components.count >= 3 else { return }
-        let username = components[1].appending("@xmpp1.diomerc.com")
-        let password = components[2].replacingOccurrences(of: "@Diomerc", with: "")
+        let username = components[1].appending("@chat.tribu.monster")
+        let password = components[2].replacingOccurrences(of: "@Tribu", with: "")
+            .replacingOccurrences(of: "@TRIBU", with: "")
+            .replacingOccurrences(of: "*", with: "")
         
         processFormLogin(username, password: password)
     }
@@ -123,16 +148,18 @@ class DiochatWelcomeViewController: OTRBaseLoginViewController {
             jidNode = _username
         }
         
+        let deviceId = getDeviceID()
+        
         account.rememberPassword = true
         account.password = _password
         account.autologin = true
-        account.domain = "xmpp1.diomerc.com"
+        account.domain = "chat.tribu.monster"
         account.port = OTRXMPPAccount.defaultPort()
-        account.resource = OTRXMPPAccount.newResource()
+        account.resource = deviceId
         account.disableAutomaticURLFetching = false
 
         if jidDomain.isEmpty {
-            jidDomain = "xmpp1.diomerc.com"
+            jidDomain = "chat.tribu.monster"
         }
         
         guard let jid = XMPPJID(user: jidNode, domain: jidDomain, resource: account.resource) else { return }
@@ -183,6 +210,18 @@ class DiochatWelcomeViewController: OTRBaseLoginViewController {
         self.navigationController?.dismiss(animated: true) {
             
         }
+    }
+    
+    private func getDeviceID() -> String {
+        guard let deviceId = self.keychain.get(self.deviceIdKey), !deviceId.isEmpty else {
+            let uuid = UUID().uuidString
+            
+            self.keychain.set(uuid, forKey: self.deviceIdKey)
+            
+            return getDeviceID()
+        }
+        
+        return deviceId
     }
 }
 

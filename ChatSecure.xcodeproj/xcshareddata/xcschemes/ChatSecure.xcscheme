@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6396AF991A169D54009F3E6C"
-               BuildableName = "Diofon.app"
+               BuildableName = "Tribu.app"
                BlueprintName = "ChatSecure"
                ReferencedContainer = "container:ChatSecure.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6396AF991A169D54009F3E6C"
-            BuildableName = "Diofon.app"
+            BuildableName = "Tribu.app"
             BlueprintName = "ChatSecure"
             ReferencedContainer = "container:ChatSecure.xcodeproj">
          </BuildableReference>
@@ -89,7 +89,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6396AF991A169D54009F3E6C"
-            BuildableName = "Diofon.app"
+            BuildableName = "Tribu.app"
             BlueprintName = "ChatSecure"
             ReferencedContainer = "container:ChatSecure.xcodeproj">
          </BuildableReference>
@@ -113,7 +113,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6396AF991A169D54009F3E6C"
-            BuildableName = "Diofon.app"
+            BuildableName = "Tribu.app"
             BlueprintName = "ChatSecure"
             ReferencedContainer = "container:ChatSecure.xcodeproj">
          </BuildableReference>

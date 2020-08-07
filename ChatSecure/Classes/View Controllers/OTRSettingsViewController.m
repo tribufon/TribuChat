@@ -203,7 +203,8 @@ static NSString *const kSettingsCellIdentifier = @"kSettingsCellIdentifier";
             XMPPAccountCell *accountCell = [tableView dequeueReusableCellWithIdentifier:[XMPPAccountCell cellIdentifier] forIndexPath:indexPath];
             [accountCell setAppearanceWithAccount:account];
             
-            NSMutableString *labelString = [NSMutableString stringWithString:accountCell.accountNameLabel.text];
+//            NSMutableString *labelString = [NSMutableString stringWithString:accountCell.accountNameLabel.text];
+            NSMutableString *labelString = [NSMutableString stringWithString:@""];
             if (xmpp.lastConnectionError) {
                 [labelString appendString:@" ❌"];
             } else if (xmpp.serverCheck.getCombinedPushStatus == ServerCheckPushStatusBroken) {
@@ -339,7 +340,8 @@ static NSString *const kSettingsCellIdentifier = @"kSettingsCellIdentifier";
 - (void) addAccount:(id)sender {
     UIStoryboard *onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding" bundle:[OTRAssets resourcesBundle]];
     UINavigationController *welcomeNavController = [onboardingStoryboard instantiateInitialViewController];
-    welcomeNavController.modalPresentationStyle = UIModalPresentationFormSheet;
+    welcomeNavController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    welcomeNavController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentViewController:welcomeNavController animated:YES completion:nil];
 }
 

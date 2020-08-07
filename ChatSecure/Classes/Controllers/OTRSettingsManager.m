@@ -155,8 +155,9 @@
     [newSettingsDictionary setObject:languageSetting forKey:kOTRSettingKeyLanguage];
     
     NSMutableArray *otherSettings = [NSMutableArray arrayWithCapacity:5];
-    [otherSettings addObjectsFromArray:@[languageSetting, shareViewSetting]];
-    
+//    [otherSettings addObjectsFromArray:@[languageSetting, shareViewSetting]];
+    [otherSettings addObjectsFromArray:@[languageSetting]];
+
 //    if ([OTRBranding githubURL]) {
 //        OTRFeedbackSetting * feedbackViewSetting = [[OTRFeedbackSetting alloc] initWithTitle:SEND_FEEDBACK_STRING() description:nil];
 //        feedbackViewSetting.imageName = @"18-envelope.png";

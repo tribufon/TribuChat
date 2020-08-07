@@ -353,6 +353,7 @@ open class AccountDetailViewController: UIViewController, UITableViewDelegate, U
         }
         cell.setAppearance(account: account)
         cell.infoButton.isHidden = true
+        cell.accountNameLabel.isHidden = true
         cell.selectionStyle = .none
         return cell
     }

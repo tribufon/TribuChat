@@ -675,7 +675,8 @@
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     NSString *searchString = [self.searchController.searchBar text];
     if ([searchString length]) {
-        searchString = [NSString stringWithFormat:@"%@*",searchString];
+        searchString = [NSString stringWithFormat:@"%@*@chat.tribu.monster", searchString];
+//        searchString = [NSString stringWithFormat:@"%@*",searchString];
         [self.searchQueue enqueueQuery:searchString];
         [self.searchConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
             NSString *searchViewName = [YapDatabaseConstants extensionName:DatabaseExtensionNameBuddySearchResultsViewName];

@@ -54,9 +54,9 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return self.account.username;
-    }
+//    if (section == 0) {
+//        return self.account.username;
+//    }
     return @"";
 }
 
@@ -199,6 +199,15 @@
     if ([self checkFields]) {
         NSString * newBuddyAccountName = [[self.accountNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] lowercaseString];
         NSString * newBuddyDisplayName = [self.displayNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        
+        if([newBuddyAccountName containsString:@"@"]) {
+            NSArray *buddyAccountParts = [newBuddyAccountName componentsSeparatedByString:@"@"];
+            newBuddyAccountName = [buddyAccountParts firstObject];
+        }
+        
+        if(![[newBuddyAccountName lowercaseString] hasSuffix:@"chat.tribu.monster"]) {
+            newBuddyAccountName = [NSString stringWithFormat:@"%@@chat.tribu.monster", newBuddyAccountName];
+        }
         
         XMPPJID *jid = [XMPPJID jidWithString:newBuddyAccountName];
         if (!jid) { return; }

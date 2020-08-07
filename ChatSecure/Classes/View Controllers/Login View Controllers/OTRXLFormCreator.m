@@ -43,7 +43,7 @@ NSString *const kOTRXLFormAutomaticURLFetchTag               = @"kOTRXLFormAutom
 {
     XLFormDescriptor *descriptor = [self formForAccountType:account.accountType createAccount:NO];
     
-    [[descriptor formRowWithTag:kOTRXLFormUsernameTextFieldTag] setValue:account.username];
+//    [[descriptor formRowWithTag:kOTRXLFormUsernameTextFieldTag] setValue:account.username];
     [[descriptor formRowWithTag:kOTRXLFormPasswordTextFieldTag] setValue:account.password];
     [[descriptor formRowWithTag:kOTRXLFormRememberPasswordSwitchTag] setValue:@(account.rememberPassword)];
     [[descriptor formRowWithTag:kOTRXLFormLoginAutomaticallySwitchTag] setValue:@(account.autologin)];
@@ -155,7 +155,7 @@ NSString *const kOTRXLFormAutomaticURLFetchTag               = @"kOTRXLFormAutom
         switch (accountType) {
             case OTRAccountTypeJabber:
             case OTRAccountTypeXMPPTor:{
-                [basicSection addFormRow:[self jidTextFieldRowDescriptorWithValue:nil]];
+//                [basicSection addFormRow:[self jidTextFieldRowDescriptorWithValue:nil]];
                 [basicSection addFormRow:[self passwordTextFieldRowDescriptorWithValue:nil]];
                 [basicSection addFormRow:[self rememberPasswordRowDescriptorWithValue:YES]];
                 [basicSection addFormRow:[self loginAutomaticallyRowDescriptorWithValue:YES]];

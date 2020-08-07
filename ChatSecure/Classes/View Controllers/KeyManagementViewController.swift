@@ -385,7 +385,7 @@ open class KeyManagementViewController: XLFormViewController {
         
         // Add section for each buddy's device
         for buddy in buddies {
-            let theirSection = XLFormSectionDescriptor.formSection(withTitle: buddy.username)
+            let theirSection = XLFormSectionDescriptor.formSection(withTitle: "")
 
             let buddyRow = XLFormRowDescriptor(tag: buddy.uniqueId, rowType: UserInfoProfileCell.defaultRowDescriptorType())
             buddyRow.value = buddy
@@ -425,8 +425,8 @@ open class KeyManagementViewController: XLFormViewController {
             }
             cryptoSection.hidden = "$\(RowTags.ShowAdvancedCryptoSettingsTag)==0"
             let buddySection = theirSections.first!
-            buddySection.addFormRow(showAdvancedSwitch)
-            sectionsToAdd.append(cryptoSection)
+//            buddySection.addFormRow(showAdvancedSwitch)
+//            sectionsToAdd.append(cryptoSection)
         }
         
         if let section = _yourProfileSection {

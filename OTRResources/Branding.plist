@@ -27,9 +27,9 @@
 	<key>ShareBaseURL</key>
 	<string>https://diomerc.com/i/#</string>
 	<key>pushAPIURL</key>
-	<string>https://push.diomerc.com/api/v1/</string>
+	<string>https://push.tribu.monster/api/v1/</string>
 	<key>StagingPushAPIURL</key>
-	<string>https://push.diomerc.com/api/v1/</string>
+	<string>https://push.tribu.monster/api/v1/</string>
 	<key>TestflightSignupURL</key>
 	<string>https://goo.gl/forms/p8XAiaJFvodl7DLk2</string>
 	<key>ShouldShowPushWarning</key>
