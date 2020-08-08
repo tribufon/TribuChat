@@ -796,7 +796,7 @@ typedef NS_ENUM(int, OTRDropDownType) {
     }
     
     NSArray<UIAlertAction*> *mediaActions = [UIAlertAction actionsForMediaMessage:message sourceView:self.view viewController:self];
-    [actions addObjectsFromArray:mediaActions];
+//    [actions addObjectsFromArray:mediaActions];
     
     [actions addObject:[self cancleAction]];
     return actions;

@@ -140,26 +140,26 @@
         }
     }
     
-    UIAlertAction *shareAction = [UIAlertAction actionWithTitle:SHARE_STRING() style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSMutableArray *activityItems = [NSMutableArray new];
-        if (url) {
-            [activityItems addObject:url];
-        }
-        // This is sorta janky, but only support fetching images for now
-        if (mediaItemUniqueId.length) {
-            UIImage *image = [OTRImages imageWithIdentifier:mediaItemUniqueId];
-            if (image) {
-                [activityItems addObject:image];
-            }
-        }
-        NSArray<UIActivity*> *activities = UIActivity.otr_linkActivities;
-        UIActivityViewController *share = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:activities];
-        
-        share.popoverPresentationController.sourceView = sourceView;
-        share.popoverPresentationController.sourceRect = sourceView.bounds;
-        [viewController presentViewController:share animated:YES completion:nil];
-    }];
-    [actions addObject:shareAction];
+//    UIAlertAction *shareAction = [UIAlertAction actionWithTitle:SHARE_STRING() style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        NSMutableArray *activityItems = [NSMutableArray new];
+//        if (url) {
+//            [activityItems addObject:url];
+//        }
+//        // This is sorta janky, but only support fetching images for now
+//        if (mediaItemUniqueId.length) {
+//            UIImage *image = [OTRImages imageWithIdentifier:mediaItemUniqueId];
+//            if (image) {
+//                [activityItems addObject:image];
+//            }
+//        }
+//        NSArray<UIActivity*> *activities = UIActivity.otr_linkActivities;
+//        UIActivityViewController *share = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:activities];
+//        
+//        share.popoverPresentationController.sourceView = sourceView;
+//        share.popoverPresentationController.sourceRect = sourceView.bounds;
+//        [viewController presentViewController:share animated:YES completion:nil];
+//    }];
+//    [actions addObject:shareAction];
     
     if (url) {
         UIAlertAction *copyLinkAction = [UIAlertAction actionWithTitle:COPY_LINK_STRING() style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
