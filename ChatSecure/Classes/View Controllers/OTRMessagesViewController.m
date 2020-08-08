@@ -666,7 +666,7 @@ typedef NS_ENUM(int, OTRDropDownType) {
             NSDate *lastSeen = [OTRBuddyCache.shared lastSeenDateForBuddy:buddy];
             OTRThreadStatus status = [OTRBuddyCache.shared threadStatusForBuddy:buddy];
             if (!lastSeen) {
-                titleView.subtitleLabel.text = buddy.username;
+                titleView.subtitleLabel.text = @"";
                 return;
             }
             TTTTimeIntervalFormatter *tf = [[TTTTimeIntervalFormatter alloc] init];

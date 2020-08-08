@@ -71,7 +71,7 @@
     
     UIBarButtonItem *qrButton = [[UIBarButtonItem alloc] initWithTitle:QR_CODE_STRING() style:UIBarButtonItemStylePlain target:self action:@selector(qrButtonPressed:)];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(doneButtonPressed:)];
-    self.navigationItem.rightBarButtonItems = @[doneButton, qrButton];
+    self.navigationItem.rightBarButtonItems = @[doneButton];
     
     self.accountNameTextField = [[UITextField alloc] initWithFrame:CGRectZero];
     self.accountNameTextField.placeholder = XMPP_USERNAME_EXAMPLE_STRING();
