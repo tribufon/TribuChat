@@ -228,9 +228,9 @@
 		// However, having these rules only would make impossible a match like "all collections having JID
 		// exactly equal to bare JID/domain JID". Therefore, when the 'exactmatch' attribute is set to "true" or
 		// "1" on the <list/>, <remove/> or <item/> element, a JID value such as "example.com" matches
-		// that exact JID only rather than <*@chat.tribu.monster>, <*@chat.tribu.monster/*>, or <example.com/*>, and
-		// a JID value such as "localpart@chat.tribu.monster" matches that exact JID only rather than
-		// <localpart@chat.tribu.monster/*>.
+		// that exact JID only rather than <*@example.com>, <*@example.com/*>, or <example.com/*>, and
+		// a JID value such as "localpart@example.com" matches that exact JID only rather than
+		// <localpart@example.com/*>.
 		
 		XMPPJID *messageJid;
 		if (isOutgoing)
