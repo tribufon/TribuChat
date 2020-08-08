@@ -99,7 +99,7 @@ static NSString *const GOOGLE_APP_SCOPE = @"GOOGLE_APP_SCOPE";
 
 #pragma mark Strings
 
-/** The default XMPP resource (e.g. username@example.com/chatsecure) */
+/** The default XMPP resource (e.g. username@chat.tribu.monster/chatsecure) */
 + (NSString*) xmppResource {
     return [[self defaultPlist] objectForKey:kOTRXMPPResource];
 }

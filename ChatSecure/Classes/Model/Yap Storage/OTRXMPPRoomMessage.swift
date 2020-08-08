@@ -522,7 +522,7 @@ extension XMPPRoom {
 
 extension XMPPMessage {
     /// Gets the non-anonymous user JID from MUC message
-    /// <x xmlns="http://jabber.org/protocol/muc#user"><item jid="user@example.com" affiliation="member" role="participant"/></x>
+    /// <x xmlns="http://jabber.org/protocol/muc#user"><item jid="user@chat.tribu.monster" affiliation="member" role="participant"/></x>
     public var mucUserJID: XMPPJID? {
         let x = element(forName: "x", xmlns: "http://jabber.org/protocol/muc#user")
         let item = x?.element(forName: "item")

@@ -423,7 +423,7 @@ typedef enum XMPPPrivacyQueryInfoType {
 	// <iq type='set' id='edit1'>
 	//   <query xmlns='jabber:iq:privacy'>
 	//     <list name='public'>
-	//       <item type='jid' value='tybalt@example.com' action='deny' order='3'/>
+	//       <item type='jid' value='tybalt@chat.tribu.monster' action='deny' order='3'/>
 	//       <item type='jid' value='paris@example.org' action='deny' order='5'/>
 	//       <item action='allow' order='68'/>
 	//     </list>
@@ -637,7 +637,7 @@ NSInteger sortItems(id itemOne, id itemTwo, void *context)
 		// <iq type='result' id='getlist2'>
 		//   <query xmlns='jabber:iq:privacy'>
 		//     <list name='public'>
-		//       <item type='jid' value='tybalt@example.com' action='deny' order='1'/>
+		//       <item type='jid' value='tybalt@chat.tribu.monster' action='deny' order='1'/>
 		//       <item action='allow' order='2'/>
 		//     </list>
 		//   </query>

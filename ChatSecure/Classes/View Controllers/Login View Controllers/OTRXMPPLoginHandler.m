@@ -73,7 +73,7 @@
     
     XLFormRowDescriptor *usernameRow = [form formRowWithTag:kOTRXLFormUsernameTextFieldTag];
     
-    NSString *jidNode = nil; // aka 'username' from username@example.com
+    NSString *jidNode = nil; // aka 'username' from username@chat.tribu.monster
     NSString *jidDomain = nil;
 
     if (![usernameRow isHidden]) {

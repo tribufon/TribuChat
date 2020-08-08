@@ -26,10 +26,10 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Account JID. (Optional)
  * Used to specify an account with which to perform an action.
- * For example 'guest@example.com' would be the authority portion of
- *    xmpp://guest@example.com/support@example.com?message
+ * For example 'guest@chat.tribu.monster' would be the authority portion of
+ *    xmpp://guest@chat.tribu.monster/support@chat.tribu.monster?message
  * so the application would show a dialog with an outgoing message
- * to support@example.com from the user's account guest@example.com.
+ * to support@chat.tribu.monster from the user's account guest@chat.tribu.monster.
  */
 @property (nonatomic, strong, readonly, nullable) XMPPJID *accountJID;
 

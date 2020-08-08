@@ -134,7 +134,7 @@
     
     /////////// testing VCs
 //    OTRXMPPAccount *account = [[OTRXMPPAccount alloc] init];
-//    account.username = @"test@example.com";
+//    account.username = @"test@chat.tribu.monster";
 //    OTRInviteViewController *vc = [[OTRInviteViewController alloc] initWithAccount:account];
 //    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
 //    self.window.rootViewController = nav;

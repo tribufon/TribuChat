@@ -757,7 +757,7 @@
     },
     "XMPP_USERNAME_EXAMPLE_STRING": {
         "comment": "Example of a username using the words user and example",
-        "string": "user@example.com"
+        "string": "user@chat.tribu.monster"
     },
     "YOU_HAVE_BEEN_INVITED_TO_GROUP_STRING": {
         "comment": "Title of screen for joining/not joining group",

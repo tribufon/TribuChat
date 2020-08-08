@@ -110,7 +110,7 @@
 }
 
 /*
- <iq xmlns="jabber:client" id="AEA43C1D-DA7D-448F-8F41-268D1A14FF3F" type="result" to="test@example.com/b9038fb3-0575-47bf-b8bb-cd1073f972c6" from="conversations@example.com">
+ <iq xmlns="jabber:client" id="AEA43C1D-DA7D-448F-8F41-268D1A14FF3F" type="result" to="test@chat.tribu.monster/b9038fb3-0575-47bf-b8bb-cd1073f972c6" from="conversations@chat.tribu.monster">
     <pubsub xmlns="http://jabber.org/protocol/pubsub">
         <items node="eu.siacs.conversations.axolotl.devicelist">
             <item id="1">

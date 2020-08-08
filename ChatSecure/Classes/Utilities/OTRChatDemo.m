@@ -24,7 +24,7 @@
 + (void)loadDemoChatInDatabase
 {
     NSArray *buddyNames = @[@"Martin Hellman",@"Nikita Borisov",@"Whitfield Diffie"];
-    NSString *accountName = @"username@example.com";
+    NSString *accountName = @"username@chat.tribu.monster";
     NSArray *helloArray = @[@"Hello",
                             @"Bonjour",
                             @"Hallo",
@@ -45,7 +45,7 @@
         
         [buddyNames enumerateObjectsUsingBlock:^(NSString *name, NSUInteger idx, BOOL *stop) {
             NSString *firstName = [[name componentsSeparatedByString:@" "].firstObject lowercaseString];
-            NSString *jidString = [NSString stringWithFormat:@"%@@example.com", firstName];
+            NSString *jidString = [NSString stringWithFormat:@"%@@chat.tribu.monster", firstName];
             XMPPJID *jid = [XMPPJID jidWithString:jidString];
             OTRXMPPBuddy * buddy = [OTRXMPPBuddy fetchBuddyWithJid:jid accountUniqueId:account.uniqueId transaction:transaction];
             if (!buddy) {
@@ -124,7 +124,7 @@
         for (int buddyIndex = 0; buddyIndex < 100; buddyIndex++) {
             NSString *name = [NSString stringWithFormat:@"Buddy #%d", buddyIndex + 1];
             NSString *firstName = [NSString stringWithFormat:@"buddy%d", buddyIndex + 1];
-            NSString *jidString = [NSString stringWithFormat:@"%@@example.com", firstName];
+            NSString *jidString = [NSString stringWithFormat:@"%@@chat.tribu.monster", firstName];
             XMPPJID *jid = [XMPPJID jidWithString:jidString];
             OTRXMPPBuddy * buddy = [[OTRXMPPBuddy alloc] initWithJID:jid accountId:account.uniqueId];
             buddy.displayName = name;

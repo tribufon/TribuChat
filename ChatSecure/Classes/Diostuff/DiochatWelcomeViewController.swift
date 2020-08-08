@@ -64,8 +64,21 @@ class DiochatWelcomeViewController: OTRBaseLoginViewController {
         self.qrScanLabel.font = UIFont.boldSystemFont(ofSize: 13.0)
         self.qrScanLabel.text = "Scan QR"
         
+        self.loginButton.layer.borderWidth = 1
+        self.loginButton.layer.borderColor = UIColor.white.cgColor
+        self.loginButton.layer.cornerRadius = 4
         self.loginButton.addTarget(self, action: #selector(loginAction), for: .touchUpInside)
         
+        if #available(iOS 11.0, *) {
+            self.loginButton.setTitleColor(UIColor(named: "tribuColor") ?? .black, for: .highlighted)
+            self.loginButton.setTitleColor(UIColor(named: "tribuColor") ?? .black, for: .selected)
+        } else {
+            self.loginButton.setTitleColor(.black, for: .highlighted)
+            self.loginButton.setTitleColor(.black, for: .selected)
+        }
+        self.loginButton.setBackgroundColor(.white, for: .highlighted)
+        self.loginButton.setBackgroundColor(.white, for: .selected)
+
         self.qrButton.addTarget(self, action: #selector(qrCodeScan), for: .touchUpInside)
             
             NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:UIResponder.keyboardWillShowNotification, object: nil)
@@ -264,4 +277,16 @@ extension DiochatWelcomeViewController: QRCodeReaderDelegate {
     func readerDidCancel(_ reader: QRCodeReaderViewController!) {
         reader.dismiss(animated: true, completion: nil)
     }
+}
+
+extension UIButton {
+    func setBackgroundColor(_ color: UIColor, for state: UIControl.State) {
+    let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
+    UIGraphicsBeginImageContext(rect.size)
+    color.setFill()
+    UIRectFill(rect)
+    let colorImage = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    setBackgroundImage(colorImage, for: state)
+  }
 }

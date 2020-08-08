@@ -24,7 +24,7 @@ FOUNDATION_EXPORT NSString *const kOTRSettingKeyLanguage;
 
 #pragma mark Strings
 
-/** The default XMPP resource (e.g. username@example.com/chatsecure) */
+/** The default XMPP resource (e.g. username@chat.tribu.monster/chatsecure) */
 @property (class, readonly) NSString* xmppResource;
 
 /** Email for user feedback e.g. support@chatsecure.org */
