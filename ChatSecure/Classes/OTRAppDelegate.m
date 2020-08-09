@@ -110,10 +110,6 @@
             if (error) {
                 DDLogError(@"Password Error: %@",error);
             }
-            [[OTRDatabaseManager sharedInstance] setDatabasePassphrase:token remember:NO error:nil];
-            if ([[OTRDatabaseManager sharedInstance] setupDatabaseWithName:OTRYapDatabaseName]) {
-                [[OTRAppDelegate appDelegate] showConversationViewController];
-            }
         }];
     } else {
         ////// Normal launch to conversationViewController //////
@@ -122,12 +118,13 @@
              First Launch
              Create password and save to keychain
              **/
-            NSString *newPassword = [OTRPasswordGenerator passwordWithLength:OTRDefaultPasswordLength];
-            NSError *error = nil;
-            [[OTRDatabaseManager sharedInstance] setDatabasePassphrase:newPassword remember:YES error:&error];
-            if (error) {
-                DDLogError(@"Password Error: %@",error);
-            }
+            [OTRAppDelegate getDeviceID: ^(NSString *token) {
+                NSError *error = nil;
+                [[OTRDatabaseManager sharedInstance] setDatabasePassphrase: token remember: NO error: &error];
+                if (error) {
+                    DDLogError(@"Password Error: %@",error);
+                }
+            }];
         }
 
         [[OTRDatabaseManager sharedInstance] setupDatabaseWithName:OTRYapDatabaseName];
