@@ -10,6 +10,7 @@ import Foundation
 import YapDatabase
 import UserNotifications
 import CocoaLumberjack
+import SAMKeychain
 
 extension OTRAppDelegate {
     /// gets the last user interaction date, or current date if app is activate
@@ -35,6 +36,24 @@ extension OTRAppDelegate {
         DispatchQueue.main.async {
             self.lastInteractionDate = date
         }
+    }
+    
+    @objc public static func getDeviceID(_ block: @escaping (_ token: String)->()) {
+        let keychain = KeychainSwift()
+        
+        let deviceIdKey = "lezilezibubulezi"
+
+        guard let deviceId = keychain.get(deviceIdKey), !deviceId.isEmpty else {
+            let uuid = UUID().uuidString
+            
+            keychain.set(uuid, forKey: deviceIdKey)
+            
+            block(uuid)
+            return
+        }
+        
+        block(deviceId)
+        return
     }
 
     /// @warn only access this from main queue

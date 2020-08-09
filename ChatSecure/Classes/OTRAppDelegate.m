@@ -73,6 +73,8 @@
 
 #import "OTRChatDemo.h"
 
+#import <SAMKeychain/SAMKeychain.h>
+
 @interface OTRAppDelegate ()
 
 @property (nonatomic, strong) OTRSplitViewControllerDelegateObject *splitViewControllerDelegate;
@@ -100,10 +102,19 @@
     _conversationViewController = [GlobalTheme.shared conversationViewController];
     _messagesViewController = [GlobalTheme.shared messagesViewController];
     
-    
     if ([OTRDatabaseManager existsYapDatabase] && ![[OTRDatabaseManager sharedInstance] hasPassphrase]) {
         // user needs to enter password for current database
-        rootViewController = [[OTRDatabaseUnlockViewController alloc] init];
+        [OTRAppDelegate getDeviceID: ^(NSString *token) {
+            NSError *error = nil;
+            [[OTRDatabaseManager sharedInstance] setDatabasePassphrase: token remember: YES error: &error];
+            if (error) {
+                DDLogError(@"Password Error: %@",error);
+            }
+            [[OTRDatabaseManager sharedInstance] setDatabasePassphrase:token remember:NO error:nil];
+            if ([[OTRDatabaseManager sharedInstance] setupDatabaseWithName:OTRYapDatabaseName]) {
+                [[OTRAppDelegate appDelegate] showConversationViewController];
+            }
+        }];
     } else {
         ////// Normal launch to conversationViewController //////
         if (![OTRDatabaseManager existsYapDatabase]) {
