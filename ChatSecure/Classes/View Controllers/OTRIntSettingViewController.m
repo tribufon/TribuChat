@@ -69,7 +69,7 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     newValue = otrSetting.intValue;
-    [self setTextForValueLabel];
+    //[self setTextForValueLabel];
     self.descriptionLabel.text = otrSetting.settingDescription;
     
     [self resizeDescriptionLabel];
@@ -158,7 +158,7 @@
 {
     self.selectedPath = indexPath;
     newValue = [self valueForRow:(int)indexPath.row];
-    [self setTextForValueLabel];
+    //[self setTextForValueLabel];
     [self.valueTable reloadData];
     [self.valueTable selectRowAtIndexPath:selectedPath animated:NO scrollPosition:UITableViewScrollPositionNone];
 }
