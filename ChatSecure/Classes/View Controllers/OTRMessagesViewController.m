@@ -32,6 +32,8 @@
 #import "OTRProtocolManager.h"
 #import "OTRColors.h"
 #import "JSQMessagesCollectionViewCell+ChatSecure.h"
+#import "./../Categories/JSQMessagesCollectioNViewCell+Timer.h"
+#import "./../Controllers/OTRMessageTimerManager.h"
 @import BButton;
 #import "OTRAttachmentPicker.h"
 #import "OTRImageItem.h"
@@ -70,7 +72,7 @@ typedef NS_ENUM(int, OTRDropDownType) {
     OTRDropDownTypePush          = 2
 };
 
-@interface OTRMessagesViewController () <UITextViewDelegate, OTRAttachmentPickerDelegate, OTRYapViewHandlerDelegateProtocol, OTRMessagesCollectionViewFlowLayoutSizeProtocol, OTRRoomOccupantsViewControllerDelegate> {
+@interface OTRMessagesViewController () <UITextViewDelegate, OTRAttachmentPickerDelegate, OTRYapViewHandlerDelegateProtocol, OTRMessagesCollectionViewFlowLayoutSizeProtocol, OTRRoomOccupantsViewControllerDelegate, JSQMessagesCollectionViewCellTimerDelegate> {
     JSQMessagesAvatarImage *_warningAvatarImage;
     JSQMessagesAvatarImage *_accountAvatarImage;
     JSQMessagesAvatarImage *_buddyAvatarImage;
@@ -1470,6 +1472,46 @@ typedef NS_ENUM(int, OTRDropDownType) {
     
     // Needed for link interaction
     cell.textView.delegate = self;
+    
+    // for Timer and for lock
+    cell.timerDelegate = self;
+    
+    NSDate *unlockedDate = NULL;
+    NSNumber *timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:kOTRSettingKeyFireMsgTimer];
+    
+    if ([message isMessageIncoming]) {
+        NSDictionary* dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
+        if (dict) {
+            unlockedDate = dict[@"date"];
+            timeSetting = dict[@"expire"];
+        }
+        
+    } else {
+        NSDictionary* dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
+        if (dict) {
+            unlockedDate = dict[@"date"];
+            timeSetting = dict[@"expire"];
+        } else {
+            unlockedDate = message.messageDate;
+            timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:@"messageFireTimer"];
+            if (timeSetting == NULL) {
+                timeSetting = [NSNumber numberWithInt:48*60*60];
+            }
+            
+            [OTRMessageTimerManager setUnlockTimerOfMessage:message.uniqueId date:unlockedDate expire:timeSetting];
+        }
+    }
+    
+    if (unlockedDate == NULL) {
+        [cell showLock:YES];
+        
+    } else {
+        NSDate* now = [NSDate date];
+        double interval = [now timeIntervalSinceDate:unlockedDate];
+        NSInteger max = (NSInteger)timeSetting.intValue;
+        [cell startTimer:((NSTimeInterval)max - interval)];
+    }
+    
     return cell;
 }
 
@@ -1827,8 +1869,10 @@ typedef NS_ENUM(int, OTRDropDownType) {
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath
 {
+    id<OTRMessageProtocol,JSQMessageData> message = [self messageAtIndexPath:indexPath];
+    
     if ([self showSenderDisplayNameAtIndexPath:indexPath]) {
-        id<OTRMessageProtocol,JSQMessageData> message = [self messageAtIndexPath:indexPath];
+        //id<OTRMessageProtocol,JSQMessageData> message = [self messageAtIndexPath:indexPath];
         
         __block NSString *displayName = nil;
         if ([message isKindOfClass:[OTRXMPPRoomMessage class]]) {
@@ -1857,7 +1901,39 @@ typedef NS_ENUM(int, OTRDropDownType) {
         return [[NSAttributedString alloc] initWithString:displayName];
     }
     
-    return  nil;
+    // for timer
+    NSDate *unlockedDate;
+    NSNumber *timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:kOTRSettingKeyFireMsgTimer];
+    
+    if ([message isMessageIncoming]) {
+        NSDictionary* dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
+        if (dict) {
+            unlockedDate = dict[@"date"];
+            timeSetting = dict[@"expire"];
+        }
+    } else {
+        NSDictionary* dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
+        if (dict) {
+            unlockedDate = dict[@"date"];
+            timeSetting = dict[@"expire"];
+        } else {
+            unlockedDate = message.messageDate;
+            timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:@"messageFireTimer"];
+            if (timeSetting == NULL) {
+                timeSetting = [NSNumber numberWithInt:48*60*60];
+            }
+        }
+    }
+    
+    if (unlockedDate == NULL) {
+        return nil;
+    }
+    
+    NSDate* now = [NSDate date];
+    double interval = [now timeIntervalSinceDate:unlockedDate];
+    double t = ((double)timeSetting.intValue > interval) ? ((double)timeSetting.intValue - interval) : 0;
+    NSString *str = [NSString stringWithFormat:@"%.2ld:%.2ld:%.2ld",(NSInteger)t / 60 / 60, ((NSInteger)t / 60) % 60, (NSInteger)t % 60];
+    return [[NSAttributedString alloc] initWithString:str];
 }
 
 /** Currently uses clock for queued, and checkmark for delivered. */
@@ -1996,7 +2072,9 @@ heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath
     if ([self showSenderDisplayNameAtIndexPath:indexPath]) {
         return kJSQMessagesCollectionViewCellLabelHeightDefault;
     }
-    return 0.0f;
+    
+    // for Timer
+    return 21.0f;//0.0f;
 }
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
@@ -2022,6 +2100,9 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
         buddy.lastMessageId = nil;
         [buddy saveWithTransaction:transaction];
     }];
+    
+    // for lock / unlock msg
+    [OTRMessageTimerManager removeUnlockTimerOfMessage:message.uniqueId];
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapAvatarImageView:(UIImageView *)avatarImageView atIndexPath:(NSIndexPath *)indexPath
@@ -2161,6 +2242,7 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
                 // We can't use finishSendingMessage here because it might
                 // accidentally clear out unsent message text
                 [self scrollToBottomAnimated:YES];
+                [self.collectionView reloadData];
             }
         }
     }];
@@ -2385,6 +2467,51 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
         UINavigationController *keyNav = [[UINavigationController alloc] initWithRootViewController:vc];
         [self presentViewController:keyNav animated:YES completion:nil];
     }
+}
+
+
+// MARK: - JSQCollectionViewCell Timer Delegate
+
+- (void)deleteMessageAt:(NSIndexPath *)indexPath
+{
+    [self deleteMessageAtIndexPath:indexPath];
+    //[self.collectionView reloadData];
+}
+
+- (NSTimeInterval)timerIntervalAt:(NSIndexPath *)indexPath
+{
+    id <OTRMessageProtocol>message = [self messageAtIndexPath:indexPath];
+    
+    NSDate *now = [NSDate date];
+    
+    NSDictionary *dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
+    NSDate *unlockedDate;
+    NSNumber *timeSetting;
+    
+    if (dict == NULL) {
+        unlockedDate = message.messageDate;
+        timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:kOTRSettingKeyFireMsgTimer];
+    } else {
+        unlockedDate = dict[@"date"];
+        timeSetting = dict[@"expire"];
+    }
+    
+    double interval = [now timeIntervalSinceDate:unlockedDate];
+    
+    return (double)timeSetting.intValue - interval;
+}
+
+- (NSTimeInterval)setUnlockedAt:(NSIndexPath *)indexPath
+{
+    id <OTRMessageProtocol>message = [self messageAtIndexPath:indexPath];
+    NSDate *now = [NSDate date];
+    NSDate *unlockedDate = now;
+    NSNumber *timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:kOTRSettingKeyFireMsgTimer];
+    
+    [OTRMessageTimerManager setUnlockTimerOfMessage:message.uniqueId date:unlockedDate expire:timeSetting];
+    double interval = [now timeIntervalSinceDate:unlockedDate];
+    NSInteger max = (NSInteger)timeSetting.intValue;
+    return ((NSTimeInterval)max - interval);
 }
 
 @end

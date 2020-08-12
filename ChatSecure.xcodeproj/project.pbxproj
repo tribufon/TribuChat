@@ -80,6 +80,8 @@
 		D9BC71DC1E53B31C007A3C4F /* SingleButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9BC71D91E53B2BF007A3C4F /* SingleButtonTableViewCell.xib */; };
 		D9BC71E11E53B4A3007A3C4F /* TwoButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9BC71DE1E53B465007A3C4F /* TwoButtonTableViewCell.xib */; };
 		D9DEC34A1FABC9F900BF1F7C /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D9DEC3491FABC9F900BF1F7C /* Settings.bundle */; };
+		F3370B8224E3F0F600B13394 /* OTRMessageTimerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F3370B8124E3F0F600B13394 /* OTRMessageTimerManager.m */; };
+		F373DBEA24E15A2700DD6E28 /* JSQMessagesCollectionViewCell+Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = F373DBE924E15A2700DD6E28 /* JSQMessagesCollectionViewCell+Timer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -662,6 +664,11 @@
 		D9FF60212040A9EF003207DC /* AppTheme.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppTheme.h; sourceTree = "<group>"; };
 		D9FF60232040B0E5003207DC /* DefaultTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
 		E509B9597D90E4125440145B /* Pods-ChatSecureCorePods-ChatSecure.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatSecureCorePods-ChatSecure.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChatSecureCorePods-ChatSecure/Pods-ChatSecureCorePods-ChatSecure.debug.xcconfig"; sourceTree = "<group>"; };
+		F3370B8024E3F0F600B13394 /* OTRMessageTimerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OTRMessageTimerManager.h; sourceTree = "<group>"; };
+		F3370B8124E3F0F600B13394 /* OTRMessageTimerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OTRMessageTimerManager.m; sourceTree = "<group>"; };
+		F373DBE724E15A2600DD6E28 /* ChatSecure-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ChatSecure-Bridging-Header.h"; sourceTree = "<group>"; };
+		F373DBE824E15A2700DD6E28 /* JSQMessagesCollectionViewCell+Timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JSQMessagesCollectionViewCell+Timer.h"; sourceTree = "<group>"; };
+		F373DBE924E15A2700DD6E28 /* JSQMessagesCollectionViewCell+Timer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "JSQMessagesCollectionViewCell+Timer.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -794,6 +801,9 @@
 				63636D6D1C1F78A6009F5FCD /* UINavigationController+ChatSecure.swift */,
 				63636D711C1F9D7C009F5FCD /* UIApplication+ChatSecure.swift */,
 				631C79921E56846700B30CB4 /* NSData+ChatSecure.swift */,
+				F373DBE824E15A2700DD6E28 /* JSQMessagesCollectionViewCell+Timer.h */,
+				F373DBE924E15A2700DD6E28 /* JSQMessagesCollectionViewCell+Timer.m */,
+				F373DBE724E15A2600DD6E28 /* ChatSecure-Bridging-Header.h */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -855,6 +865,8 @@
 				633105321A16D1A300C17BAE /* XMPP */,
 				6358FDDF1CDC097A00C9D3B6 /* OTRXMPPMessageStatusModule.swift */,
 				6381F35F1DFB7AD800563057 /* OTRXMPPChangePasswordManager.swift */,
+				F3370B8024E3F0F600B13394 /* OTRMessageTimerManager.h */,
+				F3370B8124E3F0F600B13394 /* OTRMessageTimerManager.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1656,7 +1668,7 @@
 					6396AF991A169D54009F3E6C = {
 						CreatedOnToolsVersion = 6.1;
 						DevelopmentTeam = L92UU5TPQZ;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1150;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.DataProtection = {
@@ -2075,6 +2087,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9B3EC221FA196CE00E63C7F /* AppDelegate.swift in Sources */,
+				F3370B8224E3F0F600B13394 /* OTRMessageTimerManager.m in Sources */,
+				F373DBEA24E15A2700DD6E28 /* JSQMessagesCollectionViewCell+Timer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2361,7 +2375,9 @@
 				PRODUCT_NAME = TribuChat;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "ChatSecure/Classes/Categories/ChatSecure-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -2399,6 +2415,8 @@
 				PRODUCT_NAME = TribuChat;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "ChatSecure/Classes/Categories/ChatSecure-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
