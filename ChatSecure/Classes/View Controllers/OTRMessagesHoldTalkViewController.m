@@ -64,6 +64,8 @@ static Float64 kOTRMessagesMinimumAudioTime = .5;
 {
     [super viewWillAppear:animated];
     [self.microphoneButton setImage:[UIImage imageNamed:@"dbph_eyeIcon"] forState:UIControlStateNormal];
+    [self.microphoneButton setTitle:@"" forState:UIControlStateNormal];
+    [self.microphoneButton setImageEdgeInsets: UIEdgeInsetsMake(5, 5, 5, 5)];
 }
 
 - (void)viewDidAppear:(BOOL)animated
