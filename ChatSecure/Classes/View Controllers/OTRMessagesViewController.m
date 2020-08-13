@@ -2508,6 +2508,10 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
     NSDate *unlockedDate = now;
     NSNumber *timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:kOTRSettingKeyFireMsgTimer];
     
+    if(timeSetting == nil) {
+        timeSetting = [NSNumber numberWithInt:120*60*24+1];
+    }
+    
     [OTRMessageTimerManager setUnlockTimerOfMessage:message.uniqueId date:unlockedDate expire:timeSetting];
     double interval = [now timeIntervalSinceDate:unlockedDate];
     NSInteger max = (NSInteger)timeSetting.intValue;
