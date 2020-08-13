@@ -50,7 +50,11 @@
         mutableDict = [[NSMutableDictionary alloc] init];
     }
     
-    [mutableDict setObject:@{@"date": date, @"expire": expire} forKey:messageID];
+    if(expire == nil) {
+        [mutableDict setObject:@{@"date": date, @"expire": [NSNumber numberWithInt:120*60*24+1]} forKey:messageID];
+    } else {
+        [mutableDict setObject:@{@"date": date, @"expire": expire} forKey:messageID];
+    }
     
     [[NSUserDefaults standardUserDefaults] setObject:mutableDict forKey:@"messageUnlockTimer"];
     [[NSUserDefaults standardUserDefaults] synchronize];
