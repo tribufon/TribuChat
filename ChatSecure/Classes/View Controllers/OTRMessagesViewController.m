@@ -1477,7 +1477,7 @@ typedef NS_ENUM(int, OTRDropDownType) {
     cell.timerDelegate = self;
     
     NSDate *unlockedDate = NULL;
-    NSNumber *timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:kOTRSettingKeyFireMsgTimer];
+    NSNumber *timeSetting = [self numberForOTRSettingKey:kOTRSettingKeyFireMsgTimer];
     
     if ([message isMessageIncoming]) {
         NSDictionary* dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
@@ -1505,7 +1505,15 @@ typedef NS_ENUM(int, OTRDropDownType) {
     if (unlockedDate == NULL) {
         [cell showLock:YES];
         
+        NSString *log = [NSString stringWithFormat:@"LOCKED: %@-%@\n", message.uniqueId, message.messageText];
+        printf(log.UTF8String);
+        
     } else {
+        [cell showLock:NO];
+        
+        NSString *log = [NSString stringWithFormat:@"UNLOCKED: %@-%@\n", message.uniqueId, message.messageText];
+        printf(log.UTF8String);
+        
         NSDate* now = [NSDate date];
         double interval = [now timeIntervalSinceDate:unlockedDate];
         NSInteger max = (NSInteger)timeSetting.intValue;
@@ -1903,7 +1911,7 @@ typedef NS_ENUM(int, OTRDropDownType) {
     
     // for timer
     NSDate *unlockedDate;
-    NSNumber *timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:kOTRSettingKeyFireMsgTimer];
+    NSNumber *timeSetting = [self numberForOTRSettingKey:kOTRSettingKeyFireMsgTimer];
     
     if ([message isMessageIncoming]) {
         NSDictionary* dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
@@ -2488,12 +2496,19 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
     NSDate *unlockedDate;
     NSNumber *timeSetting;
     
-    if (dict == NULL) {
-        unlockedDate = message.messageDate;
-        timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:kOTRSettingKeyFireMsgTimer];
+    NSString *log = [NSString stringWithFormat:@"TIMER: %@\n", message.messageText];
+    printf(log.UTF8String);
+    
+    if ([message isMessageIncoming]) {
+        if (dict == NULL) {
+            return -1;
+        } else {
+            unlockedDate = dict[@"date"];
+            timeSetting = dict[@"expire"];
+        }
     } else {
-        unlockedDate = dict[@"date"];
-        timeSetting = dict[@"expire"];
+        unlockedDate = message.messageDate;
+        timeSetting = [self numberForOTRSettingKey:kOTRSettingKeyFireMsgTimer];
     }
     
     double interval = [now timeIntervalSinceDate:unlockedDate];
@@ -2506,7 +2521,7 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
     id <OTRMessageProtocol>message = [self messageAtIndexPath:indexPath];
     NSDate *now = [NSDate date];
     NSDate *unlockedDate = now;
-    NSNumber *timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:kOTRSettingKeyFireMsgTimer];
+    NSNumber *timeSetting = [self numberForOTRSettingKey:kOTRSettingKeyFireMsgTimer];
     
     if(timeSetting == nil) {
         timeSetting = [NSNumber numberWithInt:120*60*24+1];
@@ -2517,5 +2532,15 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
     NSInteger max = (NSInteger)timeSetting.intValue;
     return ((NSTimeInterval)max - interval);
 }
+
+- (NSNumber *) numberForOTRSettingKey:(NSString *)key
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *num = [defaults objectForKey:key];
+    if (num) return num;
+    return [NSNumber numberWithInt:120*60*24+1];
+}
+
+
 
 @end
