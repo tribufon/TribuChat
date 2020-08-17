@@ -1505,14 +1505,14 @@ typedef NS_ENUM(int, OTRDropDownType) {
     if (unlockedDate == NULL) {
         [cell showLock:YES];
         
-        NSString *log = [NSString stringWithFormat:@"LOCKED: %@-%@\n", message.uniqueId, message.messageText];
-        printf(log.UTF8String);
+//        NSString *log = [NSString stringWithFormat:@"LOCKED: %@-%@\n", message.uniqueId, message.messageText];
+//        printf(log.UTF8String);
         
     } else {
         [cell showLock:NO];
         
-        NSString *log = [NSString stringWithFormat:@"UNLOCKED: %@-%@\n", message.uniqueId, message.messageText];
-        printf(log.UTF8String);
+//        NSString *log = [NSString stringWithFormat:@"UNLOCKED: %@-%@\n", message.uniqueId, message.messageText];
+//        printf(log.UTF8String);
         
         NSDate* now = [NSDate date];
         double interval = [now timeIntervalSinceDate:unlockedDate];
@@ -2496,8 +2496,8 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
     NSDate *unlockedDate;
     NSNumber *timeSetting;
     
-    NSString *log = [NSString stringWithFormat:@"TIMER: %@\n", message.messageText];
-    printf(log.UTF8String);
+//    NSString *log = [NSString stringWithFormat:@"TIMER: %@\n", message.messageText];
+//    printf(log.UTF8String);
     
     if ([message isMessageIncoming]) {
         if (dict == NULL) {
@@ -2506,9 +2506,21 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
             unlockedDate = dict[@"date"];
             timeSetting = dict[@"expire"];
         }
+        
     } else {
-        unlockedDate = message.messageDate;
-        timeSetting = [self numberForOTRSettingKey:kOTRSettingKeyFireMsgTimer];
+        NSDictionary* dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
+        
+        if (dict) {
+            unlockedDate = dict[@"date"];
+            timeSetting = dict[@"expire"];
+            
+        } else {
+            unlockedDate = message.messageDate;
+            timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:@"messageFireTimer"];
+            if (timeSetting == NULL) {
+                timeSetting = [NSNumber numberWithInt:48*60*60];
+            }
+        }
     }
     
     double interval = [now timeIntervalSinceDate:unlockedDate];
@@ -2538,9 +2550,7 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSNumber *num = [defaults objectForKey:key];
     if (num) return num;
-    return [NSNumber numberWithInt:120*60*24+1];
+    return [NSNumber numberWithInt:48*60*60+1];
 }
-
-
 
 @end
