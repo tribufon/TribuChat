@@ -102,15 +102,16 @@
         if (t >= 0) {
             NSString *str = [NSString stringWithFormat:@"%.2ld:%.2ld:%.2ld",(NSInteger)t / 60 / 60, ((NSInteger)t / 60) % 60, (NSInteger)t % 60];
             self.messageBubbleTopLabel.attributedText = [[NSAttributedString alloc] initWithString:str];
+            return;
+            
         } else {
             self.messageBubbleTopLabel.attributedText = nil;
         }
-        
-    } else {
-        [self.timer invalidate];
-        self.timer = NULL;
-        [self deleteMsg];
     }
+    
+    [self.timer invalidate];
+    self.timer = NULL;
+    [self deleteMsg];
 }
 
 - (void)deleteMsg
