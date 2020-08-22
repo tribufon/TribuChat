@@ -89,23 +89,23 @@
         [settingsGroups addObject:donateGroup];
     }
     
-    OTRBoolSetting *deletedDisconnectedConversations = [[OTRBoolSetting alloc] initWithTitle:DELETE_CONVERSATIONS_ON_DISCONNECT_TITLE_STRING()
-                                                                                 description:DELETE_CONVERSATIONS_ON_DISCONNECT_DESCRIPTION_STRING()
-                                                                                 settingsKey:kOTRSettingKeyDeleteOnDisconnect];
+//    OTRBoolSetting *deletedDisconnectedConversations = [[OTRBoolSetting alloc] initWithTitle:DELETE_CONVERSATIONS_ON_DISCONNECT_TITLE_STRING()
+//                                                                                 description:DELETE_CONVERSATIONS_ON_DISCONNECT_DESCRIPTION_STRING()
+//                                                                                 settingsKey:kOTRSettingKeyDeleteOnDisconnect];
     
-    OTRListSetting *fireMsgTime = [[OTRListSetting alloc] initWithTitle:@"Fire Message Time"
-                                                          description:NULL
-                                                          settingsKey:kOTRSettingKeyFireMsgTimer];
-    fireMsgTime.possibleValues = @[[[OTRListSettingValue alloc] initWithTitle:@"48 hours" detail:NULL value:[NSNumber numberWithInt:120*60*24+1]],
-                                   [[OTRListSettingValue alloc] initWithTitle:@"24 hours" detail:NULL value:[NSNumber numberWithInt:60*60*24+1]],
-                                   [[OTRListSettingValue alloc] initWithTitle:@"1 hour" detail:NULL value:[NSNumber numberWithInt:60*60+1]],
-                                   [[OTRListSettingValue alloc] initWithTitle:@"1 min" detail:NULL value:[NSNumber numberWithInt:60+1]],
-                                   [[OTRListSettingValue alloc] initWithTitle:@"30 seconds" detail:NULL value:[NSNumber numberWithInt:30+1]]];
+//    OTRListSetting *fireMsgTime = [[OTRListSetting alloc] initWithTitle:@"Fire Message Time"
+//                                                          description:NULL
+//                                                          settingsKey:kOTRSettingKeyFireMsgTimer];
+//    fireMsgTime.possibleValues = @[[[OTRListSettingValue alloc] initWithTitle:@"48 hours" detail:NULL value:[NSNumber numberWithInt:120*60*24+1]],
+//                                   [[OTRListSettingValue alloc] initWithTitle:@"24 hours" detail:NULL value:[NSNumber numberWithInt:60*60*24+1]],
+//                                   [[OTRListSettingValue alloc] initWithTitle:@"1 hour" detail:NULL value:[NSNumber numberWithInt:60*60+1]],
+//                                   [[OTRListSettingValue alloc] initWithTitle:@"1 min" detail:NULL value:[NSNumber numberWithInt:60+1]],
+//                                   [[OTRListSettingValue alloc] initWithTitle:@"30 seconds" detail:NULL value:[NSNumber numberWithInt:30+1]]];
     
     //fireMsgTime.defaultValue = @"48 hours";
     
-    [newSettingsDictionary setObject:deletedDisconnectedConversations forKey:kOTRSettingKeyDeleteOnDisconnect];
-    [newSettingsDictionary setObject:fireMsgTime forKey:kOTRSettingKeyFireMsgTimer];
+//    [newSettingsDictionary setObject:deletedDisconnectedConversations forKey:kOTRSettingKeyDeleteOnDisconnect];
+//    [newSettingsDictionary setObject:fireMsgTime forKey:kOTRSettingKeyFireMsgTimer];
     
     OTRCertificateSetting * certSetting = [[OTRCertificateSetting alloc] initWithTitle:PINNED_CERTIFICATES_STRING()
                                                                            description:PINNED_CERTIFICATES_DESCRIPTION_STRING()];
@@ -153,9 +153,9 @@
 //    }
 
     
-    NSArray *chatSettings = @[deletedDisconnectedConversations, fireMsgTime];
-    OTRSettingsGroup *chatSettingsGroup = [[OTRSettingsGroup alloc] initWithTitle:CHAT_STRING() settings:chatSettings];
-    [settingsGroups addObject:chatSettingsGroup];
+//    NSArray *chatSettings = @[deletedDisconnectedConversations, fireMsgTime];
+//    OTRSettingsGroup *chatSettingsGroup = [[OTRSettingsGroup alloc] initWithTitle:CHAT_STRING() settings:chatSettings];
+//    [settingsGroups addObject:chatSettingsGroup];
     
 //    NSArray * securitySettings = @[certSetting, backupKeySetting];
 //    OTRSettingsGroup *securitySettingsGroup = [[OTRSettingsGroup alloc] initWithTitle:SECURITY_STRING() settings:securitySettings];
@@ -169,9 +169,8 @@
     [newSettingsDictionary setObject:languageSetting forKey:kOTRSettingKeyLanguage];
     
     NSMutableArray *otherSettings = [NSMutableArray arrayWithCapacity:5];
-//    [otherSettings addObjectsFromArray:@[languageSetting, shareViewSetting]];
-    [otherSettings addObjectsFromArray:@[languageSetting]];
-
+    [otherSettings addObjectsFromArray:@[languageSetting, shareViewSetting]];
+    
 //    if ([OTRBranding githubURL]) {
 //        OTRFeedbackSetting * feedbackViewSetting = [[OTRFeedbackSetting alloc] initWithTitle:SEND_FEEDBACK_STRING() description:nil];
 //        feedbackViewSetting.imageName = @"18-envelope.png";
