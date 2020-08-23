@@ -580,11 +580,14 @@ extension MessageQueueHandler {
         }
         guard let signalCoordinator = accountProtocol.omemoSignalCoordinator else {
             self.databaseConnection.asyncReadWrite({ (transaction) in
-                guard let message = message.refetch(with: transaction)?.copyAsSelf() else {
+                guard let messageData = message.refetch(with: transaction)?.copyAsSelf() else {
                     return
                 }
-                message.messageError = NSError.chatSecureError(EncryptionError.omemoNotSuported, userInfo: nil)
-                message.save(with: transaction)
+                if ((message as? OTRBaseMessage) != nil) {
+                    (messageData as! OTRBaseMessage).setAutoFireTime((message as! OTRBaseMessage).getAutoFireTime())
+                }
+                messageData.messageError = NSError.chatSecureError(EncryptionError.omemoNotSuported, userInfo: nil)
+                messageData.save(with: transaction)
             })
             completion(true, 0.0)
             return
@@ -596,11 +599,14 @@ extension MessageQueueHandler {
                 //Something went wrong getting ready to send the message
                 //Save error object to message
                 self.databaseConnection.readWrite({ (transaction) in
-                    guard let message = message.refetch(with: transaction)?.copyAsSelf() else {
+                    guard let messageData = message.refetch(with: transaction)?.copyAsSelf() else {
                         return
                     }
-                    message.messageError = error
-                    message.save(with: transaction)
+                    if ((message as? OTRBaseMessage) != nil) {
+                        (messageData as! OTRBaseMessage).setAutoFireTime((message as! OTRBaseMessage).getAutoFireTime())
+                    }
+                    messageData.messageError = error
+                    messageData.save(with: transaction)
                 })
                 if let messageInfo = self.popWaitingMessage(message.uniqueId, messageCollection: type(of: message).collection) {
                     //Even though we were not succesfull in sending a message. The action needs to be removed from the queue so the next message can be handled.

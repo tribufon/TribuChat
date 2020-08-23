@@ -300,6 +300,7 @@
     newMessage.mediaItemUniqueId = message.mediaItemUniqueId;
     newMessage.buddyUniqueId = message.buddyUniqueId;
     newMessage.messageSecurityInfo = message.messageSecurityInfo;
+    [newMessage setAutoFireTime:[message getAutoFireTime]];
     return newMessage;
 }
 

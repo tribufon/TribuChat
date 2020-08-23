@@ -981,7 +981,7 @@ typedef NS_ENUM(int, OTRDropDownType) {
     [self.connections.ui readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
         account = [self accountWithTransaction:transaction];
         buddy = [self buddyWithTransaction:transaction];
-    }];
+    }]; 
     if (!account || !buddy || ([buddy isKindOfClass:[OTRXMPPBuddy class]] && [(OTRXMPPBuddy *)buddy pendingApproval])) {
         return;
     }
@@ -1447,7 +1447,7 @@ typedef NS_ENUM(int, OTRDropDownType) {
     //Fixes times when there needs to be two lines (date & knock sent) and doesn't seem to affect one line instances
     cell.cellTopLabel.numberOfLines = 0;
     
-    id <OTRMessageProtocol>message = [self messageAtIndexPath:indexPath];
+    OTRBaseMessage<OTRMessageProtocol>*message = [self messageAtIndexPath:indexPath];
     
     __block OTRXMPPAccount *account = nil;
     [self.connections.ui readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
@@ -1461,10 +1461,11 @@ typedef NS_ENUM(int, OTRDropDownType) {
     else {
         textColor = [UIColor whiteColor];
     }
-    if (cell.textView != nil)
+    if (cell.textView != nil) {
         cell.textView.textColor = textColor;
-
-    // Do not allow clickable links for Tor accounts to prevent information leakage
+    }
+    
+	// Do not allow clickable links for Tor accounts to prevent information leakage
     // Could be better to move this information to the message object to not need to do a database read.
     if ([account isKindOfClass:[OTRXMPPTorAccount class]]) {
         cell.textView.dataDetectorTypes = UIDataDetectorTypeNone;
@@ -1491,7 +1492,7 @@ typedef NS_ENUM(int, OTRDropDownType) {
     cell.messageBubbleTopLabel.attributedText = [self collectionView:collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:indexPath];
     
     NSDate *unlockedDate = NULL;
-    NSNumber *timeSetting = [self numberForOTRSettingKey:kOTRSettingKeyFireMsgTimer];
+    NSNumber *timeSetting = [NSNumber numberWithInteger:[XMPPTimerManager getFireTime:message.messageId]];//[self numberForOTRSettingKey:kOTRSettingKeyFireMsgTimer];
     
     if ([message isMessageIncoming]) {
         NSDictionary* dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
@@ -1516,7 +1517,7 @@ typedef NS_ENUM(int, OTRDropDownType) {
         }
     }
     
-    if (unlockedDate == NULL) {
+    if (unlockedDate == NULL || timeSetting == NULL) {
         [cell showLock:YES];
         
     } else {
@@ -1555,7 +1556,7 @@ typedef NS_ENUM(int, OTRDropDownType) {
     //   A side effect is that sent messages may not appear in the UI immediately
     [self finishSendingMessage];
     
-    __block id<OTRMessageProtocol> message = nil;
+    __block OTRBaseMessage<OTRMessageProtocol> *message = nil;
     __block OTRXMPPManager *xmpp = nil;
     [self.connections.ui readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
         id<OTRThreadOwner> thread = [self threadObjectWithTransaction:transaction];
@@ -1563,6 +1564,15 @@ typedef NS_ENUM(int, OTRDropDownType) {
         xmpp = [self xmppManagerWithTransaction:transaction];
     }];
     if (!message || !xmpp) { return; }
+    
+    // add auto fire timer
+    NSNumber *timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:@"messageFireTimer"];
+    if (timeSetting == NULL) {
+        timeSetting = [NSNumber numberWithInt:48*60*60];
+    }
+    [message setAutoFireTime:timeSetting.integerValue];
+    //DDLogInfo(@"\n --- auto timer = %d ---\n", [message getAutoFireTime]);
+    
     [xmpp enqueueMessage:message];
 }
 
@@ -1885,7 +1895,7 @@ typedef NS_ENUM(int, OTRDropDownType) {
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath
 {
-    id<OTRMessageProtocol,JSQMessageData> message = [self messageAtIndexPath:indexPath];
+    OTRBaseMessage<OTRMessageProtocol,JSQMessageData> *message = [self messageAtIndexPath:indexPath];
     
     if ([self showSenderDisplayNameAtIndexPath:indexPath]) {
         //id<OTRMessageProtocol,JSQMessageData> message = [self messageAtIndexPath:indexPath];
@@ -1919,7 +1929,7 @@ typedef NS_ENUM(int, OTRDropDownType) {
     
     // for timer
     NSDate *unlockedDate;
-    NSNumber *timeSetting = [self numberForOTRSettingKey:kOTRSettingKeyFireMsgTimer];
+    NSNumber *timeSetting = [NSNumber numberWithInteger:[XMPPTimerManager getFireTime:message.messageId]];//[self numberForOTRSettingKey:kOTRSettingKeyFireMsgTimer];
     
     if ([message isMessageIncoming]) {
         NSDictionary* dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
@@ -1941,7 +1951,7 @@ typedef NS_ENUM(int, OTRDropDownType) {
         }
     }
     
-    if (unlockedDate == NULL) {
+    if (unlockedDate == NULL || timeSetting == NULL) {
         return nil;
     }
     
@@ -2505,7 +2515,7 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
 
 - (NSTimeInterval)timerIntervalAt:(NSIndexPath *)indexPath
 {
-    id <OTRMessageProtocol>message = [self messageAtIndexPath:indexPath];
+    OTRBaseMessage <OTRMessageProtocol> *message = [self messageAtIndexPath:indexPath];
     
     NSDate *now = [NSDate date];
     
@@ -2547,10 +2557,22 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
 
 - (NSTimeInterval)setUnlockedAt:(NSIndexPath *)indexPath
 {
-    id <OTRMessageProtocol>message = [self messageAtIndexPath:indexPath];
+    OTRBaseMessage *message = [self messageAtIndexPath:indexPath];
     NSDate *now = [NSDate date];
     NSDate *unlockedDate = now;
-    NSNumber *timeSetting = [self numberForOTRSettingKey:kOTRSettingKeyFireMsgTimer];
+    
+//    NSNumber *timeSetting = [NSNumber numberWithInteger:48*60*60];
+//    if (message.text) {
+//        NSArray *array =[message.text componentsSeparatedByString:@"@"];
+//        if (array && array.lastObject) {
+//            NSString *tt = array.lastObject;
+//            if ([tt integerValue] != 0) {
+//                timeSetting = [NSNumber numberWithInteger:[tt integerValue]];
+//            }
+//        }
+//    }
+    DDLogInfo(@"\n --- auto timer = %d ---\n", [XMPPTimerManager getFireTime:message.messageId]);
+    NSNumber *timeSetting = [NSNumber numberWithInteger:[XMPPTimerManager getFireTime:message.messageId]];//[self numberForOTRSettingKey:kOTRSettingKeyFireMsgTimer];
     
     [OTRMessageTimerManager setUnlockTimerOfMessage:message.uniqueId date:unlockedDate expire:timeSetting];
     double interval = [now timeIntervalSinceDate:unlockedDate];

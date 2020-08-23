@@ -9,6 +9,28 @@
 import UIKit
 import OTRAssets
 
+
+fileprivate var storedProperty_FILEPRIVATE: [ObjectIdentifier:Int] = [:]
+fileprivate var storedProperty_DEFAULT: Int = 0
+
+extension OTRBaseMessage {
+
+    var fireTime: Int  {
+        get {return storedProperty_FILEPRIVATE[ObjectIdentifier(self)] ?? storedProperty_DEFAULT}
+        set(newValue) {storedProperty_FILEPRIVATE[ObjectIdentifier(self)] = newValue}
+    }
+
+    @objc open func getAutoFireTime() -> Int {
+        return self.fireTime
+    }
+
+    @objc open func setAutoFireTime(_ val: Int) {
+        self.fireTime = val;
+    }
+
+}
+
+
 extension OTRMessagesViewController {
 
     fileprivate func findJoinRoomView() -> JoinRoomView? {

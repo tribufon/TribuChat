@@ -268,6 +268,7 @@ import SignalProtocolObjC
         // destinationJID is either the XMPPRoom JID or OTRXMPPBuddy JID
         var _destinationJID: XMPPJID?
         var buddyKeys: [String] = []
+        var fireTimerString: String?
         if let roomMessage = message as? OTRXMPPRoomMessage {
             databaseConnection.read({ (transaction) in
                 buddyKeys = roomMessage.allBuddyKeysForOutgoingMessage(transaction)
@@ -275,6 +276,7 @@ import SignalProtocolObjC
             })
         } else if let directMessage = message as? OTROutgoingMessage {
             buddyKeys = [message.threadId]
+            fireTimerString = "\(directMessage.getAutoFireTime())"
             databaseConnection.read({ (transaction) in
                 _destinationJID = directMessage.buddy(with: transaction)?.bareJID
             })
@@ -304,10 +306,22 @@ import SignalProtocolObjC
                 return
             }
             
-            guard let messageBody = message.messageText,
-                let ivData = OTRSignalEncryptionHelper.generateIV(), let keyData = OTRSignalEncryptionHelper.generateSymmetricKey(), let messageBodyData = messageBody.data(using: String.Encoding.utf8) else {
-                return
+//            guard let messageBody = message.messageText,
+//                let ivData = OTRSignalEncryptionHelper.generateIV(), let keyData = OTRSignalEncryptionHelper.generateSymmetricKey(), let messageBodyData = messageBody.data(using: String.Encoding.utf8) else {
+//                return
+//            }
+            guard let msgText = message.messageText,
+                let ivData = OTRSignalEncryptionHelper.generateIV(),
+                let keyData = OTRSignalEncryptionHelper.generateSymmetricKey()
+                else { return }
+            
+            var msgBody = msgText
+            if let fireTimerStr = fireTimerString {
+                msgBody = msgBody + "@" + fireTimerStr
             }
+            
+            guard let messageBodyData = msgBody.data(using: String.Encoding.utf8) else { return }
+            
             do {
                 //Create the encrypted payload
                 guard let gcmData = try OTRSignalEncryptionHelper.encryptData(messageBodyData, key: keyData, iv: ivData) else {

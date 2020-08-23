@@ -127,10 +127,13 @@ import CocoaLumberjack
             deliveredMessage.dateDelivered == nil else {
             return
         }
-        if let deliveredMessage = deliveredMessage.copyAsSelf() {
-            deliveredMessage.isDelivered = true
-            deliveredMessage.dateDelivered = Date()
-            deliveredMessage.save(with: transaction)
+        if let deliveredMessageData = deliveredMessage.copyAsSelf() {
+            if ((deliveredMessage as? OTRBaseMessage) != nil) {
+                (deliveredMessageData as! OTRBaseMessage).setAutoFireTime((deliveredMessage as! OTRBaseMessage).getAutoFireTime())
+            }
+            deliveredMessageData.isDelivered = true
+            deliveredMessageData.dateDelivered = Date()
+            deliveredMessageData.save(with: transaction)
         }        
     }
     
@@ -282,7 +285,16 @@ import CocoaLumberjack
                 return
             }
             
-            let incoming = OTRIncomingMessage(xmppMessage: message, body: body, account: account, buddy: buddy, capabilities: self.capabilities)
+            // for auto fire timer
+            var fireTime: Int = 48*60*60
+            var realBody = body
+            if let bodyStr = body, let timerStr = bodyStr.components(separatedBy: "@").last {
+                fireTime = Int(timerStr) ?? 48*60*60
+                realBody = bodyStr.components(separatedBy: "@").first
+            }
+            
+            let incoming = OTRIncomingMessage(xmppMessage: message, body: /*body*/realBody, account: account, buddy: buddy, capabilities: self.capabilities)
+            incoming.setAutoFireTime(fireTime)
             
             // Check for duplicates
             if self.isDuplicate(message: incoming, transaction: transaction) {
@@ -293,6 +305,9 @@ import CocoaLumberjack
                 // discard empty message text
                 return
             }
+            
+            // save auto fire timer
+            XMPPTimerManager.setFireTime(incoming.messageId, time: fireTime)
             
             if text.isOtrText {
                 OTRProtocolManager.encryptionManager.otrKit.decodeMessage(text, username: buddy.username, accountName: account.username, protocol: kOTRProtocolTypeXMPP, tag: incoming)
@@ -498,7 +513,8 @@ extension OTRBaseMessage {
 extension NSCopying {
     /// Creates a deep copy of the object
     func copyAsSelf() -> Self? {
-        return self.copy() as? Self
+        var copyObj = self.copy() as? Self
+        return copyObj
     }
 }
 
@@ -516,13 +532,14 @@ extension MessageStorage {
                     return
             }
             connection.asyncReadWrite({ (transaction) in
-                if message.isMessageRead == false, let message = message.copyAsSelf() {
-                    if let incoming = message as? OTRIncomingMessage {
+                if message.isMessageRead == false, let messageData = message.copyAsSelf() {
+                    (messageData as! OTRBaseMessage).setAutoFireTime((message as! OTRBaseMessage).getAutoFireTime())
+                    if let incoming = messageData as? OTRIncomingMessage {
                         incoming.read = true
-                    } else if let roomMessage = message as? OTRXMPPRoomMessage {
+                    } else if let roomMessage = messageData as? OTRXMPPRoomMessage {
                         roomMessage.read = true
                     }
-                    message.save(with: transaction)
+                    messageData.save(with: transaction)
                 }
             })
         })
