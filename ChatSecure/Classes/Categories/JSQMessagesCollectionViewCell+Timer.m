@@ -7,6 +7,7 @@
 //
 
 #import "JSQMessagesCollectionViewCell+Timer.h"
+#import "UIColor+JSQMessages.h"
 #import <objc/runtime.h>
 
 @implementation JSQMessagesCollectionViewCell (Timer)
@@ -49,24 +50,42 @@
 
 - (void)showLock:(BOOL)isShown
 {
-    UIButton* lockView = (UIButton *)[self viewWithTag:0x1234];
+    UIView *superView;
+    CGRect rt;
+    UIColor *bkColor;
+    if (self.mediaView) {
+        superView = self.mediaView;
+        rt = self.mediaView.frame;
+        bkColor = [UIColor jsq_messageBubbleLightGrayColor];
+        
+    } else {
+        superView = self.messageBubbleContainerView;
+        rt = self.messageBubbleContainerView.bounds;
+        bkColor = nil;
+    }
+
+    UIButton* lockView = (UIButton *)[superView viewWithTag:0x1234];
     if (isShown == YES && !lockView) {
-        lockView = [[UIButton alloc] initWithFrame:self.messageBubbleImageView.frame];
+        lockView = [[UIButton alloc] initWithFrame:rt];
         [lockView setImage:[UIImage imageNamed:@"dbph_lockIcon"] forState:UIControlStateNormal];
         [lockView.imageView setContentMode:UIViewContentModeScaleAspectFit];
         lockView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin |
                                     UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin |
                                     UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        [lockView addTarget:self action:@selector(lockBtnTapped:) forControlEvents:UIControlEventTouchUpInside];
-        //[lockView setBackgroundColor:[UIColor greenColor]];
+        if (!self.mediaView) [lockView addTarget:self action:@selector(lockBtnTapped:) forControlEvents:UIControlEventTouchUpInside];
+        if (bkColor) [lockView setBackgroundColor:bkColor];
+
         lockView.tag = 0x1234;
-        [self.messageBubbleContainerView addSubview:lockView];
+        [superView addSubview:lockView];
         
     } else if (isShown == NO && lockView) {
         [lockView removeFromSuperview];
+        
+    } else if (isShown == YES && lockView) {
+        [superView bringSubviewToFront:lockView];
     }
     
-    [self.textView setHidden:isShown];
+    if (self.textView) [self.textView setHidden:isShown];
 }
 
 - (void)lockBtnTapped:(id)sender {
