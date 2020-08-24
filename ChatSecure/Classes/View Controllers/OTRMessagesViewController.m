@@ -1632,8 +1632,16 @@ typedef NS_ENUM(int, OTRDropDownType) {
     NSParameterAssert(xmpp);
     NSParameterAssert(thread);
     if (!xmpp || !thread) { return; }
+    
+    // add auto fire timer
+    NSNumber *timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:@"messageFireTimer"];
+    if (timeSetting == NULL) {
+        timeSetting = [NSNumber numberWithInt:48*60*60];
+    }
+    //[message setAutoFireTime:timeSetting.integerValue];
+    //DDLogInfo(@"\n --- auto timer = %d ---\n", [message getAutoFireTime]);
 
-    [xmpp.fileTransferManager sendWithImage:photo thread:thread];
+    [xmpp.fileTransferManager sendWithImage:photo thread:thread autoFireTime:timeSetting.integerValue];
 }
 
 #pragma - mark OTRAttachmentPickerDelegate Methods

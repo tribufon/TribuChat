@@ -419,7 +419,7 @@ public class FileTransferManager: NSObject, OTRServerCapabilitiesDelegate {
         }
     }
     
-    @objc public func send(image: UIImage, thread: OTRThreadOwner) {
+    @objc public func send(image: UIImage, thread: OTRThreadOwner, autoFireTime: Int) {
         internalQueue.async {
             guard let service = self.servers.first, service.maxSize > 0 else {
                 DDLogError("No HTTP upload service available!")
@@ -433,6 +433,10 @@ public class FileTransferManager: NSObject, OTRServerCapabilitiesDelegate {
             }
             imageItem.parentObjectKey = message.messageKey
             imageItem.parentObjectCollection = message.messageCollection
+            
+            // set auto fire time for picture
+            (message as! OTRBaseMessage).setAutoFireTime(autoFireTime)
+            
             self.connection.readWrite { transaction in
                 message.save(with: transaction)
                 imageItem.save(with: transaction)
