@@ -1595,20 +1595,20 @@ typedef NS_ENUM(int, OTRDropDownType) {
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    id <OTRMessageProtocol, JSQMessageData> message = [self messageAtIndexPath:indexPath];
-
-    NSNumber *key = @(message.messageHash);
-    NSValue *sizeValue = [self.messageSizeCache objectForKey:key];
-    if (sizeValue != nil) {
-        return [sizeValue CGSizeValue];
-    }
+//    id <OTRMessageProtocol, JSQMessageData> message = [self messageAtIndexPath:indexPath];
+//
+//    NSNumber *key = @(message.messageHash);
+//    NSValue *sizeValue = [self.messageSizeCache objectForKey:key];
+//    if (sizeValue != nil) {
+//        return [sizeValue CGSizeValue];
+//    }
 
     // Although JSQMessagesBubblesSizeCalculator has its own cache, its size is fixed and quite small, so it quickly chokes on scrolling into the past
     CGSize size = [super collectionView:collectionView layout:collectionViewLayout sizeForItemAtIndexPath:indexPath];
     // The height of the first cell might change: on loading additional messages the date label most likely will disappear
-    if (indexPath.row > 0) {
-        [self.messageSizeCache setObject:[NSValue valueWithCGSize:size] forKey:key];
-    }
+//    if (indexPath.row > 0) {
+//        [self.messageSizeCache setObject:[NSValue valueWithCGSize:size] forKey:key];
+//    }
     return size;
 }
 

@@ -414,14 +414,14 @@ static Float64 kOTRMessagesMinimumAudioTime = .5;
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"30 seconds" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [[NSUserDefaults standardUserDefaults] setObject:@30 forKey:@"messageFireTimer"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }];
-    [alert addAction:action1];
+//    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"30 seconds" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        [[NSUserDefaults standardUserDefaults] setObject:@30 forKey:@"messageFireTimer"];
+//        [[NSUserDefaults standardUserDefaults] synchronize];
+//    }];
+//    [alert addAction:action1];
     
-    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"1 minute" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [[NSUserDefaults standardUserDefaults] setObject:@60 forKey:@"messageFireTimer"];
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"5 minutes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[NSUserDefaults standardUserDefaults] setObject:@(5*60) forKey:@"messageFireTimer"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }];
     [alert addAction:action2];
