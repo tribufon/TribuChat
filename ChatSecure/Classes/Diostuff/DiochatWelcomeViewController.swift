@@ -135,6 +135,7 @@ class DiochatWelcomeViewController: OTRBaseLoginViewController {
             components.count >= 3 else { return }
         let username = components[1].appending("@chat.tribu.monster")
         let password = components[2].replacingOccurrences(of: "@Tribufon", with: "")
+            .replacingOccurrences(of: "@tribufon", with: "")
             .replacingOccurrences(of: "@TRIBUFON", with: "")
             .replacingOccurrences(of: "*", with: "")
         
