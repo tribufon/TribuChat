@@ -134,8 +134,8 @@ class DiochatWelcomeViewController: OTRBaseLoginViewController {
             let components = _value.removingPercentEncoding?.components(separatedBy: ":"),
             components.count >= 3 else { return }
         let username = components[1].appending("@chat.tribu.monster")
-        let password = components[2].replacingOccurrences(of: "@Tribu", with: "")
-            .replacingOccurrences(of: "@TRIBU", with: "")
+        let password = components[2].replacingOccurrences(of: "@Tribufon", with: "")
+            .replacingOccurrences(of: "@TRIBUFON", with: "")
             .replacingOccurrences(of: "*", with: "")
         
         processFormLogin(username, password: password)
