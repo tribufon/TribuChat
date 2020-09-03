@@ -188,6 +188,9 @@ import CocoaLumberjack
             }
             var _message: OTRBaseMessage? = nil
             
+            // for auto fire timer
+            var fireTime: Int = 48*60*60
+            
             if isIncoming {
                 self.handleDeliveryResponse(message: xmppMessage, transaction: transaction)
                 self.handleChatState(message: xmppMessage, buddy: buddy)
@@ -197,7 +200,14 @@ import CocoaLumberjack
                     return
                 }
                 
-                let incomingMessage = OTRIncomingMessage(xmppMessage: xmppMessage, body: body, account: account, buddy: buddy, capabilities: self.capabilities)
+                // for auto fire timer
+                var realBody = body
+                if let bodyStr = body, let timerStr = bodyStr.components(separatedBy: "@").last {
+                    fireTime = Int(timerStr) ?? 48*60*60
+                    realBody = bodyStr.components(separatedBy: "@").first
+                }
+                
+                let incomingMessage = OTRIncomingMessage(xmppMessage: xmppMessage, body: /*body*/realBody, account: account, buddy: buddy, capabilities: self.capabilities)
                 // mark message as read if this is a MAM catchup
                 if delayed != nil {
                     incomingMessage.read = true
@@ -225,6 +235,10 @@ import CocoaLumberjack
             preSave?(message, transaction)
             message.save(with: transaction)
             if let incoming = message as? OTRIncomingMessage {
+                
+                // save auto fire timer
+                XMPPTimerManager.setFireTime(incoming.messageId, time: fireTime)
+                
                 // We only want to send receipts and show notifications for "real time" messages
                 // undelivered messages still go through the "handleDirectMessage" path,
                 // so MAM messages have been delivered to another device
