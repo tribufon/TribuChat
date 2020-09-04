@@ -100,10 +100,10 @@ open class AccountDetailViewController: UIViewController, UITableViewDelegate, U
     
     private func setupDetailCells() {
         detailCells = [
-            DetailCellInfo(title: EDIT_ACCOUNT_STRING(), type: .editAccount, action: { [weak self] (_, _, sender) -> (Void) in
-                guard let strongSelf = self else { return }
-                strongSelf.pushLoginView(account: strongSelf.account, sender: sender)
-            }),
+//            DetailCellInfo(title: EDIT_ACCOUNT_STRING(), type: .editAccount, action: { [weak self] (_, _, sender) -> (Void) in
+//                guard let strongSelf = self else { return }
+//                strongSelf.pushLoginView(account: strongSelf.account, sender: sender)
+//            }),
             DetailCellInfo(title: MANAGE_MY_KEYS(), type: .manageKeys, action: { [weak self] (_, _, sender) -> (Void) in
                 guard let strongSelf = self else { return }
                 strongSelf.pushKeyManagementView(account: strongSelf.account, sender: sender)
