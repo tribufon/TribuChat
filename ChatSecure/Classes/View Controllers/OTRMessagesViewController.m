@@ -108,6 +108,8 @@ typedef NS_ENUM(int, OTRDropDownType) {
 @property (nonatomic, strong) id currentMessage;
 @property (nonatomic, strong) NSCache *messageSizeCache;
 
+@property (strong, nonatomic) NSIndexPath *selectedIndexPathForMenu;
+
 @end
 
 @implementation OTRMessagesViewController
@@ -149,6 +151,9 @@ typedef NS_ENUM(int, OTRDropDownType) {
     if (fireTimer) {
         [fireTimer invalidate];
     }
+    
+    // for menu of each cell
+    [self jsq_registerForNotifications:NO];
 }
 
 - (void)viewDidLoad
@@ -244,6 +249,10 @@ typedef NS_ENUM(int, OTRDropDownType) {
             [self didUpdateState];
         }
     }];
+    
+    
+    // for menu of each cell
+    [self jsq_registerForNotifications:YES];
     
     
     // for fire timer
@@ -925,6 +934,31 @@ typedef NS_ENUM(int, OTRDropDownType) {
     return [self.threadCollection isEqualToString:OTRXMPPRoom.collection];
 }
 
+- (void)jsq_registerForNotifications:(BOOL)registerForNotifications
+{
+    if (registerForNotifications) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didReceiveMenuWillShowNotification:)
+                                                     name:UIMenuControllerWillShowMenuNotification
+                                                   object:nil];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didReceiveMenuWillHideNotification:)
+                                                     name:UIMenuControllerWillHideMenuNotification
+                                                   object:nil];
+    }
+    else {
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:UIMenuControllerWillShowMenuNotification
+                                                      object:nil];
+
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:UIMenuControllerWillHideMenuNotification
+                                                      object:nil];
+    }
+}
+
+
 #pragma - mark Profile Button Methods
 
 - (void)setupInfoButton {
@@ -1530,6 +1564,22 @@ typedef NS_ENUM(int, OTRDropDownType) {
     }
     
     return cell;
+}
+
+- (BOOL)collectionView:(JSQMessagesCollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.selectedIndexPathForMenu = indexPath;
+
+    //  textviews are selectable to allow data detectors
+    //  however, this allows the 'copy, define, select' UIMenuController to show
+    //  which conflicts with the collection view's UIMenuController
+    //  temporarily disable 'selectable' to prevent this issue
+    JSQMessagesCollectionViewCell *selectedCell = (JSQMessagesCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    if (selectedCell.textView) {
+        selectedCell.textView.selectable = NO;
+    }
+
+    return YES;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
@@ -2511,6 +2561,48 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
         [self presentViewController:keyNav animated:YES completion:nil];
     }
 }
+
+
+#pragma mark - Notifications
+
+- (void)didReceiveMenuWillShowNotification:(NSNotification *)notification
+{
+    if (!self.selectedIndexPathForMenu) {
+        return;
+    }
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIMenuControllerWillShowMenuNotification
+                                                  object:nil];
+
+    UIMenuController *menu = [notification object];
+    [menu setMenuVisible:NO animated:NO];
+
+    JSQMessagesCollectionViewCell *selectedCell = (JSQMessagesCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:self.selectedIndexPathForMenu];
+    CGRect selectedCellMessageBubbleFrame = [selectedCell convertRect:selectedCell.messageBubbleContainerView.frame toView:self.view];
+
+    [menu setTargetRect:selectedCellMessageBubbleFrame inView:self.view];
+    [menu setMenuVisible:YES animated:YES];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveMenuWillShowNotification:)
+                                                 name:UIMenuControllerWillShowMenuNotification
+                                               object:nil];
+}
+
+- (void)didReceiveMenuWillHideNotification:(NSNotification *)notification
+{
+    if (!self.selectedIndexPathForMenu) {
+        return;
+    }
+
+    //  per comment above in 'shouldShowMenuForItemAtIndexPath:'
+    //  re-enable 'selectable', thus re-enabling data detectors if present
+    JSQMessagesCollectionViewCell *selectedCell = (JSQMessagesCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:self.selectedIndexPathForMenu];
+    selectedCell.textView.selectable = YES;
+    self.selectedIndexPathForMenu = nil;
+}
+
 
 
 // MARK: - JSQCollectionViewCell Timer Delegate
