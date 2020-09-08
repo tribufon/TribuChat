@@ -123,8 +123,7 @@
         }
     }
     
-    if (messageError &&
-        !messageError.isAutomaticDownloadError) {
+    if (messageError && !messageError.isAutomaticDownloadError && !lastMessage.isMessageSent) {
         if (!messageText.length) {
             messageText = ERROR_STRING();
         }
