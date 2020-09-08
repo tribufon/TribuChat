@@ -320,7 +320,9 @@ static NSString *const kSettingsCellIdentifier = @"kSettingsCellIdentifier";
             [OTRAccountsManager removeAccount:account];
         }];
         
-        NSString * message = [NSString stringWithFormat:@"%@ %@?", DELETE_ACCOUNT_MESSAGE_STRING(), account.username];
+        NSString *accountUsername = [account.username stringByReplacingOccurrencesOfString:@"@chat.tribu.monster" withString:@""];
+        
+        NSString * message = [NSString stringWithFormat:@"\n%@ \"%@\"?", DELETE_ACCOUNT_MESSAGE_STRING(), accountUsername];
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:DELETE_ACCOUNT_TITLE_STRING() message:message preferredStyle:UIAlertControllerStyleAlert];
         [alert addAction:cancelButtonItem];
         [alert addAction:okButtonItem];
