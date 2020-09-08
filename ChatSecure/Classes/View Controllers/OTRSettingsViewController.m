@@ -205,7 +205,7 @@ static NSString *const kSettingsCellIdentifier = @"kSettingsCellIdentifier";
             
 //            NSMutableString *labelString = [NSMutableString stringWithString:accountCell.accountNameLabel.text];
             NSMutableString *labelString = [NSMutableString stringWithString:@""];
-            if (xmpp.lastConnectionError) {
+            if (xmpp.lastConnectionError && xmpp.loginStatus != OTRLoginStatusAuthenticated) {
                 [labelString appendString:@" ❌"];
             } else if (xmpp.serverCheck.getCombinedPushStatus == ServerCheckPushStatusBroken) {
                 if ([OTRBranding shouldShowPushWarning]) {

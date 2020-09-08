@@ -1824,7 +1824,7 @@ typedef NS_ENUM(int, OTRDropDownType) {
     }
     
     NSError *messageError = [message messageError];
-    if ((messageError && !messageError.isAutomaticDownloadError && !messageError.isUserCanceledError) ||
+    if ((messageError && !messageError.isAutomaticDownloadError && !messageError.isUserCanceledError && !message.isMessageSent) ||
         ![self isMessageTrusted:message]) {
         return [self warningAvatarImage];
     }
