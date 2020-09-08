@@ -31,10 +31,11 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 
-@interface BITWebTableViewCell : UITableViewCell <UIWebViewDelegate>
+@interface BITWebTableViewCell : UITableViewCell <WKNavigationDelegate>
 
-@property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, strong) WKWebView *webView;
 @property (nonatomic, copy) NSString *webViewContent;
 @property (nonatomic, assign) CGSize webViewSize;
 @property (nonatomic, strong) UIColor *cellBackgroundColor;

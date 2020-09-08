@@ -57,12 +57,12 @@ body { font: 13px 'Helvetica Neue', Helvetica; color:#626262; word-wrap:break-wo
   if(self.webViewContent) {
     CGRect webViewRect = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
     if(!self.webView) {
-      self.webView = [[UIWebView alloc] initWithFrame:webViewRect];
+      self.webView = [[WKWebView alloc] initWithFrame:webViewRect];
       [self addSubview:self.webView];
       self.webView.hidden = YES;
       self.webView.backgroundColor = self.cellBackgroundColor;
       self.webView.opaque = NO;
-      self.webView.delegate = self;
+      self.webView.navigationDelegate = self;
       self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
       
       for(UIView* subView in self.webView.subviews){
@@ -101,7 +101,7 @@ body { font: 13px 'Helvetica Neue', Helvetica; color:#626262; word-wrap:break-wo
 
 - (void)removeWebView {
   if(self.webView) {
-    self.webView.delegate = nil;
+    self.webView.navigationDelegate = nil;
     [self.webView resignFirstResponder];
     [self.webView removeFromSuperview];
   }
@@ -157,22 +157,22 @@ body { font: 13px 'Helvetica Neue', Helvetica; color:#626262; word-wrap:break-wo
 
 #pragma mark - UIWebViewDelegate
 
-- (BOOL)webView:(UIWebView *) __unused webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-  switch (navigationType) {
-    case UIWebViewNavigationTypeLinkClicked:
-      [self openURL:request.URL];
-      return NO;
-    case UIWebViewNavigationTypeOther:
-      return YES;
-    case UIWebViewNavigationTypeBackForward:
-    case UIWebViewNavigationTypeFormResubmitted:
-    case UIWebViewNavigationTypeFormSubmitted:
-    case UIWebViewNavigationTypeReload:
-      return NO;
-  }
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    
+    switch (navigationAction.navigationType) {
+        case WKNavigationTypeLinkActivated:
+            [self openURL:navigationAction.request.URL];
+            decisionHandler(WKNavigationActionPolicyAllow);
+            
+        case WKNavigationTypeOther:
+            decisionHandler(WKNavigationActionPolicyAllow);
+            
+        default:
+            decisionHandler(WKNavigationActionPolicyCancel);
+    }
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *) __unused webView {
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
   if(self.webViewContent)
     [self showWebView];
   
@@ -184,8 +184,12 @@ body { font: 13px 'Helvetica Neue', Helvetica; color:#626262; word-wrap:break-wo
   self.webView.frame = frame;
   
   // sizeThatFits is not reliable - use javascript for optimal height
-  NSString *output = [self.webView stringByEvaluatingJavaScriptFromString:@"document.body.scrollHeight;"];
-  self.webViewSize = CGSizeMake(fittingSize.width, [output integerValue]);
+    [self.webView evaluateJavaScript:@"document.body.scrollHeight;" completionHandler:^(id output, NSError *error) {
+        if([output isKindOfClass:[NSString class]]) {
+            NSString *stringOutput = (NSString *)output;
+            self.webViewSize = CGSizeMake(fittingSize.width, [stringOutput integerValue]);
+        }
+    }];
 }
 
 #pragma mark - Helper
