@@ -213,8 +213,17 @@ import CocoaLumberjack
                     incomingMessage.read = true
                 }
                 _message = incomingMessage
+                
             } else {
-                let outgoing = OTROutgoingMessage(xmppMessage: xmppMessage, body: body, account: account, buddy: buddy, capabilities: self.capabilities)
+                
+                // for auto fire timer
+                var realBody = body
+                if let bodyStr = body, let timerStr = bodyStr.components(separatedBy: "@").last {
+                    fireTime = Int(timerStr) ?? 48*60*60
+                    realBody = bodyStr.components(separatedBy: "@").first
+                }
+                
+                let outgoing = OTROutgoingMessage(xmppMessage: xmppMessage, body: /*body*/realBody, account: account, buddy: buddy, capabilities: self.capabilities)
                 outgoing.dateSent = delayed ?? Date()
                 _message = outgoing
             }
@@ -236,9 +245,6 @@ import CocoaLumberjack
             message.save(with: transaction)
             if let incoming = message as? OTRIncomingMessage {
                 
-                // save auto fire timer
-                XMPPTimerManager.setFireTime(incoming.messageId, time: fireTime)
-                
                 // We only want to send receipts and show notifications for "real time" messages
                 // undelivered messages still go through the "handleDirectMessage" path,
                 // so MAM messages have been delivered to another device
@@ -247,6 +253,11 @@ import CocoaLumberjack
             // let's count carbon messages as realtime
             if delayed == nil {
                 self.updateLastFetch(account: account, date: Date(), transaction: transaction)
+            }
+            
+            // save auto fire timer
+            if message.messageText != nil {
+                XMPPTimerManager.setFireTime(message.messageId, time: fireTime)
             }
         }
     }
