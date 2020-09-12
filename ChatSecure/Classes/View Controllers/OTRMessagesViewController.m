@@ -1542,9 +1542,14 @@ typedef NS_ENUM(int, OTRDropDownType) {
             timeSetting = dict[@"expire"];
         } else {
             unlockedDate = message.messageDate;
-            timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:@"messageFireTimer"];
-            if (timeSetting == NULL) {
-                timeSetting = [NSNumber numberWithInt:48*60*60];
+            
+            timeSetting = [NSNumber numberWithInteger:[XMPPTimerManager getFireTime:message.messageId]];
+            if (timeSetting == nil || timeSetting.integerValue == 0) {
+                timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:@"messageFireTimer"];
+                
+                if (timeSetting == NULL) {
+                    timeSetting = [NSNumber numberWithInt:48*60*60];
+                }
             }
             
             [OTRMessageTimerManager setUnlockTimerOfMessage:message.uniqueId date:unlockedDate expire:timeSetting];
