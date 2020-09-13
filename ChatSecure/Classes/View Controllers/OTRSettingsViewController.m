@@ -206,10 +206,10 @@ static NSString *const kSettingsCellIdentifier = @"kSettingsCellIdentifier";
 //            NSMutableString *labelString = [NSMutableString stringWithString:accountCell.accountNameLabel.text];
             NSMutableString *labelString = [NSMutableString stringWithString:@""];
             if (xmpp.lastConnectionError && xmpp.loginStatus != OTRLoginStatusAuthenticated) {
-                [labelString appendString:@" ❌"];
+                //[labelString appendString:@" ❌"];
             } else if (xmpp.serverCheck.getCombinedPushStatus == ServerCheckPushStatusBroken) {
                 if ([OTRBranding shouldShowPushWarning]) {
-                    [labelString appendString:@"  ⚠️"];
+                    //[labelString appendString:@"  ⚠️"];
                 }
             }
             accountCell.accountNameLabel.text = labelString;
