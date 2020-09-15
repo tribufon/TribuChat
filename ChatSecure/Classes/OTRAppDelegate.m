@@ -151,15 +151,15 @@
     [self.window makeKeyAndVisible];
     [TransactionObserver.shared startObserving];
     
-    if ([PushController getPushPreference] == PushPreferenceEnabled) {
+    //if ([PushController getPushPreference] == PushPreferenceEnabled) {
         [PushController registerForPushNotifications];
-    }
+    //}
   
     [Appirater setAppId:@"464200063"];
     [Appirater setOpenInAppStore:NO];
     [Appirater appLaunched:YES];
     
-    [self autoLoginFromBackground:NO];
+//    [self autoLoginFromBackground:NO];
     [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
         
     // For disabling screen dimming while plugged in
