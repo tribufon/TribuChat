@@ -1,0 +1,11 @@
+framework module CPAProxy {
+  umbrella header "CPAProxy.h"
+
+  export *
+  module * { export * }
+}
+
+module CPAProxy.Swift {
+    header "CPAProxy-Swift.h"
+    requires objc
+}

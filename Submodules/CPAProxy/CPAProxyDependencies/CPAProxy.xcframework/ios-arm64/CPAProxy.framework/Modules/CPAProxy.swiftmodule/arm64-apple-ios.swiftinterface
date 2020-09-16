@@ -1,0 +1,41 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)
+// swift-module-flags: -target arm64-apple-ios12.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name CPAProxy
+@_exported import CPAProxy
+import Foundation
+import Network
+import Swift
+@objc(CPASocketDelegate) public protocol SocketDelegate : ObjectiveC.NSObjectProtocol {
+  @objc(socket:didConnectToHost:port:) func socket(_ socket: CPAProxy.Socket, didConnectTo host: Swift.String, port: Swift.UInt16)
+  @objc(socketDidDisconnect:withError:) func socketDidDisconnect(_ socket: CPAProxy.Socket, error: Swift.Error)
+  @objc(socket:didReadData:withTag:) func socket(_ socket: CPAProxy.Socket, didRead data: Foundation.Data, tag: Swift.Int)
+  @objc(socket:didWriteDataWithTag:) func socket(_ socket: CPAProxy.Socket, didWriteData tag: Swift.Int)
+  @objc(socket:didReceiveTrust:completionHandler:) func socket(_ socket: CPAProxy.Socket, didReceiveTrust trust: Security.SecTrust, completion: @escaping (Swift.Bool) -> Swift.Void)
+}
+@objc(CPASocketError) public enum SocketError : Swift.Int, Swift.Error {
+  case badConfig
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+  public static var _nsErrorDomain: Swift.String {
+    get
+  }
+}
+@objc(CPASocket) final public class Socket : ObjectiveC.NSObject {
+  weak final public var delegate: CPAProxy.SocketDelegate?
+  final public var delegateQueue: Dispatch.DispatchQueue
+  @objc(initWithDelegate:delegateQueue:socketQueue:) public init(delegate: CPAProxy.SocketDelegate? = nil, delegateQueue: Dispatch.DispatchQueue = .main, socketQueue: Dispatch.DispatchQueue? = nil)
+  @objc(connectToHost:onPort:error:) final public func connect(to host: Swift.String, port: Swift.UInt16) throws
+  @objc(writeData:withTimeout:tag:) final public func write(data: Foundation.Data, timeout: Foundation.TimeInterval, tag: Swift.Int)
+  @objc(readDataWithTimeout:tag:) final public func readData(timeout: Foundation.TimeInterval, tag: Swift.Int)
+  @objc deinit
+  @objc override dynamic public init()
+}
+extension Socket {
+  @objc(cpa_writeString:withTimeout:tag:) final public func write(string: Swift.String, timeout: Foundation.TimeInterval, tag: Swift.Int)
+}
+extension CPAProxy.SocketError : Swift.Equatable {}
+extension CPAProxy.SocketError : Swift.Hashable {}
+extension CPAProxy.SocketError : Swift.RawRepresentable {}
