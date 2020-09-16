@@ -1,1 +1,0 @@
-../../../../Submodules/XMPPFramework/Extensions/XEP-0115/CoreDataStorage/XMPPCapsCoreDataStorageObject.h

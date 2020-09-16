@@ -1,1 +1,0 @@
-../../../Target Support Files/Kvitto/Kvitto-umbrella.h

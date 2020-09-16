@@ -1,1 +1,0 @@
-../../../../Submodules/YapDatabase/YapDatabase/Extensions/SearchResultsView/Internal/YapDatabaseSearchQueuePrivate.h

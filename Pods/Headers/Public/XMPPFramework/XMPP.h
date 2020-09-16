@@ -1,1 +1,0 @@
-../../../../Submodules/XMPPFramework/Core/XMPP.h

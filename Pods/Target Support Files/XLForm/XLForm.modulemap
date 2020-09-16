@@ -1,6 +1,0 @@
-module XLForm {
-  umbrella header "XLForm-umbrella.h"
-
-  export *
-  module * { export * }
-}

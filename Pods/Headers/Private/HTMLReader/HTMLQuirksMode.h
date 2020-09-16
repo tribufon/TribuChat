@@ -1,1 +1,0 @@
-../../../HTMLReader/Sources/include/HTMLQuirksMode.h

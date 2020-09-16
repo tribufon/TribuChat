@@ -1,1 +1,0 @@
-../../../Target Support Files/ChatSecure-Push-iOS/ChatSecure-Push-iOS-umbrella.h

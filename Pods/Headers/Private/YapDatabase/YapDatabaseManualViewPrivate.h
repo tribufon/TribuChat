@@ -1,1 +1,0 @@
-../../../../Submodules/YapDatabase/YapDatabase/Extensions/ManualView/Internal/YapDatabaseManualViewPrivate.h
