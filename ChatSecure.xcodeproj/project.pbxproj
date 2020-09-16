@@ -624,7 +624,7 @@
 		636DE07D1E5E476200D8D868 /* portrait-orientation.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "portrait-orientation.jpg"; path = "TestImages/portrait-orientation.jpg"; sourceTree = "<group>"; };
 		639120921D8CA1E200F4100E /* OTROmemoStorageTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTROmemoStorageTest.swift; sourceTree = "<group>"; };
 		63917C3D1DFA20D900341D96 /* OTRModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTRModelTest.swift; sourceTree = "<group>"; };
-		6396AF9A1A169D54009F3E6C /* ChatSecure.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatSecure.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6396AF9A1A169D54009F3E6C /* TribuChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TribuChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6396AF9E1A169D54009F3E6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6396AFB31A169D54009F3E6C /* ChatSecureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatSecureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6396AFB81A169D54009F3E6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1229,10 +1229,10 @@
 				D9B7EEEE235D477200AD1EEA /* OTRKit.xcodeproj */,
 				D9B7EEDF235D476700AD1EEA /* CPAProxy.xcodeproj */,
 				6396AF9C1A169D54009F3E6C /* ChatSecure */,
-				6396AFB61A169D54009F3E6C /* ChatSecureTests */,
-				6365CEFD1E2453F6009E213F /* ChatSecureUITests */,
 				D9C5280C235CB57F002B213A /* ChatSecureCore */,
 				D93027571BAA381F000CC975 /* OTRResources */,
+				6396AFB61A169D54009F3E6C /* ChatSecureTests */,
+				6365CEFD1E2453F6009E213F /* ChatSecureUITests */,
 				6396AF9B1A169D54009F3E6C /* Products */,
 				DB9AACD6ED82090C7A6B0076 /* Frameworks */,
 				1507F5BA78237F257C4590AD /* Pods */,
@@ -1242,7 +1242,7 @@
 		6396AF9B1A169D54009F3E6C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6396AF9A1A169D54009F3E6C /* ChatSecure.app */,
+				6396AF9A1A169D54009F3E6C /* TribuChat.app */,
 				6396AFB31A169D54009F3E6C /* ChatSecureTests.xctest */,
 				6365CEFC1E2453F6009E213F /* ChatSecureUITests.xctest */,
 				D9C52800235CB55C002B213A /* ChatSecureCore.framework */,
@@ -2181,7 +2181,7 @@
 			);
 			name = ChatSecure;
 			productName = ChatSecure;
-			productReference = 6396AF9A1A169D54009F3E6C /* ChatSecure.app */;
+			productReference = 6396AF9A1A169D54009F3E6C /* TribuChat.app */;
 			productType = "com.apple.product-type.application";
 		};
 		6396AFB21A169D54009F3E6C /* ChatSecureTests */ = {
@@ -2247,7 +2247,6 @@
 					};
 					6396AF991A169D54009F3E6C = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = 4T8JLQR6GR;
 						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -3140,9 +3139,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 167;
-				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3ZAS2337KY;
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -3156,13 +3154,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.0.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.chrisballinger.ChatSecure;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tribuchat.ios;
+				PRODUCT_NAME = TribuChat;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = iOS_Debug;
 		};
@@ -3178,9 +3177,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 167;
-				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3ZAS2337KY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -3194,12 +3192,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.0.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.chrisballinger.ChatSecure;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tribuchat.ios;
+				PRODUCT_NAME = TribuChat;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = iOS_Release;
 		};
@@ -3324,9 +3323,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 167;
-				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3ZAS2337KY;
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -3340,13 +3338,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.0.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.chrisballinger.ChatSecure;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tribuchat.ios;
+				PRODUCT_NAME = TribuChat;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = macOS_Debug;
 		};
@@ -3514,9 +3513,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 167;
-				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3ZAS2337KY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -3530,12 +3528,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.0.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.chrisballinger.ChatSecure;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tribuchat.ios;
+				PRODUCT_NAME = TribuChat;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = macOS_Release;
 		};
