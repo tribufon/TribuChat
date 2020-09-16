@@ -1,1 +1,1 @@
-../../../YapDatabase/YapDatabase/Internal/NSDictionary+YapDatabase.h
+../../../../Submodules/YapDatabase/YapDatabase/Internal/NSDictionary+YapDatabase.h

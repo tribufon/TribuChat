@@ -1,1 +1,0 @@
-../../../../ChatSecure/Classes/Model/Settings/OTRFeedbackSetting.h

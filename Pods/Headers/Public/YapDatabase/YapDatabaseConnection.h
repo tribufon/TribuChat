@@ -1,1 +1,1 @@
-../../../YapDatabase/YapDatabase/YapDatabaseConnection.h
+../../../../Submodules/YapDatabase/YapDatabase/YapDatabaseConnection.h

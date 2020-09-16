@@ -1,1 +1,0 @@
-../../../../ChatSecure/Classes/Utilities/PasscodeLock/GLCTouchLockSplashViewController.h

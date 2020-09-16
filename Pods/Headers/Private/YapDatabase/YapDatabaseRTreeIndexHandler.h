@@ -1,1 +1,1 @@
-../../../YapDatabase/YapDatabase/Extensions/RTreeIndex/YapDatabaseRTreeIndexHandler.h
+../../../../Submodules/YapDatabase/YapDatabase/Extensions/RTreeIndex/YapDatabaseRTreeIndexHandler.h

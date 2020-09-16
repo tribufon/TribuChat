@@ -8,7 +8,7 @@
 
 #import "IOCipher.h"
 @import SQLCipher;
-#import "sqlfs.h"
+#import <libsqlfs/sqlfs.h>
 
 /** Switches sign on sqlfs result codes */
 static inline NSError* IOCipherPOSIXError(int code) {
@@ -315,6 +315,10 @@ static inline NSError* IOCipherPOSIXError(int code) {
         return NO;
     }
     return YES;
+}
+
+- (BOOL)vacuum {
+    return sqlfs_vacuum(NULL) == SQLITE_OK;
 }
 
 #pragma - mark File Copying

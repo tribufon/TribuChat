@@ -1,1 +1,1 @@
-../../../YapDatabase/YapDatabase/Extensions/FullTextSearch/YapDatabaseFullTextSearchHandler.h
+../../../../Submodules/YapDatabase/YapDatabase/Extensions/FullTextSearch/YapDatabaseFullTextSearchHandler.h

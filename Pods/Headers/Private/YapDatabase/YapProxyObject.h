@@ -1,1 +1,1 @@
-../../../YapDatabase/YapDatabase/Utilities/YapProxyObject.h
+../../../../Submodules/YapDatabase/YapDatabase/Utilities/YapProxyObject.h

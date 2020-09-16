@@ -105,6 +105,10 @@ NSString* OTRKitGetMimeTypeForExtension(NSString* extension) {
         [request appendData:requestData];
         if (!request.isHeaderComplete) {
             error = [NSError errorWithDomain:kOTRDataErrorDomain code:100 userInfo:@{NSLocalizedDescriptionKey: @"Message has incomplete headers"}];
+            OTRDataIncomingTransfer *transfer = [[OTRDataIncomingTransfer alloc] initWithFileLength:0 username:username accountName:accountName protocol:protocol tag:tag];
+            dispatch_async(self.callbackQueue, ^{
+                [self.delegate dataHandler:self transfer:transfer fingerprint:fingerprint error:error];
+            });
             return;
         }
         
@@ -205,7 +209,11 @@ NSString* OTRKitGetMimeTypeForExtension(NSString* extension) {
         [incomingResponse appendData:responseData];
         NSError *error = nil;
         if (!incomingResponse.isHeaderComplete) {
+            OTRDataIncomingTransfer *transfer = [[OTRDataIncomingTransfer alloc] initWithFileLength:0 username:username accountName:accountName protocol:protocol tag:tag];
             error = [NSError errorWithDomain:kOTRDataErrorDomain code:100 userInfo:@{NSLocalizedDescriptionKey: @"Message has incomplete headers"}];
+            dispatch_async(self.callbackQueue, ^{
+                [self.delegate dataHandler:self transfer:transfer fingerprint:fingerprint error:error];
+            });
             return;
         }
         NSString *requestID = [incomingResponse valueForHTTPHeaderField:kHTTPHeaderRequestID];
@@ -398,7 +406,7 @@ NSString* OTRKitGetMimeTypeForExtension(NSString* extension) {
  *  Process OTRTLV.
  *  @see OTRTLV
  *
- *  @param tlvs        array of OTRTLV objects
+ *  @param tlv        array of OTRTLV objects
  *  @param username The intended recipient of the message
  *  @param accountName Your account name
  *  @param protocol the protocol of accountName, such as @"xmpp"

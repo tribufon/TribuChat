@@ -1,1 +1,1 @@
-../../../YapDatabase/YapDatabase/Extensions/CloudCore/Internal/YapDatabaseCloudCorePrivate.h
+../../../../Submodules/YapDatabase/YapDatabase/Extensions/CloudCore/Internal/YapDatabaseCloudCorePrivate.h

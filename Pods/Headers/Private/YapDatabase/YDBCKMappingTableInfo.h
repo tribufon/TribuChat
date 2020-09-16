@@ -1,1 +1,1 @@
-../../../YapDatabase/YapDatabase/Extensions/CloudKit/Internal/YDBCKMappingTableInfo.h
+../../../../Submodules/YapDatabase/YapDatabase/Extensions/CloudKit/Internal/YDBCKMappingTableInfo.h

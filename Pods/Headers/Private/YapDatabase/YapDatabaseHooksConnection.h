@@ -1,1 +1,1 @@
-../../../YapDatabase/YapDatabase/Extensions/Hooks/YapDatabaseHooksConnection.h
+../../../../Submodules/YapDatabase/YapDatabase/Extensions/Hooks/YapDatabaseHooksConnection.h

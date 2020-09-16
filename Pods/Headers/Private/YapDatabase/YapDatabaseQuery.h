@@ -1,1 +1,1 @@
-../../../YapDatabase/YapDatabase/Utilities/YapDatabaseQuery.h
+../../../../Submodules/YapDatabase/YapDatabase/Utilities/YapDatabaseQuery.h

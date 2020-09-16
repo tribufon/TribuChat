@@ -1,1 +1,1 @@
-../../../YapDatabase/YapDatabase/Extensions/ActionManager/Internal/YapDatabaseActionManagerPrivate.h
+../../../../Submodules/YapDatabase/YapDatabase/Extensions/ActionManager/Internal/YapDatabaseActionManagerPrivate.h

@@ -1,1 +1,1 @@
-../../../YapDatabase/YapDatabase/Utilities/YapDatabaseAtomic.h
+../../../../Submodules/YapDatabase/YapDatabase/Utilities/YapDatabaseAtomic.h

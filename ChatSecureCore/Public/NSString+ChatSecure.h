@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)otr_stringByRemovingNonEnglishCharacters;
 
-/** Cleans up a JID from "user@chat.tribu.monster" -> "User" */
+/** Cleans up a JID from "user@example.com" -> "User" */
 - (nullable NSString*) otr_displayName;
 
 @end

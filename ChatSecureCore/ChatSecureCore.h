@@ -34,7 +34,6 @@ FOUNDATION_EXPORT const unsigned char ChatSecureCoreVersionString[];
 #import "OTRDatabaseManager.h"
 #import "OTRAppDelegate.h"
 #import "AppTheme.h"
-#import "OTRPushTLVHandlerProtocols.h"
 #import "OTREncryptionManager.h"
 #import "OTRQRCodeActivity.h"
 #import "OTRIncomingMessage.h"
@@ -102,10 +101,5 @@ FOUNDATION_EXPORT const unsigned char ChatSecureCoreVersionString[];
 #import "OTRSignalSignedPreKey.h"
 #import "OTRSignalSession.h"
 
-#import "OTRAssets.h"
-
 //OMEMO Models
 #import "OMEMODevice.h"
-
-//Material stuff
-#import "MaterialTextFields.h"

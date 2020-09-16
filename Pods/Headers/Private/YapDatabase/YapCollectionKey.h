@@ -1,1 +1,1 @@
-../../../YapDatabase/YapDatabase/Utilities/YapCollectionKey.h
+../../../../Submodules/YapDatabase/YapDatabase/Utilities/YapCollectionKey.h

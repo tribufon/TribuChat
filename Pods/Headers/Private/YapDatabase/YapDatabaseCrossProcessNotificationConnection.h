@@ -1,1 +1,1 @@
-../../../YapDatabase/YapDatabase/Extensions/CrossProcessNotification/YapDatabaseCrossProcessNotificationConnection.h
+../../../../Submodules/YapDatabase/YapDatabase/Extensions/CrossProcessNotification/YapDatabaseCrossProcessNotificationConnection.h

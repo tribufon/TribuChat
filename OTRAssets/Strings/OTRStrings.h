@@ -476,6 +476,14 @@ FOUNDATION_EXPORT NSString* SOMEONE_IS_TYPING_STRING();
 FOUNDATION_EXPORT NSString* SOMEONE_STRING();
 /** "Check out the source here on Github", let users know source is on Github */
 FOUNDATION_EXPORT NSString* SOURCE_STRING();
+/** "Delete All", Delete all media button */
+FOUNDATION_EXPORT NSString* STORAGE_USAGE_DELETE_ALL_BUTTON();
+/** "Manage downloaded media", Storage usage setting description */
+FOUNDATION_EXPORT NSString* STORAGE_USAGE_DESCRIPTION();
+/** "No downloaded media found in chats", No media found clarification */
+FOUNDATION_EXPORT NSString* STORAGE_USAGE_NO_MEDIA_FOUND();
+/** "Storage Usage", Storage usage setting title */
+FOUNDATION_EXPORT NSString* STORAGE_USAGE_TITLE();
 /** "Server", server selection section title */
 FOUNDATION_EXPORT NSString* Server_String();
 /** "Choose from a selection of public servers, or use your own.", server selection footer */
@@ -538,7 +546,7 @@ FOUNDATION_EXPORT NSString* WANTS_TO_CHAT_STRING();
 FOUNDATION_EXPORT NSString* XMPP_FAIL_STRING();
 /** "XMPP + Tor", Title for xmpp accounts that connect through the Tor network */
 FOUNDATION_EXPORT NSString* XMPP_TOR_STRING();
-/** "user@chat.tribu.monster", Example of a username using the words user and example */
+/** "user@example.com", Example of a username using the words user and example */
 FOUNDATION_EXPORT NSString* XMPP_USERNAME_EXAMPLE_STRING();
 /** "You have been invited to the ´%@´ group.", Title of screen for joining/not joining group */
 FOUNDATION_EXPORT NSString* YOU_HAVE_BEEN_INVITED_TO_GROUP_STRING();

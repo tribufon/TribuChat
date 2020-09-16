@@ -1,1 +1,1 @@
-../../../YapDatabase/YapDatabase/Extensions/Relationships/Internal/YapDatabaseRelationshipPrivate.h
+../../../../Submodules/YapDatabase/YapDatabase/Extensions/Relationships/Internal/YapDatabaseRelationshipPrivate.h

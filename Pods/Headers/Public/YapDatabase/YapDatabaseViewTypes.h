@@ -1,1 +1,1 @@
-../../../YapDatabase/YapDatabase/Extensions/AutoView/YapDatabaseViewTypes.h
+../../../../Submodules/YapDatabase/YapDatabase/Extensions/AutoView/YapDatabaseViewTypes.h

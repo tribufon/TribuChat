@@ -1,1 +1,1 @@
-../../../YapDatabase/YapDatabase/Internal/YapProxyObjectPrivate.h
+../../../../Submodules/YapDatabase/YapDatabase/Internal/YapProxyObjectPrivate.h

@@ -1,1 +1,0 @@
-../../../../ChatSecureCore/Public/OTRShareSetting.h

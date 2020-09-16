@@ -1,1 +1,1 @@
-../../../YapDatabase/YapDatabase/Extensions/SecondaryIndex/YapDatabaseSecondaryIndexSetup.h
+../../../../Submodules/YapDatabase/YapDatabase/Extensions/SecondaryIndex/YapDatabaseSecondaryIndexSetup.h

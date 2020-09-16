@@ -1,1 +1,1 @@
-../../../YapDatabase/YapDatabase/Internal/YapDatabasePrivate.h
+../../../../Submodules/YapDatabase/YapDatabase/Internal/YapDatabasePrivate.h

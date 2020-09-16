@@ -1,1 +1,1 @@
-../../../CocoaLumberjack/Classes/SwiftLogLevel.h
+../../../CocoaLumberjack/Sources/CocoaLumberjackSwiftSupport/include/SwiftLogLevel.h

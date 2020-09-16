@@ -1,1 +1,1 @@
-../../../YapDatabase/YapDatabase/Extensions/CloudKit/Internal/YDBCKRecordTableInfo.h
+../../../../Submodules/YapDatabase/YapDatabase/Extensions/CloudKit/Internal/YDBCKRecordTableInfo.h

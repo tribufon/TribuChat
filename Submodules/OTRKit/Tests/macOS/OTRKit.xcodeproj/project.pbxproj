@@ -3,13 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C080A3F187599AE8D717241F /* Pods_OTRKitTestsMac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 328293020A936BCFB215E168 /* Pods_OTRKitTestsMac.framework */; };
+		D9156FF9235BD9AB003AD6A0 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9156FF8235BD9AB003AD6A0 /* XCTest.framework */; };
 		D963F2051DD785690070A1D3 /* OTRKitSessionBase.m in Sources */ = {isa = PBXBuildFile; fileRef = D963F2041DD785690070A1D3 /* OTRKitSessionBase.m */; };
 		D963F2081DD79C1F0070A1D3 /* OTRKitFingerprintTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D963F2071DD79C1F0070A1D3 /* OTRKitFingerprintTests.m */; };
+		D96A6A59235BD884006FF925 /* OTRKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D96A6A58235BD884006FF925 /* OTRKit.xcframework */; };
 		D9EA1C3E1DD4FEE200055E75 /* OTRUtilityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 63547DE71DA30B1100E4E24D /* OTRUtilityTests.m */; };
 		D9EA1C3F1DD4FEE400055E75 /* OTRKitUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D955143F1A6897C500C1A45D /* OTRKitUnitTests.m */; };
 		D9EA1C401DD4FEE700055E75 /* OTRKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9A9406A197E42BE00EEADD4 /* OTRKitTests.m */; };
@@ -17,24 +18,21 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		21D1EBC2171EB93D483ADD36 /* Pods-OTRKitTestsMac.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OTRKitTestsMac.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OTRKitTestsMac/Pods-OTRKitTestsMac.debug.xcconfig"; sourceTree = "<group>"; };
-		328293020A936BCFB215E168 /* Pods_OTRKitTestsMac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OTRKitTestsMac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63547DE71DA30B1100E4E24D /* OTRUtilityTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OTRUtilityTests.m; path = ../../Shared/OTRUtilityTests.m; sourceTree = "<group>"; };
 		D905CFCD155B2B0000654181 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D9156FF8235BD9AB003AD6A0 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		D955143D1A6896F600C1A45D /* test_image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = test_image.jpg; path = ../../Shared/test_image.jpg; sourceTree = "<group>"; };
 		D955143F1A6897C500C1A45D /* OTRKitUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OTRKitUnitTests.m; path = ../../Shared/OTRKitUnitTests.m; sourceTree = "<group>"; };
 		D963F2011DD785140070A1D3 /* OTRKitTestsMac-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OTRKitTestsMac-Bridging-Header.h"; sourceTree = "<group>"; };
 		D963F2041DD785690070A1D3 /* OTRKitSessionBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OTRKitSessionBase.m; path = ../../Shared/OTRKitSessionBase.m; sourceTree = "<group>"; };
 		D963F2061DD785820070A1D3 /* OTRKitSessionBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OTRKitSessionBase.h; path = ../../Shared/OTRKitSessionBase.h; sourceTree = "<group>"; };
 		D963F2071DD79C1F0070A1D3 /* OTRKitFingerprintTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OTRKitFingerprintTests.m; path = ../../Shared/OTRKitFingerprintTests.m; sourceTree = "<group>"; };
-		D98B9D3018C93739008C8D1C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		D96A6A58235BD884006FF925 /* OTRKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OTRKit.xcframework; path = ../../OTRKitDependencies/OTRKit.xcframework; sourceTree = "<group>"; };
 		D9A9404E197E423300EEADD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D9A94052197E423300EEADD4 /* OTRKitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OTRKitTests-Prefix.pch"; sourceTree = "<group>"; };
 		D9A9406A197E42BE00EEADD4 /* OTRKitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OTRKitTests.m; path = ../../Shared/OTRKitTests.m; sourceTree = "<group>"; };
-		D9EA1C301DD4FC2600055E75 /* OTRKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OTRKit.framework; path = "../../../../../../../Library/Developer/Xcode/DerivedData/OTRKit-btyaascrghjaacgibwbkeukjymae/Build/Products/Debug/OTRKit/OTRKit.framework"; sourceTree = "<group>"; };
 		D9EA1C361DD4FED500055E75 /* OTRKitTestsMac.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OTRKitTestsMac.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9EA1C3A1DD4FED500055E75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FD89C0CA89343876F99D516F /* Pods-OTRKitTestsMac.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OTRKitTestsMac.release.xcconfig"; path = "Pods/Target Support Files/Pods-OTRKitTestsMac/Pods-OTRKitTestsMac.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,22 +40,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C080A3F187599AE8D717241F /* Pods_OTRKitTestsMac.framework in Frameworks */,
+				D9156FF9235BD9AB003AD6A0 /* XCTest.framework in Frameworks */,
+				D96A6A59235BD884006FF925 /* OTRKit.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1B8447B0E03F4101A6C62F53 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				21D1EBC2171EB93D483ADD36 /* Pods-OTRKitTestsMac.debug.xcconfig */,
-				FD89C0CA89343876F99D516F /* Pods-OTRKitTestsMac.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		D905CF58155B010A00654181 = {
 			isa = PBXGroup;
 			children = (
@@ -65,7 +55,6 @@
 				D9EA1C371DD4FED500055E75 /* OTRKitTestsMac */,
 				D905CFCC155B2B0000654181 /* Frameworks */,
 				D905CF68155B010B00654181 /* Products */,
-				1B8447B0E03F4101A6C62F53 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -80,10 +69,9 @@
 		D905CFCC155B2B0000654181 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D9EA1C301DD4FC2600055E75 /* OTRKit.framework */,
+				D9156FF8235BD9AB003AD6A0 /* XCTest.framework */,
+				D96A6A58235BD884006FF925 /* OTRKit.xcframework */,
 				D905CFCD155B2B0000654181 /* Foundation.framework */,
-				D98B9D3018C93739008C8D1C /* XCTest.framework */,
-				328293020A936BCFB215E168 /* Pods_OTRKitTestsMac.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -128,12 +116,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D9EA1C3B1DD4FED500055E75 /* Build configuration list for PBXNativeTarget "OTRKitTestsMac" */;
 			buildPhases = (
-				E95B12A3CDA252EB38C87E3E /* [CP] Check Pods Manifest.lock */,
 				D9EA1C321DD4FED500055E75 /* Sources */,
 				D9EA1C331DD4FED500055E75 /* Frameworks */,
 				D9EA1C341DD4FED500055E75 /* Resources */,
-				47C48C87A77573665BD56EBE /* [CP] Embed Pods Frameworks */,
-				5DED5EC927B7AD50292C921B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -150,7 +135,7 @@
 		D905CF5A155B010A00654181 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 1110;
 				TargetAttributes = {
 					D9EA1C351DD4FED500055E75 = {
 						CreatedOnToolsVersion = 8.1;
@@ -160,8 +145,8 @@
 				};
 			};
 			buildConfigurationList = D905CF5D155B010A00654181 /* Build configuration list for PBXProject "OTRKit" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			compatibilityVersion = "Xcode 11.0";
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -171,6 +156,7 @@
 				it,
 				vi,
 				ar,
+				Base,
 			);
 			mainGroup = D905CF58155B010A00654181;
 			productRefGroup = D905CF68155B010B00654181 /* Products */;
@@ -192,54 +178,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		47C48C87A77573665BD56EBE /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OTRKitTestsMac/Pods-OTRKitTestsMac-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5DED5EC927B7AD50292C921B /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OTRKitTestsMac/Pods-OTRKitTestsMac-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E95B12A3CDA252EB38C87E3E /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D9EA1C321DD4FED500055E75 /* Sources */ = {
@@ -274,12 +212,20 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -318,12 +264,20 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -350,7 +304,6 @@
 		};
 		D9EA1C3C1DD4FED500055E75 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 21D1EBC2171EB93D483ADD36 /* Pods-OTRKitTestsMac.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -369,7 +322,11 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = OTRKitTestsMac/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.chatsecure.OTRKitTestsMac;
@@ -382,7 +339,6 @@
 		};
 		D9EA1C3D1DD4FED500055E75 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FD89C0CA89343876F99D516F /* Pods-OTRKitTestsMac.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -398,7 +354,11 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = OTRKitTestsMac/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = org.chatsecure.OTRKitTestsMac;

@@ -15,7 +15,7 @@ FOUNDATION_EXPORT NSString *const kOTRSettingKeyLanguage;
 /** Stub class for identifying asset framework bundle via bundleForClass: */
 @interface OTRAssets : NSObject
 
-/** Returns OTRResources.bundle */
+/** Returns resources bundle */
 @property (class, readonly) NSBundle* resourcesBundle;
 
 @end
@@ -24,7 +24,7 @@ FOUNDATION_EXPORT NSString *const kOTRSettingKeyLanguage;
 
 #pragma mark Strings
 
-/** The default XMPP resource (e.g. username@chat.tribu.monster/chatsecure) */
+/** The default XMPP resource (e.g. username@example.com/chatsecure) */
 @property (class, readonly) NSString* xmppResource;
 
 /** Email for user feedback e.g. support@chatsecure.org */
@@ -35,6 +35,9 @@ FOUNDATION_EXPORT NSString *const kOTRSettingKeyLanguage;
 
 /** Google Apps Scope e.g. https://www.googleapis.com/auth/googletalk */
 @property (class, readonly) NSString* googleAppScope;
+
+/** e.g. https://itunes.apple.com/app/idXXXXXXXXXX */
+@property (class, readonly, nullable) NSString* appStoreID;
 
 #pragma mark URLs
 
