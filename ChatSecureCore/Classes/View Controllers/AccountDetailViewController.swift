@@ -15,6 +15,8 @@ struct DetailCellInfo {
         case editAccount
         case manageKeys
         case serverInfo
+        case pinEnable
+        case biometricsEnable
     }
     let title: String
     let type: ActionType
@@ -25,10 +27,11 @@ enum TableSections: Int {
     case account
     case invite
     case details
+    case pin
     case loginlogout
-    case migrate
-    case delete
-    static let allValues = [account, invite, details, loginlogout, migrate, delete]
+    //case migrate
+//    case delete
+    static let allValues = [account, invite, details, loginlogout]
 }
 
 enum AccountRows: Int {
@@ -46,6 +49,8 @@ open class AccountDetailViewController: UIViewController, UITableViewDelegate, U
     let readConnection: YapDatabaseConnection
     var detailCells: [DetailCellInfo] = []
     let DetailCellIdentifier = "DetailCellIdentifier"
+    let pinCellIdentifier = "PinCellIdentifier"
+    let biometricsCellIdentifier = "BiometricsCellIdentifier"
     private var loginStatusObserver: NSKeyValueObservation? = nil
     
     let xmpp: XMPPManager
@@ -89,14 +94,16 @@ open class AccountDetailViewController: UIViewController, UITableViewDelegate, U
             tableView.register(nib, forCellReuseIdentifier: identifier)
         }
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: DetailCellIdentifier)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: pinCellIdentifier)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: biometricsCellIdentifier)
     }
     
     private func setupDetailCells() {
         detailCells = [
-            DetailCellInfo(title: EDIT_ACCOUNT_STRING(), type: .editAccount, action: { [weak self] (_, _, sender) -> (Void) in
-                guard let strongSelf = self else { return }
-                strongSelf.pushLoginView(account: strongSelf.account, sender: sender)
-            }),
+//            DetailCellInfo(title: EDIT_ACCOUNT_STRING(), type: .editAccount, action: { [weak self] (_, _, sender) -> (Void) in
+//                guard let strongSelf = self else { return }
+//                strongSelf.pushLoginView(account: strongSelf.account, sender: sender)
+//            }),
             DetailCellInfo(title: MANAGE_MY_KEYS(), type: .manageKeys, action: { [weak self] (_, _, sender) -> (Void) in
                 guard let strongSelf = self else { return }
                 strongSelf.pushKeyManagementView(account: strongSelf.account, sender: sender)
@@ -116,6 +123,7 @@ open class AccountDetailViewController: UIViewController, UITableViewDelegate, U
             }
         }
         NotificationCenter.default.addObserver(self, selector: #selector(serverCheckUpdate(_:)), name: ServerCheck.UpdateNotificationName, object: xmpp.serverCheck)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadContents), name: Notification.Name(rawValue: "reload_contents"), object: nil)
         tableView.reloadData()
     }
     
@@ -128,6 +136,10 @@ open class AccountDetailViewController: UIViewController, UITableViewDelegate, U
     
     @objc func serverCheckUpdate(_ notification: Notification) {
         setupDetailCells() // refresh server info warning label
+        tableView.reloadData()
+    }
+    
+    @objc func reloadContents() {
         tableView.reloadData()
     }
     
@@ -175,11 +187,19 @@ open class AccountDetailViewController: UIViewController, UITableViewDelegate, U
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: CANCEL_STRING(), style: .cancel)
         let logout = UIAlertAction(title: LOGOUT_STRING(), style: .destructive) { (action) in
+//            let protocols = OTRProtocolManager.sharedInstance()
+//            if let xmpp = protocols.protocol(for: account) as? XMPPManager,
+//                xmpp.loginStatus != .disconnected {
+//                xmpp.disconnect()
+//            }
             let protocols = OTRProtocolManager.sharedInstance()
             if let xmpp = protocols.protocol(for: account) as? XMPPManager,
                 xmpp.loginStatus != .disconnected {
                 xmpp.disconnect()
             }
+            protocols.removeProtocol(for: account)
+            OTRAccountsManager.remove(account)
+            self.dismiss(animated: true, completion: nil)
         }
         alert.addAction(cancel)
         alert.addAction(logout)
@@ -238,8 +258,11 @@ open class AccountDetailViewController: UIViewController, UITableViewDelegate, U
             return AccountRows.allValues.count
         case .details:
             return detailCells.count
-        case .delete, .loginlogout, .invite, .migrate:
+        case .loginlogout, .invite:
             return 1
+            
+        case .pin:
+            return PincodeManager.shared.isBiometricAuthenticationAvailable() ? 2 : 1
         }
     }
 
@@ -260,12 +283,18 @@ open class AccountDetailViewController: UIViewController, UITableViewDelegate, U
             return detailCell(account: account, tableView: tableView, indexPath: indexPath)
         case .invite:
             return inviteCell(account: account, tableView: tableView, indexPath: indexPath)
-        case .delete:
-            return deleteCell(account: account, tableView: tableView, indexPath: indexPath)
+        case .pin:
+            if PincodeManager.shared.isBiometricAuthenticationAvailable() {
+                if indexPath.row == 0 {
+                    return pinSettingsCell(account: account, tableView: tableView, indexPath: indexPath)
+                } else {
+                    return biometricsSettingsCell(account: account, tableView: tableView, indexPath: indexPath)
+                }
+            } else {
+                return pinSettingsCell(account: account, tableView: tableView, indexPath: indexPath)
+            }
         case .loginlogout:
             return loginLogoutCell(account: account, tableView: tableView, indexPath: indexPath)
-        case .migrate:
-            return migrateCell(account: account, tableView: tableView, indexPath: indexPath)
         }
         return UITableViewCell() // this should never be reached
     }
@@ -287,7 +316,7 @@ open class AccountDetailViewController: UIViewController, UITableViewDelegate, U
             let cell = self.tableView(tableView, cellForRowAt: indexPath)
             detail.action(tableView, indexPath, cell)
             return
-        case .invite, .delete, .loginlogout, .migrate:
+        case .invite, .pin, .loginlogout:
             self.tableView.deselectRow(at: indexPath, animated: true)
             if let cell = self.tableView(tableView, cellForRowAt: indexPath) as? SingleButtonTableViewCell, let action = cell.buttonAction {
                 action(cell, cell.button)
@@ -310,7 +339,7 @@ open class AccountDetailViewController: UIViewController, UITableViewDelegate, U
                     break
                 }
             }
-        case .details, .invite, .delete, .loginlogout, .migrate:
+        case .details, .invite, .pin, .loginlogout:
             break
         }
         return height
@@ -324,6 +353,7 @@ open class AccountDetailViewController: UIViewController, UITableViewDelegate, U
         }
         cell.setAppearance(account: account)
         cell.infoButton.isHidden = true
+        cell.accountNameLabel.isHidden = true
         cell.selectionStyle = .none
         return cell
     }
@@ -351,7 +381,7 @@ open class AccountDetailViewController: UIViewController, UITableViewDelegate, U
         case .authenticated:
             cell.button.setTitle(LOGOUT_STRING(), for: .normal)
             cell.buttonAction = { [weak self] (cell, sender) in
-                self?.xmpp.disconnect()
+                self?.showLogoutDialog(account: account, sender: sender)
             }
             cell.button.setTitleColor(UIColor.red, for: .normal)
         @unknown default:
@@ -383,6 +413,44 @@ open class AccountDetailViewController: UIViewController, UITableViewDelegate, U
         cell.textLabel?.text = title
         cell.accessoryType = .disclosureIndicator
         return cell
+    }
+    
+    func pinSettingsCell(account: OTRXMPPAccount, tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: pinCellIdentifier, for: indexPath)
+        
+        let toggleView = UISwitch()
+        toggleView.isOn = PincodeManager.shared.hasPin()
+        toggleView.isEnabled = true
+        toggleView.addTarget(self, action: #selector(enableDisablePin(_:)), for: .valueChanged)
+        
+        cell.textLabel?.text = "Use PIN authentication"
+        cell.accessoryView = toggleView
+        return cell
+    }
+    
+    func biometricsSettingsCell(account: OTRXMPPAccount, tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: biometricsCellIdentifier, for: indexPath)
+        
+        let toggleView = UISwitch()
+        toggleView.isOn = PincodeManager.shared.shouldUseBiometrics()
+        toggleView.isEnabled = PincodeManager.shared.hasPin() && PincodeManager.shared.isBiometricAuthenticationAvailable()
+        
+        cell.textLabel?.text = PincodeManager.shared.isFaceIDAvailable() ? "Use Face ID" : "Use Touch ID"
+        cell.accessoryView = toggleView
+        return cell
+    }
+    
+    @objc func enableDisablePin(_ sender: UISwitch) {
+        if sender.isOn {
+            PincodeManager.shared.createPin()
+        } else {
+            PincodeManager.shared.completionUponClose = {
+                PincodeManager.shared.removePin()
+            }
+            PincodeManager.shared.willRemovePin()
+        }
+        
+        tableView.reloadData()
     }
     
     public func singleButtonCell(account: OTRXMPPAccount, tableView: UITableView, indexPath: IndexPath) -> SingleButtonTableViewCell {
@@ -425,5 +493,4 @@ open class AccountDetailViewController: UIViewController, UITableViewDelegate, U
         cell.button.setTitleColor(UIColor.red, for: .normal)
         return cell
     }
-
 }

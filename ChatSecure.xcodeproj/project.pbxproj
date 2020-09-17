@@ -492,6 +492,7 @@
 		F339F3BC251344DF001BA328 /* PincodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F339F3A9251344DF001BA328 /* PincodeManager.swift */; };
 		F339F3BD251344DF001BA328 /* PincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F339F3AA251344DF001BA328 /* PincodeViewController.swift */; };
 		F339F3BE251344DF001BA328 /* Diochat.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F339F3AB251344DF001BA328 /* Diochat.xcassets */; };
+		F339F3CA25136E33001BA328 /* Pincode.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F339F3C525136E33001BA328 /* Pincode.storyboard */; };
 		FC71232B8C2603C869639700 /* libPods-ChatSecureCorePods-ChatSecureCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83C35A70D105953D80691D31 /* libPods-ChatSecureCorePods-ChatSecureCore.a */; };
 /* End PBXBuildFile section */
 
@@ -1151,6 +1152,7 @@
 		F339F3A9251344DF001BA328 /* PincodeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PincodeManager.swift; sourceTree = "<group>"; };
 		F339F3AA251344DF001BA328 /* PincodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PincodeViewController.swift; sourceTree = "<group>"; };
 		F339F3AB251344DF001BA328 /* Diochat.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Diochat.xcassets; sourceTree = "<group>"; };
+		F339F3C525136E33001BA328 /* Pincode.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Pincode.storyboard; sourceTree = "<group>"; };
 		F3ABC9C273758A049CBDA652 /* Pods-ChatSecureCorePods-ChatSecureTests.ios_debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatSecureCorePods-ChatSecureTests.ios_debug.xcconfig"; path = "Target Support Files/Pods-ChatSecureCorePods-ChatSecureTests/Pods-ChatSecureCorePods-ChatSecureTests.ios_debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1355,6 +1357,7 @@
 		D93027571BAA381F000CC975 /* OTRResources */ = {
 			isa = PBXGroup;
 			children = (
+				F339F3C525136E33001BA328 /* Pincode.storyboard */,
 				D93EFA8D235971E2007474EC /* Purchase.storyboard */,
 				D93EFA7A23596BC9007474EC /* OMEMODeviceFingerprintCell.xib */,
 				D93EFA7723596BC9007474EC /* OTRComposeGroupBuddyCell.xib */,
@@ -2506,6 +2509,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F339F3CA25136E33001BA328 /* Pincode.storyboard in Resources */,
 				D9F5C2A9236F7F8200F14A16 /* OMEMODeviceFingerprintCell.xib in Resources */,
 				D9F5C2C3236F7FA700F14A16 /* OTRComposeGroup.storyboard in Resources */,
 				635EF2021E276C410087BD72 /* Localizable.strings in Resources */,

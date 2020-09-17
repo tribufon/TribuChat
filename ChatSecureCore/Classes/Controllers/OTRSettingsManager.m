@@ -39,6 +39,7 @@
 #import "OTRCertificateSetting.h"
 #import "OTRUtilities.h"
 #import "ChatSecureCoreCompat-Swift.h"
+#import "UIViewController+DBPrivacyHelper.h"
 
 #import "OTRUtilities.h"
 

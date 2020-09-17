@@ -103,3 +103,6 @@ FOUNDATION_EXPORT const unsigned char ChatSecureCoreVersionString[];
 
 //OMEMO Models
 #import "OMEMODevice.h"
+
+//Material stuff
+#import "MaterialTextFields.h"

@@ -84,7 +84,7 @@ extension OMEMOBundle {
                 let omemoPreKey = OMEMOPreKey(preKeyId: preKey.keyId, publicKey: pk)
                 omemoPreKeys.append(omemoPreKey)
             } catch let error {
-                DDLogError("Found invalid prekey: \(error)")
+//                DDLogError("Found invalid prekey: \(error)")
             }
         }
         

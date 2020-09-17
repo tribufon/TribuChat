@@ -156,6 +156,8 @@
     }
     
     [application registerForRemoteNotifications];
+    
+    [[PincodeManager shared] setup];
 
     return YES;
 }

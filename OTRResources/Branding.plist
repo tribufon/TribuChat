@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>kOTRXMPPResource</key>
-	<string>chatsecure</string>
+	<string>Tribu</string>
 	<key>kOTRFeedbackEmail</key>
 	<string>support@chatsecure.org</string>
 	<key>GOOGLE_APP_ID</key>
@@ -12,8 +12,6 @@
 	<string>https://www.googleapis.com/auth/googletalk</string>
 	<key>GitHubURL</key>
 	<string>https://github.com/ChatSecure/ChatSecure-iOS/</string>
-	<key>AppStoreID</key>
-	<string>464200063</string>
 	<key>FacebookAppURL</key>
 	<string>fb://profile/151354555075008</string>
 	<key>FacebookWebURL</key>
@@ -25,13 +23,13 @@
 	<key>TransifexURL</key>
 	<string>https://www.transifex.com/projects/p/chatsecure</string>
 	<key>ProjectURL</key>
-	<string>https://chatsecure.org</string>
+	<string>https://tribu.monster</string>
 	<key>ShareBaseURL</key>
-	<string>https://chatsecure.org/i/#</string>
+	<string>https://tribu.monster/i/#</string>
 	<key>pushAPIURL</key>
-	<string>https://push.chatsecure.org/api/v1/</string>
+	<string>https://push.tribu.monster/api/v1/</string>
 	<key>StagingPushAPIURL</key>
-	<string>https://chatsecure-push-staging.herokuapp.com/api/v1</string>
+	<string>https://push.tribu.monster/api/v1/</string>
 	<key>TestflightSignupURL</key>
 	<string>https://goo.gl/forms/p8XAiaJFvodl7DLk2</string>
 	<key>ShouldShowPushWarning</key>
@@ -43,7 +41,7 @@
 	<key>AllowsDonation</key>
 	<true/>
 	<key>TorEnabled</key>
-	<false/>
+	<true/>
 	<key>AllowGroupOMEMO</key>
 	<true/>
 	<key>AllowDebugFileLogging</key>
