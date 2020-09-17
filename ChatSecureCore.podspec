@@ -78,8 +78,13 @@ TODO: Add long description of the pod here.
   s.dependency "PureLayout", '~> 3.0'
   s.dependency "KVOController", '~> 1.2'
   s.dependency "XLForm", '~> 4.1'
-  s.dependency "FormatterKit/TimeIntervalFormatter", '~> 1.8'
-  s.dependency "FormatterKit/UnitOfInformationFormatter", '~> 1.8'
+
+  s.dependency "FormatterKit", '~> 1.8'
+  
+  s.dependency 'MaterialComponents/FlexibleHeader', '~> 76.0'
+  s.dependency 'MaterialComponents/TextFields', '~> 76.0'
+  
+  s.dependency 'QRCodeReaderViewController', '~> 4.0'
 
   s.dependency "OTRAssets"
 end

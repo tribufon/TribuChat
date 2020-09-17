@@ -15,7 +15,7 @@ NSString* ACTIVE_BUDDIES_STRING() { return [OTRLanguageManager translatedString:
 /** "Active", This will be displayed in the UI as 'Active 10m ago'  */
 NSString* ACTIVE_STRING() { return [OTRLanguageManager translatedString:@"Active"]; }
 /** "Add Buddy", The title for the view to add a buddy */
-NSString* ADD_BUDDY_STRING() { return [OTRLanguageManager translatedString:@"Add Buddy"]; }
+NSString* ADD_BUDDY_STRING() { return [OTRLanguageManager translatedString:@"Add Contact"]; }
 /** "Add Existing Account", Label for button to create account by logging into an existing account */
 NSString* ADD_EXISTING_STRING() { return [OTRLanguageManager translatedString:@"Add Existing Account"]; }
 /** "Is %@ your friend? Add him/her to auto-download pictures in the future.", Shown in chat view to prompt user to add friend for auto-download of group media messages. */
@@ -59,7 +59,7 @@ NSString* BLOCK_STRING() { return [OTRLanguageManager translatedString:@"Block"]
 /** "You and %@ are now friends.", Notification message when buddy has approved you */
 NSString* BUDDY_APPROVED_STRING() { return [OTRLanguageManager translatedString:@"You and %@ are now friends."]; }
 /** "Buddy Info", The title for the view that shows detailed buddy info */
-NSString* BUDDY_INFO_STRING() { return [OTRLanguageManager translatedString:@"Buddy Info"]; }
+NSString* BUDDY_INFO_STRING() { return [OTRLanguageManager translatedString:@"Contact Info"]; }
 /** "Basic Setup", username section */
 NSString* Basic_Setup() { return [OTRLanguageManager translatedString:@"Basic Setup"]; }
 /** "Think of a unique nickname that you don't use anywhere else and doesn't contain personal information.", basic setup selection footer */
@@ -69,7 +69,7 @@ NSString* Best_Available() { return [OTRLanguageManager translatedString:@"Best 
 /** "Cancel", Cancel an alert window */
 NSString* CANCEL_STRING() { return [OTRLanguageManager translatedString:@"Cancel"]; }
 /** "ChatSecure Push", Title for ChatSecure Push (this probably doesnt need to be translated) */
-NSString* CHATSECURE_PUSH_STRING() { return [OTRLanguageManager translatedString:@"ChatSecure Push"]; }
+NSString* CHATSECURE_PUSH_STRING() { return [OTRLanguageManager translatedString:@"How to allow access"]; }
 /** "Chats", Title for chats view */
 NSString* CHATS_STRING() { return [OTRLanguageManager translatedString:@"Chats"]; }
 /** "Chat", Title for chat view */
@@ -133,7 +133,7 @@ NSString* DELIVERED_STRING() { return [OTRLanguageManager translatedString:@"Del
 /** "Did you know you can now help fund future development directly within the app?", prompt users to donate money */
 NSString* DID_YOU_KNOW_DONATION_STRING() { return [OTRLanguageManager translatedString:@"Did you know you can now help fund future development directly within the app?"]; }
 /** "Your donation will help fund the continued development of ChatSecure.", Message shown when about to donate */
-NSString* DONATE_MESSAGE_STRING() { return [OTRLanguageManager translatedString:@"Your donation will help fund the continued development of ChatSecure."]; }
+NSString* DONATE_MESSAGE_STRING() { return [OTRLanguageManager translatedString:@"Your donation will help fund the continued development of Diofon."]; }
 /** "Donate", Title for donation link */
 NSString* DONATE_STRING() { return [OTRLanguageManager translatedString:@"Donate"]; }
 /** "Done", Title for button to press when user is finished */
@@ -185,7 +185,7 @@ NSString* FIX_BACKGROUND_FETCH_STRING() { return [OTRLanguageManager translatedS
 /** "Fix Permissions...", prompt to fix permissions */
 NSString* FIX_PERMISSIONS_STRING() { return [OTRLanguageManager translatedString:@"Fix Permissions..."]; }
 /** "Because the database contents is encrypted with your passphrase, you've lost access to your data and will need to delete and reinstall ChatSecure to continue. Password managers like 1Password or MiniKeePass can be helpful for generating and storing strong passwords.", Text describing what happens when the user has forgotten the passphrase */
-NSString* FORGOT_PASSPHRASE_INFO_STRING() { return [OTRLanguageManager translatedString:@"Because the database contents is encrypted with your passphrase, you've lost access to your data and will need to delete and reinstall ChatSecure to continue. Password managers like 1Password or MiniKeePass can be helpful for generating and storing strong passwords."]; }
+NSString* FORGOT_PASSPHRASE_INFO_STRING() { return [OTRLanguageManager translatedString:@"Because the database contents is encrypted with your passphrase, you've lost access to your data and will need to delete and reinstall Diofon to continue. Password managers like 1Password or MiniKeePass can be helpful for generating and storing strong passwords."]; }
 /** "Forgot Passphrase?", Label for button when you've forgotten the passphrase */
 NSString* FORGOT_PASSPHRASE_STRING() { return [OTRLanguageManager translatedString:@"Forgot Passphrase?"]; }
 /** "GitHub", Name of popular web based hosting service */
@@ -245,7 +245,7 @@ NSString* LOGIN_STRING() { return [OTRLanguageManager translatedString:@"Log In"
 /** "Log Out", log out from account */
 NSString* LOGOUT_STRING() { return [OTRLanguageManager translatedString:@"Log Out"]; }
 /** "Manage ChatSecure Push account", Title for button to manage ChatSecure Push account */
-NSString* MANAGE_CHATSECURE_PUSH_ACCOUNT_STRING() { return [OTRLanguageManager translatedString:@"Manage ChatSecure Push account"]; }
+NSString* MANAGE_CHATSECURE_PUSH_ACCOUNT_STRING() { return [OTRLanguageManager translatedString:@"Manage Diofon Push account"]; }
 /** "Manage Debug Logs", Manage the device logs */
 NSString* MANAGE_DEBUG_LOGS_STRING() { return [OTRLanguageManager translatedString:@"Manage Debug Logs"]; }
 /** "Manage My Keys", Button to manage your OTR and OMEMO keys */
@@ -259,9 +259,9 @@ NSString* MESSAGE_FRIENDS_WITH_NEW_INFO_STRING() { return [OTRLanguageManager tr
 /** "Ignore", Button to ignore the migrated buddy warning */
 NSString* MIGRATED_BUDDY_IGNORE() { return [OTRLanguageManager translatedString:@"Ignore"]; }
 /** "Your buddy has a different forwarding address than the jid you are currently chatting with. Do you want to switch to this account instead?", Explanation that buddy has a different prefered jid in the vcard */
-NSString* MIGRATED_BUDDY_INFO_STRING() { return [OTRLanguageManager translatedString:@"Your buddy has a different forwarding address than the jid you are currently chatting with. Do you want to switch to this account instead?"]; }
+NSString* MIGRATED_BUDDY_INFO_STRING() { return [OTRLanguageManager translatedString:@"Your contact has a different forwarding address than the jid you are currently chatting with. Do you want to switch to this account instead?"]; }
 /** "Buddy has moved!", Title for migrated buddy header view */
-NSString* MIGRATED_BUDDY_STRING() { return [OTRLanguageManager translatedString:@"Buddy has moved!"]; }
+NSString* MIGRATED_BUDDY_STRING() { return [OTRLanguageManager translatedString:@"Contact has moved!"]; }
 /** "Switch", Button to switch the chat over to the migrated account */
 NSString* MIGRATED_BUDDY_SWITCH() { return [OTRLanguageManager translatedString:@"Switch"]; }
 /** "Migrate Account", Title for button to start migration tool */
@@ -546,8 +546,8 @@ NSString* WANTS_TO_CHAT_STRING() { return [OTRLanguageManager translatedString:@
 NSString* XMPP_FAIL_STRING() { return [OTRLanguageManager translatedString:@"Failed to connect to XMPP server. Please check your login credentials and internet connection and try again."]; }
 /** "XMPP + Tor", Title for xmpp accounts that connect through the Tor network */
 NSString* XMPP_TOR_STRING() { return [OTRLanguageManager translatedString:@"XMPP + Tor"]; }
-/** "user@example.com", Example of a username using the words user and example */
-NSString* XMPP_USERNAME_EXAMPLE_STRING() { return [OTRLanguageManager translatedString:@"user@example.com"]; }
+/** "user@chat.tribu.monster", Example of a username using the words user and example */
+NSString* XMPP_USERNAME_EXAMPLE_STRING() { return [OTRLanguageManager translatedString:@"user@chat.tribu.monster"]; }
 /** "You have been invited to the ´%@´ group.", Title of screen for joining/not joining group */
 NSString* YOU_HAVE_BEEN_INVITED_TO_GROUP_STRING() { return [OTRLanguageManager translatedString:@"You have been invited to the ´%@´ group."]; }
 /** "Bad certificate format", SSL error message */

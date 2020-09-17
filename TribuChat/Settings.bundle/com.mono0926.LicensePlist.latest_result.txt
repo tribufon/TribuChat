@@ -316,9 +316,20 @@ name: Mantle, nameSpecified:
 body: **Copyright (c) GitH…
 version: 2.1.1
 
-name: MBProgressHUD, nameSpecified: 
-body: Copyright © 2009-202…
-version: 1.2.0
+name: MaterialComponents, nameSpecified: 
+body: 
+                   …
+version: 76.1.2
+
+name: MaterialComponents, nameSpecified: 
+body: 
+                   …
+version: 76.1.2
+
+name: MaterialComponents, nameSpecified: 
+body: 
+                   …
+version: 76.1.2
 
 name: MBProgressHUD, nameSpecified: 
 body: Copyright © 2009-202…
@@ -327,6 +338,40 @@ version: 1.2.0
 name: MBProgressHUD, nameSpecified: 
 body: Copyright © 2009-202…
 version: 1.2.0
+
+name: MBProgressHUD, nameSpecified: 
+body: Copyright © 2009-202…
+version: 1.2.0
+
+name: MDFInternationalization, nameSpecified: 
+body: 
+                   …
+version: 2.0.0
+
+name: MDFInternationalization, nameSpecified: 
+body: 
+                   …
+version: 2.0.0
+
+name: MDFInternationalization, nameSpecified: 
+body: 
+                   …
+version: 2.0.0
+
+name: MDFTextAccessibility, nameSpecified: 
+body: 
+                   …
+version: 2.0.0
+
+name: MDFTextAccessibility, nameSpecified: 
+body: 
+                   …
+version: 2.0.0
+
+name: MDFTextAccessibility, nameSpecified: 
+body: 
+                   …
+version: 2.0.0
 
 name: MWFeedParser, nameSpecified: 
 body: Copyright (c) 2010 M…

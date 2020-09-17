@@ -80,13 +80,13 @@
     
     
     self.navigationItem.leftBarButtonItem = cancelBarButtonItem;
-    self.navigationItem.rightBarButtonItem = self.groupBarButtonItem;
+//    self.navigationItem.rightBarButtonItem = self.groupBarButtonItem;
     
     _inboxArchiveControl = [[UISegmentedControl alloc] initWithItems:@[ACTIVE_BUDDIES_STRING(), ARCHIVE_STRING()]];
     _inboxArchiveControl.selectedSegmentIndex = 0;
     [self updateInboxArchiveFilteringAndShowArchived:NO];
     [_inboxArchiveControl addTarget:self action:@selector(inboxArchiveControlValueChanged:) forControlEvents:UIControlEventValueChanged];
-    self.navigationItem.titleView = _inboxArchiveControl;
+//    self.navigationItem.titleView = _inboxArchiveControl;
     
     /////////// TableView ///////////
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
@@ -118,13 +118,13 @@
         [strongSelf addBuddy:accounts];
     }];
     // Add the "Join Group" button
-    UITableViewCell *cellJoinGroup = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    cellJoinGroup.textLabel.text = JOIN_GROUP_STRING();
-    cellJoinGroup.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    [self.tableViewHeader addStackedSubview:cellJoinGroup identifier:JOIN_GROUP_STRING() gravity:OTRVerticalStackViewGravityBottom height:80 callback:^() {
-        __strong typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf joinGroup:cellJoinGroup];
-    }];
+//    UITableViewCell *cellJoinGroup = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+//    cellJoinGroup.textLabel.text = JOIN_GROUP_STRING();
+//    cellJoinGroup.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//    [self.tableViewHeader addStackedSubview:cellJoinGroup identifier:JOIN_GROUP_STRING() gravity:OTRVerticalStackViewGravityBottom height:80 callback:^() {
+//        __strong typeof(weakSelf)strongSelf = weakSelf;
+//        [strongSelf joinGroup:cellJoinGroup];
+//    }];
     
     [self.tableView registerClass:[OTRBuddyInfoCell class] forCellReuseIdentifier:[OTRBuddyInfoCell reuseIdentifier]];
     
@@ -233,7 +233,11 @@
     
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:searchResultsController];
     self.searchController.searchResultsUpdater = self;
-    self.searchController.obscuresBackgroundDuringPresentation = NO;
+    if (@available(iOS 13.0, *)) {
+        self.searchController.obscuresBackgroundDuringPresentation = NO;
+    } else {
+        self.searchController.dimsBackgroundDuringPresentation = NO;
+    }
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
     
@@ -508,7 +512,7 @@
     }
 }
 
-- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (nullable NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath  {
     NSIndexPath *databaseIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:0];
     id <OTRThreadOwner> thread = [self threadOwnerAtIndexPath:databaseIndexPath withTableView:tableView];
     if (!thread) { return nil; }
@@ -542,7 +546,7 @@
 - (void) joinGroup:(id)sender {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:JOIN_GROUP_STRING() message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = NSLocalizedString(@"room@conference.example.com", @"conference room JID");
+        textField.placeholder = @"room@conference.example.com";
     }];
     [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.placeholder = [NSString stringWithFormat:@"%@ (%@)", PASSWORD_STRING(), OPTIONAL_STRING()];
@@ -679,7 +683,8 @@
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     NSString *searchString = [self.searchController.searchBar text];
     if ([searchString length]) {
-        searchString = [NSString stringWithFormat:@"%@*",searchString];
+        searchString = [NSString stringWithFormat:@"%@*@chat.tribu.monster", searchString];
+//        searchString = [NSString stringWithFormat:@"%@*",searchString];
         [self.searchQueue enqueueQuery:searchString];
         [self.searchConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
             NSString *searchViewName = [YapDatabaseConstants extensionName:DatabaseExtensionNameBuddySearchResultsViewName];

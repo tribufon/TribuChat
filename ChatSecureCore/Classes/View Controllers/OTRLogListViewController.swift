@@ -36,9 +36,9 @@ import LumberjackConsole
         
         // only allow console log output for debug builds
         #if DEBUG
-            debugPrint("Enabling os_log logger...")
-            DDLog.add(DDOSLogger.sharedInstance)
-            DDLogVerbose("os_log logger enabled.")
+            debugPrint("Enabling TTY logger...")
+            DDLog.add(DDTTYLogger.sharedInstance!)
+            
         #endif
         
         // allow file-based debug logging if user has enabled it
@@ -49,12 +49,12 @@ import LumberjackConsole
             fileLogger.doNotReuseLogFiles = true
             DDLog.add(fileLogger)
             self.fileLogger = fileLogger
-            DDLogVerbose("File logger enabled.")
+           
             
             let consoleLogger = PTEConsoleLogger()
             DDLog.add(consoleLogger)
             self.consoleLogger = consoleLogger
-            DDLogVerbose("Console logger enabled.")
+            
         } else {
             self.fileLogger = nil
             self.consoleLogger = nil
@@ -86,7 +86,7 @@ import LumberjackConsole
                 do {
                     try FileManager.default.removeItem(atPath: logsDirectory)
                 } catch {
-                    DDLogError("Error deleting log files! \(error)")
+                   
                 }
             }
             setupLogging()
@@ -248,24 +248,20 @@ extension OTRLogListViewController: UITableViewDelegate {
         }
     }
     
-    public func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .destructive, title: DELETE_STRING()) { (action, view, completion) in
+    public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let action = UITableViewRowAction(style: .destructive, title: DELETE_STRING()) { (action, indexPath) in
             guard let file = self.file(at: indexPath) else {
-                completion(false)
                 return
             }
             let url = file.fileURL
+            
             do {
                 try FileManager.default.removeItem(at: url)
                 self.removeFile(at: indexPath)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
-                completion(true)
-            } catch {
-                completion(false)
-            }
+            } catch { }
         }
-        let configuration = UISwipeActionsConfiguration(actions: [action])
-        return configuration
+        return [action]
     }
 }
 

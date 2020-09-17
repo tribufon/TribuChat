@@ -473,6 +473,25 @@
 		D9F5C2C2236F7FA700F14A16 /* OTRRoomOccupants.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9251C3041F345DD5003ACE4A /* OTRRoomOccupants.storyboard */; };
 		D9F5C2C3236F7FA700F14A16 /* OTRComposeGroup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92CC68BE1F42F0710006CDF8 /* OTRComposeGroup.storyboard */; };
 		D9F5C2C4236F7FA700F14A16 /* JoinRoomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9224A5F2207E3BD800A044BF /* JoinRoomView.xib */; };
+		F339F3AC251344DF001BA328 /* DispatchQueue+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = F339F38E251344DE001BA328 /* DispatchQueue+Ex.swift */; };
+		F339F3AD251344DF001BA328 /* DBPrivacyHelperDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = F339F390251344DE001BA328 /* DBPrivacyHelperDataSource.h */; };
+		F339F3AE251344DF001BA328 /* DBPrivacyHelperDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F339F391251344DE001BA328 /* DBPrivacyHelperDataSource.m */; };
+		F339F3AF251344DF001BA328 /* DBPrivacyHelperLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F339F393251344DE001BA328 /* DBPrivacyHelperLocalizable.strings */; };
+		F339F3B0251344DF001BA328 /* DBPrivateHelperCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F339F39B251344DE001BA328 /* DBPrivateHelperCell.h */; };
+		F339F3B1251344DF001BA328 /* DBPrivateHelperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F339F39C251344DE001BA328 /* DBPrivateHelperCell.m */; };
+		F339F3B2251344DF001BA328 /* DBPrivateHelperController.h in Headers */ = {isa = PBXBuildFile; fileRef = F339F39D251344DE001BA328 /* DBPrivateHelperController.h */; };
+		F339F3B3251344DF001BA328 /* DBPrivateHelperController.m in Sources */ = {isa = PBXBuildFile; fileRef = F339F39E251344DE001BA328 /* DBPrivateHelperController.m */; };
+		F339F3B4251344DF001BA328 /* UIImage+ImageEffects.h in Headers */ = {isa = PBXBuildFile; fileRef = F339F39F251344DE001BA328 /* UIImage+ImageEffects.h */; };
+		F339F3B5251344DF001BA328 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = F339F3A0251344DE001BA328 /* UIImage+ImageEffects.m */; };
+		F339F3B6251344DF001BA328 /* UIViewController+DBPrivacyHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = F339F3A1251344DE001BA328 /* UIViewController+DBPrivacyHelper.h */; };
+		F339F3B7251344DF001BA328 /* UIViewController+DBPrivacyHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F339F3A2251344DE001BA328 /* UIViewController+DBPrivacyHelper.m */; };
+		F339F3B8251344DF001BA328 /* KeychainSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = F339F3A4251344DE001BA328 /* KeychainSwift.swift */; };
+		F339F3B9251344DF001BA328 /* KeychainSwiftAccessOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F339F3A5251344DE001BA328 /* KeychainSwiftAccessOptions.swift */; };
+		F339F3BA251344DF001BA328 /* KeychainSwiftConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F339F3A6251344DE001BA328 /* KeychainSwiftConstants.swift */; };
+		F339F3BB251344DF001BA328 /* DiochatWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F339F3A7251344DF001BA328 /* DiochatWelcomeViewController.swift */; };
+		F339F3BC251344DF001BA328 /* PincodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F339F3A9251344DF001BA328 /* PincodeManager.swift */; };
+		F339F3BD251344DF001BA328 /* PincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F339F3AA251344DF001BA328 /* PincodeViewController.swift */; };
+		F339F3BE251344DF001BA328 /* Diochat.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F339F3AB251344DF001BA328 /* Diochat.xcassets */; };
 		FC71232B8C2603C869639700 /* libPods-ChatSecureCorePods-ChatSecureCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83C35A70D105953D80691D31 /* libPods-ChatSecureCorePods-ChatSecureCore.a */; };
 /* End PBXBuildFile section */
 
@@ -1107,6 +1126,31 @@
 		DC9AC4BC9B1EE58593CE5C3D /* Pods-ChatSecure.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatSecure.release.xcconfig"; path = "Target Support Files/Pods-ChatSecure/Pods-ChatSecure.release.xcconfig"; sourceTree = "<group>"; };
 		E3E9B8FEBB110591EF226AD3 /* Pods-ChatSecureCorePods-ChatSecure.macos_release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatSecureCorePods-ChatSecure.macos_release.xcconfig"; path = "Target Support Files/Pods-ChatSecureCorePods-ChatSecure/Pods-ChatSecureCorePods-ChatSecure.macos_release.xcconfig"; sourceTree = "<group>"; };
 		F0C9D2C724F78DD3739637DD /* Pods-ChatSecureCorePods-ChatSecureCore.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatSecureCorePods-ChatSecureCore.release.xcconfig"; path = "Target Support Files/Pods-ChatSecureCorePods-ChatSecureCore/Pods-ChatSecureCorePods-ChatSecureCore.release.xcconfig"; sourceTree = "<group>"; };
+		F339F38E251344DE001BA328 /* DispatchQueue+Ex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Ex.swift"; sourceTree = "<group>"; };
+		F339F390251344DE001BA328 /* DBPrivacyHelperDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBPrivacyHelperDataSource.h; sourceTree = "<group>"; };
+		F339F391251344DE001BA328 /* DBPrivacyHelperDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBPrivacyHelperDataSource.m; sourceTree = "<group>"; };
+		F339F394251344DE001BA328 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DBPrivacyHelperLocalizable.strings; sourceTree = "<group>"; };
+		F339F395251344DE001BA328 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/DBPrivacyHelperLocalizable.strings; sourceTree = "<group>"; };
+		F339F396251344DE001BA328 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/DBPrivacyHelperLocalizable.strings; sourceTree = "<group>"; };
+		F339F397251344DE001BA328 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/DBPrivacyHelperLocalizable.strings; sourceTree = "<group>"; };
+		F339F398251344DE001BA328 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/DBPrivacyHelperLocalizable.strings; sourceTree = "<group>"; };
+		F339F399251344DE001BA328 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/DBPrivacyHelperLocalizable.strings"; sourceTree = "<group>"; };
+		F339F39A251344DE001BA328 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/DBPrivacyHelperLocalizable.strings"; sourceTree = "<group>"; };
+		F339F39B251344DE001BA328 /* DBPrivateHelperCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBPrivateHelperCell.h; sourceTree = "<group>"; };
+		F339F39C251344DE001BA328 /* DBPrivateHelperCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBPrivateHelperCell.m; sourceTree = "<group>"; };
+		F339F39D251344DE001BA328 /* DBPrivateHelperController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBPrivateHelperController.h; sourceTree = "<group>"; };
+		F339F39E251344DE001BA328 /* DBPrivateHelperController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBPrivateHelperController.m; sourceTree = "<group>"; };
+		F339F39F251344DE001BA328 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		F339F3A0251344DE001BA328 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		F339F3A1251344DE001BA328 /* UIViewController+DBPrivacyHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+DBPrivacyHelper.h"; sourceTree = "<group>"; };
+		F339F3A2251344DE001BA328 /* UIViewController+DBPrivacyHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+DBPrivacyHelper.m"; sourceTree = "<group>"; };
+		F339F3A4251344DE001BA328 /* KeychainSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainSwift.swift; sourceTree = "<group>"; };
+		F339F3A5251344DE001BA328 /* KeychainSwiftAccessOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainSwiftAccessOptions.swift; sourceTree = "<group>"; };
+		F339F3A6251344DE001BA328 /* KeychainSwiftConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainSwiftConstants.swift; sourceTree = "<group>"; };
+		F339F3A7251344DF001BA328 /* DiochatWelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiochatWelcomeViewController.swift; sourceTree = "<group>"; };
+		F339F3A9251344DF001BA328 /* PincodeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PincodeManager.swift; sourceTree = "<group>"; };
+		F339F3AA251344DF001BA328 /* PincodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PincodeViewController.swift; sourceTree = "<group>"; };
+		F339F3AB251344DF001BA328 /* Diochat.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Diochat.xcassets; sourceTree = "<group>"; };
 		F3ABC9C273758A049CBDA652 /* Pods-ChatSecureCorePods-ChatSecureTests.ios_debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatSecureCorePods-ChatSecureTests.ios_debug.xcconfig"; path = "Target Support Files/Pods-ChatSecureCorePods-ChatSecureTests/Pods-ChatSecureCorePods-ChatSecureTests.ios_debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1400,6 +1444,7 @@
 		D9C5280E235CB57F002B213A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				F339F389251344AD001BA328 /* Diostuff */,
 				D9C5280F235CB57F002B213A /* OTRAppDelegate.m */,
 				D9C52810235CB57F002B213A /* Compatibility.swift */,
 				D9C52811235CB57F002B213A /* View Controllers */,
@@ -1976,6 +2021,64 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F339F389251344AD001BA328 /* Diostuff */ = {
+			isa = PBXGroup;
+			children = (
+				F339F38F251344DE001BA328 /* DBPrivacyHelper */,
+				F339F3AB251344DF001BA328 /* Diochat.xcassets */,
+				F339F3A7251344DF001BA328 /* DiochatWelcomeViewController.swift */,
+				F339F38E251344DE001BA328 /* DispatchQueue+Ex.swift */,
+				F339F3A3251344DE001BA328 /* keychain */,
+				F339F3A8251344DF001BA328 /* Pincode */,
+			);
+			path = Diostuff;
+			sourceTree = "<group>";
+		};
+		F339F38F251344DE001BA328 /* DBPrivacyHelper */ = {
+			isa = PBXGroup;
+			children = (
+				F339F390251344DE001BA328 /* DBPrivacyHelperDataSource.h */,
+				F339F391251344DE001BA328 /* DBPrivacyHelperDataSource.m */,
+				F339F392251344DE001BA328 /* DBPrivacyHelperLocalizations */,
+				F339F39B251344DE001BA328 /* DBPrivateHelperCell.h */,
+				F339F39C251344DE001BA328 /* DBPrivateHelperCell.m */,
+				F339F39D251344DE001BA328 /* DBPrivateHelperController.h */,
+				F339F39E251344DE001BA328 /* DBPrivateHelperController.m */,
+				F339F39F251344DE001BA328 /* UIImage+ImageEffects.h */,
+				F339F3A0251344DE001BA328 /* UIImage+ImageEffects.m */,
+				F339F3A1251344DE001BA328 /* UIViewController+DBPrivacyHelper.h */,
+				F339F3A2251344DE001BA328 /* UIViewController+DBPrivacyHelper.m */,
+			);
+			path = DBPrivacyHelper;
+			sourceTree = "<group>";
+		};
+		F339F392251344DE001BA328 /* DBPrivacyHelperLocalizations */ = {
+			isa = PBXGroup;
+			children = (
+				F339F393251344DE001BA328 /* DBPrivacyHelperLocalizable.strings */,
+			);
+			path = DBPrivacyHelperLocalizations;
+			sourceTree = "<group>";
+		};
+		F339F3A3251344DE001BA328 /* keychain */ = {
+			isa = PBXGroup;
+			children = (
+				F339F3A4251344DE001BA328 /* KeychainSwift.swift */,
+				F339F3A5251344DE001BA328 /* KeychainSwiftAccessOptions.swift */,
+				F339F3A6251344DE001BA328 /* KeychainSwiftConstants.swift */,
+			);
+			path = keychain;
+			sourceTree = "<group>";
+		};
+		F339F3A8251344DF001BA328 /* Pincode */ = {
+			isa = PBXGroup;
+			children = (
+				F339F3A9251344DF001BA328 /* PincodeManager.swift */,
+				F339F3AA251344DF001BA328 /* PincodeViewController.swift */,
+			);
+			path = Pincode;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -2002,6 +2105,7 @@
 				D9C52B12235CB582002B213A /* OTRViewSetting.h in Headers */,
 				D9C52A47235CB581002B213A /* OTROpenInFacebookActivity.h in Headers */,
 				D9C52B10235CB582002B213A /* OTRDatabaseManager.h in Headers */,
+				F339F3AD251344DF001BA328 /* DBPrivacyHelperDataSource.h in Headers */,
 				D9C52B3C235CB582002B213A /* OTRXMPPServerInfo.h in Headers */,
 				D9C52B22235CB582002B213A /* OTRDatabaseView.h in Headers */,
 				D9C52AFA235CB581002B213A /* OTRSignalSenderKey.h in Headers */,
@@ -2046,6 +2150,7 @@
 				D9C52A99235CB581002B213A /* OTRStatusMessageCell.h in Headers */,
 				D9C52B20235CB582002B213A /* OTRYapMessageSendAction.h in Headers */,
 				D9C52B2B235CB582002B213A /* OTRInviteViewController.h in Headers */,
+				F339F3B2251344DF001BA328 /* DBPrivateHelperController.h in Headers */,
 				D9C52AF4235CB581002B213A /* OTRTitleSubtitleView.h in Headers */,
 				D9C52A2E235CB581002B213A /* OTRXMPPPresenceSubscriptionRequest.h in Headers */,
 				D9C52ABC235CB581002B213A /* OTRAudioControlsView.h in Headers */,
@@ -2072,6 +2177,7 @@
 				D9C52AE7235CB581002B213A /* OTRMessageEncryptionInfo.h in Headers */,
 				D9C52AFD235CB581002B213A /* OTRXMPPAccount.h in Headers */,
 				D9C52A0E235CB580002B213A /* OTRTextItem.h in Headers */,
+				F339F3B4251344DF001BA328 /* UIImage+ImageEffects.h in Headers */,
 				D9C52B2A235CB582002B213A /* YapDatabaseViewConnection+ChatSecure.h in Headers */,
 				D9C52AF7235CB581002B213A /* OTRXMPPLoginHandler.h in Headers */,
 				D9C52A69235CB581002B213A /* OTRXMPPManager_Private.h in Headers */,
@@ -2122,6 +2228,7 @@
 				D9C52A6D235CB581002B213A /* OTRXMPPBuddyManager.h in Headers */,
 				D9C52B3A235CB582002B213A /* OTRMediaFileManager.h in Headers */,
 				D9C52B32235CB582002B213A /* OTRAudioItem.h in Headers */,
+				F339F3B6251344DF001BA328 /* UIViewController+DBPrivacyHelper.h in Headers */,
 				D9C52AFB235CB581002B213A /* OTRQRCodeReaderDelegate.h in Headers */,
 				D9C52AC3235CB581002B213A /* OTRColorFadingDotView.h in Headers */,
 				D9C52B21235CB582002B213A /* OTRMessage.h in Headers */,
@@ -2134,6 +2241,7 @@
 				D9C52A7D235CB581002B213A /* ProxyXMPPStream.h in Headers */,
 				D9C529B2235CB580002B213A /* ChatSecureCore.h in Headers */,
 				D9C529E9235CB580002B213A /* OTRUtilities.h in Headers */,
+				F339F3B0251344DF001BA328 /* DBPrivateHelperCell.h in Headers */,
 				D9C529DF235CB580002B213A /* OTRWelcomeAccountTableViewDelegate.h in Headers */,
 				D9C52B05235CB581002B213A /* OTRComposeViewController.h in Headers */,
 				D9C52AC5235CB581002B213A /* OTRTouchAndHoldGestureRecognizer.h in Headers */,
@@ -2315,6 +2423,8 @@
 				"zh-Hans-CN",
 				"nb-NO",
 				"zh-Hant-TW",
+				ko,
+				"zh-Hant",
 			);
 			mainGroup = 6396AF911A169D54009F3E6C;
 			productRefGroup = 6396AF9B1A169D54009F3E6C /* Products */;
@@ -2451,6 +2561,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F339F3BE251344DF001BA328 /* Diochat.xcassets in Resources */,
+				F339F3AF251344DF001BA328 /* DBPrivacyHelperLocalizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2720,6 +2832,7 @@
 				D9C52A13235CB580002B213A /* OMEMODevice.m in Sources */,
 				D9C52A71235CB581002B213A /* MessageStorage.swift in Sources */,
 				D9C529F1235CB580002B213A /* OTRCertificatePinning.m in Sources */,
+				F339F3B5251344DF001BA328 /* UIImage+ImageEffects.m in Sources */,
 				D9C52AA4235CB581002B213A /* OMEMODeviceFingerprintCell.swift in Sources */,
 				D9C52A61235CB581002B213A /* OTRTorManager.m in Sources */,
 				D9C52AA6235CB581002B213A /* OTRSettingTableViewCell.m in Sources */,
@@ -2734,8 +2847,10 @@
 				D9C52A2A235CB581002B213A /* OTRXMPPTorAccount.m in Sources */,
 				D9C52A9F235CB581002B213A /* OTRComposeGroupBuddyCell.swift in Sources */,
 				D9C529B6235CB580002B213A /* OTRNewBuddyViewController.m in Sources */,
+				F339F3BA251344DF001BA328 /* KeychainSwiftConstants.swift in Sources */,
 				D9C52ADE235CB581002B213A /* NSURL+ChatSecure.m in Sources */,
 				D9C529FC235CB580002B213A /* OTRSettingsGroup.m in Sources */,
+				F339F3B9251344DF001BA328 /* KeychainSwiftAccessOptions.swift in Sources */,
 				D9C529BC235CB580002B213A /* OTRConversationViewController.m in Sources */,
 				D9C529FF235CB580002B213A /* OTRListSetting.m in Sources */,
 				D9C52A91235CB581002B213A /* XMPPAccountCell.swift in Sources */,
@@ -2751,8 +2866,10 @@
 				D9C529F4235CB580002B213A /* OTRUtilities.m in Sources */,
 				D9C52A64235CB581002B213A /* ShareController.swift in Sources */,
 				D9C529DE235CB580002B213A /* ServerCapabilitiesViewController.swift in Sources */,
+				F339F3BD251344DF001BA328 /* PincodeViewController.swift in Sources */,
 				D9C52A7F235CB581002B213A /* OTRYapExtensions.swift in Sources */,
 				D9C52A1C235CB580002B213A /* OTRDownloadMessage.swift in Sources */,
+				F339F3BB251344DF001BA328 /* DiochatWelcomeViewController.swift in Sources */,
 				D9C529B5235CB580002B213A /* OTRDoubleSettingViewController.m in Sources */,
 				D9C52A2C235CB581002B213A /* Account.swift in Sources */,
 				D9C529BE235CB580002B213A /* OTRRoomOccupantsViewController.swift in Sources */,
@@ -2786,15 +2903,19 @@
 				D9C529D7235CB580002B213A /* OTRLanguageListSettingViewController.m in Sources */,
 				D9C52ADF235CB581002B213A /* UIImage+ChatSecure.m in Sources */,
 				D9C52AA2235CB581002B213A /* TwoButtonTableViewCell.swift in Sources */,
+				F339F3B3251344DF001BA328 /* DBPrivateHelperController.m in Sources */,
 				D9C52AB4235CB581002B213A /* OTRTouchAndHoldGestureRecognizer.m in Sources */,
 				D9C52AE4235CB581002B213A /* UITableView+ChatSecure.m in Sources */,
+				F339F3AC251344DF001BA328 /* DispatchQueue+Ex.swift in Sources */,
 				D9C52A15235CB580002B213A /* OTRYapMessageSendAction.swift in Sources */,
 				D9C529CE235CB580002B213A /* OTRXMPPServerListViewController.m in Sources */,
 				D9C52A6F235CB581002B213A /* OTRStreamManagementYapStorage.m in Sources */,
 				D9C529E5235CB580002B213A /* OTRLogListViewController.swift in Sources */,
 				D9C52A35235CB581002B213A /* OTRXMPPRoom.swift in Sources */,
+				F339F3B7251344DF001BA328 /* UIViewController+DBPrivacyHelper.m in Sources */,
 				D9C52ADA235CB581002B213A /* NSFileManager+ChatSecure.m in Sources */,
 				D9C52ABE235CB581002B213A /* OTRButtonView.m in Sources */,
+				F339F3B8251344DF001BA328 /* KeychainSwift.swift in Sources */,
 				D9C52A3C235CB581002B213A /* OTRSignalSenderKey.m in Sources */,
 				D9C529B8235CB580002B213A /* OTRMessagesViewController+RoomOperations.swift in Sources */,
 				D9C52A3D235CB581002B213A /* SecondaryIndexes.swift in Sources */,
@@ -2812,6 +2933,7 @@
 				D9C529EC235CB580002B213A /* OTRPasswordGenerator.m in Sources */,
 				D9C529C4235CB580002B213A /* OTRMessagesHoldTalkViewController.m in Sources */,
 				D9C52A9A235CB581002B213A /* OTRInLineTextEditTableViewCell.m in Sources */,
+				F339F3BC251344DF001BA328 /* PincodeManager.swift in Sources */,
 				D9C529F5235CB580002B213A /* OTRSecrets.m in Sources */,
 				D9C52A79235CB581002B213A /* RoomManager.swift in Sources */,
 				D9C529D4235CB580002B213A /* OTRMessagesCollectionViewFlowLayout.swift in Sources */,
@@ -2836,6 +2958,7 @@
 				D9C52A4C235CB581002B213A /* OTROpenInTwitterActivity.m in Sources */,
 				D986C653244565C30066CC03 /* OTRInviteViewController_Previews.swift in Sources */,
 				D9C52A2F235CB581002B213A /* BuddyActions.swift in Sources */,
+				F339F3B1251344DF001BA328 /* DBPrivateHelperCell.m in Sources */,
 				D9C52A49235CB581002B213A /* OTRActivityItemProvider.m in Sources */,
 				D9C52A30235CB581002B213A /* OTRIncomingMessage.m in Sources */,
 				D9C52A96235CB581002B213A /* OTRBuddyImageCell.m in Sources */,
@@ -2869,6 +2992,7 @@
 				D9C52AA8235CB581002B213A /* OTRMessageUnknownSenderCell.swift in Sources */,
 				D9C52A84235CB581002B213A /* OTRAudioSessionManager.m in Sources */,
 				D9C52A5E235CB581002B213A /* OTRMediaFileManager.m in Sources */,
+				F339F3AE251344DF001BA328 /* DBPrivacyHelperDataSource.m in Sources */,
 				D9C52AD8235CB581002B213A /* UIActivityViewController+ChatSecure.m in Sources */,
 				D9C52A6C235CB581002B213A /* OTRXMPPBuddyTimers.m in Sources */,
 				D9C52A32235CB581002B213A /* OTRMessage+JSQMessageData.m in Sources */,
@@ -2952,6 +3076,20 @@
 			);
 			name = Localizable.strings;
 			path = Localizations;
+			sourceTree = "<group>";
+		};
+		F339F393251344DE001BA328 /* DBPrivacyHelperLocalizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F339F394251344DE001BA328 /* en */,
+				F339F395251344DE001BA328 /* es */,
+				F339F396251344DE001BA328 /* it */,
+				F339F397251344DE001BA328 /* ja */,
+				F339F398251344DE001BA328 /* ko */,
+				F339F399251344DE001BA328 /* pt-PT */,
+				F339F39A251344DE001BA328 /* zh-Hant */,
+			);
+			name = DBPrivacyHelperLocalizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

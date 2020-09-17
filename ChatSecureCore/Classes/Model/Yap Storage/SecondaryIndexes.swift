@@ -188,7 +188,7 @@ extension OTRXMPPBuddy {
     private static func slowLookup(jid: XMPPJID,
                                    accountUniqueId: String,
                                    transaction: YapDatabaseReadTransaction) -> OTRXMPPBuddy? {
-        DDLogWarn("WARN: Using slow O(n) lookup for OTRXMPPBuddy: \(jid)")
+//        DDLogWarn("WARN: Using slow O(n) lookup for OTRXMPPBuddy: \(jid)")
         var buddy: OTRXMPPBuddy? = nil
         transaction.iterateKeysAndObjects(inCollection: OTRXMPPBuddy.collection) { (key, potentialMatch: OTRXMPPBuddy, stop) in
             if potentialMatch.username == jid.bare {
@@ -205,7 +205,7 @@ extension OTRXMPPBuddy {
                                         accountUniqueId: String,
                                         transaction: YapDatabaseReadTransaction) -> OTRXMPPBuddy? {
         guard let indexTransaction = transaction.ext(SecondaryIndexName.buddy) as? YapDatabaseSecondaryIndexTransaction else {
-            DDLogError("Error looking up OTRXMPPBuddy via SecondaryIndex: Extension not ready.")
+//            DDLogError("Error looking up OTRXMPPBuddy via SecondaryIndex: Extension not ready.")
             return self.slowLookup(jid:jid, accountUniqueId:accountUniqueId, transaction: transaction)
         }
         let queryString = "Where \(BuddyIndexColumnName.accountKey) == ? AND \(BuddyIndexColumnName.username) == ?"
@@ -218,11 +218,11 @@ extension OTRXMPPBuddy {
             }
         }
         if !success {
-            DDLogError("Error looking up OTRXMPPBuddy with query \(query) \(jid) \(accountUniqueId)")
+//            DDLogError("Error looking up OTRXMPPBuddy with query \(query) \(jid) \(accountUniqueId)")
             return nil
         }
         if matchingBuddies.count > 1 {
-            DDLogWarn("WARN: More than one OTRXMPPBuddy matching query \(query) \(jid) \(accountUniqueId): \(matchingBuddies.count)")
+//            DDLogWarn("WARN: More than one OTRXMPPBuddy matching query \(query) \(jid) \(accountUniqueId): \(matchingBuddies.count)")
         }
 //        #if DEBUG
 //            if matchingBuddies.count == 0 {

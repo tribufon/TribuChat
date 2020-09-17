@@ -67,10 +67,10 @@ extension OTRXMPPRoomManager {
         }
         bookmarksModule.fetchAndPublish(bookmarksToAdd: bookmarks, completion: { (newBookmarks, responseIq) in
             guard let outBookmarks = newBookmarks else {
-                DDLogError("Failed to add bookmarks \(bookmarks)")
+//                DDLogError("Failed to add bookmarks \(bookmarks)")
                 return
             }
-            DDLogInfo("New bookmarks \(outBookmarks)")
+//            DDLogInfo("New bookmarks \(outBookmarks)")
             self.handleIncomingBookmarks(outBookmarks)
         })
     }
@@ -84,9 +84,9 @@ extension OTRXMPPRoomManager {
         }
         bookmarksModule.fetchAndPublish(bookmarksToAdd: [], bookmarksToRemove: bookmarks, completion: { (newBookmarks, responseIq) in
             if let newBookmarks = newBookmarks {
-                DDLogInfo("New bookmarks \(newBookmarks)")
+//                DDLogInfo("New bookmarks \(newBookmarks)")
             } else {
-                DDLogWarn("Failed to remove bookmarks \(bookmarks)")
+//                DDLogWarn("Failed to remove bookmarks \(bookmarks)")
             }
         })
     }

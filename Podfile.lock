@@ -21,8 +21,7 @@ PODS:
     - ChatSecure-Push-iOS
     - CocoaAsyncSocket (~> 7.6.0)
     - CocoaLumberjack/Swift (~> 3.6.0)
-    - FormatterKit/TimeIntervalFormatter (~> 1.8)
-    - FormatterKit/UnitOfInformationFormatter (~> 1.8)
+    - FormatterKit (~> 1.8)
     - GCDWebServer (~> 3.4)
     - HTMLReader (~> 2.1.1)
     - IOCipher/GCDWebServer
@@ -34,6 +33,8 @@ PODS:
     - LicensePlist
     - LumberjackConsole
     - Mantle
+    - MaterialComponents/FlexibleHeader (~> 76.0)
+    - MaterialComponents/TextFields (~> 76.0)
     - MBProgressHUD (~> 1.1)
     - MWFeedParser (~> 1.0)
     - OpenInChrome (~> 0.0)
@@ -61,10 +62,35 @@ PODS:
   - DTFoundation/Core (1.7.14)
   - DTFoundation/DTASN1 (1.7.14):
     - DTFoundation/Core
+  - FormatterKit (1.9.0):
+    - FormatterKit/AddressFormatter (= 1.9.0)
+    - FormatterKit/ArrayFormatter (= 1.9.0)
+    - FormatterKit/ColorFormatter (= 1.9.0)
+    - FormatterKit/LocationFormatter (= 1.9.0)
+    - FormatterKit/NameFormatter (= 1.9.0)
+    - FormatterKit/OrdinalNumberFormatter (= 1.9.0)
+    - FormatterKit/Resources (= 1.9.0)
+    - FormatterKit/TimeIntervalFormatter (= 1.9.0)
+    - FormatterKit/UnitOfInformationFormatter (= 1.9.0)
+    - FormatterKit/URLRequestFormatter (= 1.9.0)
+  - FormatterKit/AddressFormatter (1.9.0):
+    - FormatterKit/Resources
+  - FormatterKit/ArrayFormatter (1.9.0):
+    - FormatterKit/Resources
+  - FormatterKit/ColorFormatter (1.9.0):
+    - FormatterKit/Resources
+  - FormatterKit/LocationFormatter (1.9.0):
+    - FormatterKit/Resources
+  - FormatterKit/NameFormatter (1.9.0):
+    - FormatterKit/Resources
+  - FormatterKit/OrdinalNumberFormatter (1.9.0):
+    - FormatterKit/Resources
   - FormatterKit/Resources (1.9.0)
   - FormatterKit/TimeIntervalFormatter (1.9.0):
     - FormatterKit/Resources
   - FormatterKit/UnitOfInformationFormatter (1.9.0):
+    - FormatterKit/Resources
+  - FormatterKit/URLRequestFormatter (1.9.0):
     - FormatterKit/Resources
   - GCDWebServer (3.5.4):
     - GCDWebServer/Core (= 3.5.4)
@@ -104,7 +130,28 @@ PODS:
   - Mantle (2.1.1):
     - Mantle/extobjc (= 2.1.1)
   - Mantle/extobjc (2.1.1)
+  - MaterialComponents/AnimationTiming (76.1.2)
+  - MaterialComponents/FlexibleHeader (76.1.2):
+    - MaterialComponents/private/Application
+    - MaterialComponents/private/UIMetrics
+    - MDFTextAccessibility
+  - MaterialComponents/Palettes (76.1.2)
+  - MaterialComponents/private/Application (76.1.2)
+  - MaterialComponents/private/Math (76.1.2)
+  - MaterialComponents/private/UIMetrics (76.1.2):
+    - MaterialComponents/private/Application
+  - MaterialComponents/TextFields (76.1.2):
+    - MaterialComponents/AnimationTiming
+    - MaterialComponents/Palettes
+    - MaterialComponents/private/Math
+    - MaterialComponents/Typography
+    - MDFInternationalization
+  - MaterialComponents/Typography (76.1.2):
+    - MaterialComponents/private/Application
+    - MaterialComponents/private/Math
   - MBProgressHUD (1.2.0)
+  - MDFInternationalization (2.0.0)
+  - MDFTextAccessibility (2.0.0)
   - MWFeedParser (1.0.1):
     - MWFeedParser/FeedParser (= 1.0.1)
     - "MWFeedParser/NSDate+InternetDateTime (= 1.0.1)"
@@ -293,7 +340,10 @@ SPEC REPOS:
     - libidn
     - LicensePlist
     - Mantle
+    - MaterialComponents
     - MBProgressHUD
+    - MDFInternationalization
+    - MDFTextAccessibility
     - MWFeedParser
     - NBUCore
     - OpenInChrome
@@ -358,7 +408,7 @@ SPEC CHECKSUMS:
   BBlock: c56d7f72597ffe1634fcdc73836c5c0fed3271be
   BButton: ab0f2ed3b998ae73c5188b57d270d81e4a1eeb27
   ChatSecure-Push-iOS: b1e7f4133afb77a42464aa0be96b14e03edcef29
-  ChatSecureCore: d29dc259e8b44c9020d06a41789ea017a8c351b8
+  ChatSecureCore: 9902c4b9f590ffbe8d3f3fee09a5bad0d472bf36
   CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
   CocoaLumberjack: b17ae15142558d08bbacf69775fa10c4abbebcc9
   DTFoundation: 25aa19bb7c6e225b1dfae195604fb8cf1da0ab4c
@@ -376,7 +426,10 @@ SPEC CHECKSUMS:
   LicensePlist: d52efb2ce5d3cf58833d362f82967ba4af25fe9a
   LumberjackConsole: 218fed8e807ba6ce0bedbba06b7b295dc0efaf0c
   Mantle: 35238ae6f2e2b2d474fa7b67fee82a59fea71915
+  MaterialComponents: 1aef341d47fbaed37ddb5163a01af94cb6da8506
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
+  MDFTextAccessibility: 85c09a1bd9c321f494348e632a25063bcda35a53
   MWFeedParser: 2cf646014c1baf6ad1b08c480b40a08180079247
   NBUCore: 201af50441f48513ef6d5823a5fc12c9e1f288cd
   OpenInChrome: f1f3f9dec682216fe78a0d7fe0b5b263d6312c32

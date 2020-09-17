@@ -27,22 +27,6 @@ const CGFloat OTRBuddyInfoCellHeight = 80.0;
 
 @implementation OTRBuddyInfoCell
 
-+ (UIColor *) primaryTextColor {
-    if (@available(iOS 13.0, *)) {
-        return [UIColor labelColor];
-    } else {
-        return [UIColor darkTextColor];
-    }
-}
-
-+ (UIColor *) subtitleTextColor {
-    if (@available(iOS 13.0, *)) {
-        return [UIColor systemGray3Color];
-    } else {
-        return [UIColor lightGrayColor];
-    }
-}
-
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
@@ -50,14 +34,15 @@ const CGFloat OTRBuddyInfoCellHeight = 80.0;
         self.nameLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
         
         self.identifierLabel = [[UILabel alloc] initForAutoLayout];
-        self.identifierLabel.textColor = self.class.primaryTextColor;
+        self.identifierLabel.textColor = [UIColor darkTextColor];
         self.identifierLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
         
         self.accountLabel = [[UILabel alloc] initForAutoLayout];
-        self.accountLabel.textColor = self.class.subtitleTextColor;
+        self.accountLabel.textColor = [UIColor lightGrayColor];
         self.accountLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
         
-        NSArray<UILabel*> *labels = @[self.nameLabel, self.identifierLabel, self.accountLabel];
+//        NSArray<UILabel*> *labels = @[self.nameLabel, self.identifierLabel, self.accountLabel];
+        NSArray<UILabel*> *labels = @[self.nameLabel];
         [labels enumerateObjectsUsingBlock:^(UILabel * _Nonnull label, NSUInteger idx, BOOL * _Nonnull stop) {
             label.adjustsFontSizeToFitWidth = YES;
             [self.contentView addSubview:label];
@@ -90,9 +75,9 @@ const CGFloat OTRBuddyInfoCellHeight = 80.0;
     }
     self.identifierLabel.text = identifier;
     
-    UIColor *textColor = self.class.primaryTextColor;
+    UIColor *textColor = [UIColor darkTextColor];
     if ([thread isArchived]) {
-        textColor = self.class.subtitleTextColor;
+        textColor = [UIColor lightGrayColor];
     }
     [@[self.nameLabel, self.identifierLabel] enumerateObjectsUsingBlock:^(UILabel   * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         obj.textColor = textColor;
@@ -105,7 +90,7 @@ const CGFloat OTRBuddyInfoCellHeight = 80.0;
         [super updateConstraints];
         return;
     }
-    NSArray<UILabel*> *textLabelsArray = @[self.nameLabel,self.identifierLabel,self.accountLabel];
+    NSArray<UILabel*> *textLabelsArray = @[self.nameLabel];
     
     //same horizontal contraints for all labels
     for(UILabel *label in textLabelsArray) {
@@ -115,17 +100,18 @@ const CGFloat OTRBuddyInfoCellHeight = 80.0;
     
     [self.nameLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:OTRBuddyImageCellPadding];
     
-    [self.accountLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.nameLabel withOffset:3];
-    
-    [self.identifierLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:OTRBuddyImageCellPadding];
+//    [self.accountLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.nameLabel withOffset:3];
+//
+//    [self.identifierLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:OTRBuddyImageCellPadding];
+    [self.nameLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:OTRBuddyImageCellPadding];
     [super updateConstraints];
 }
 
 - (void)prepareForReuse {
     [super prepareForReuse];
-    self.nameLabel.textColor = self.class.primaryTextColor;
-    self.identifierLabel.textColor = self.class.primaryTextColor;
-    self.accountLabel.textColor = self.class.subtitleTextColor;
+    self.nameLabel.textColor = [UIColor blackColor];
+    self.identifierLabel.textColor = [UIColor darkTextColor];
+    self.accountLabel.textColor = [UIColor lightGrayColor];
 }
 
 - (void) infoButtonPressed:(UIButton*)sender {

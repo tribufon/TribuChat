@@ -155,7 +155,7 @@
         }
     }
     
-    return messageSecurity;
+    return OTRMessageTransportSecurityOMEMO;
 }
 
 - (OTRMessageTransportSecurity)bestTransportSecurityWithTransaction:(nonnull YapDatabaseReadTransaction *)transaction
@@ -164,6 +164,8 @@
     // If we have some omemo devices then that's the best we have.
     if ([devices count] > 0) {
         return OTRMessageTransportSecurityOMEMO;
+    } else {
+        return OTRMessageTransportSecurityInvalid;
     }
     
     OTRAccount *account = [OTRAccount fetchObjectWithUniqueID:self.accountUniqueId transaction:transaction];

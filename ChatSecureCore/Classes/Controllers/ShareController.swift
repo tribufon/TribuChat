@@ -47,7 +47,7 @@ open class ShareController: NSObject {
             }
             
             let qrCodeActivity = OTRQRCodeActivity()
-            let activityViewController = UIActivityViewController(activityItems: [self.getShareSource(account, url: url)], applicationActivities: [qrCodeActivity])
+            let activityViewController = UIActivityViewController(activityItems: [self.getShareSource(account, url: url)], applicationActivities: [])
             activityViewController.excludedActivityTypes = [UIActivity.ActivityType.print, UIActivity.ActivityType.saveToCameraRoll, UIActivity.ActivityType.addToReadingList]
             if let ppc = activityViewController.popoverPresentationController {
                 if let view = sender as? UIView {

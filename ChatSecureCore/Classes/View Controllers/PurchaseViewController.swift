@@ -47,18 +47,11 @@ public class PurchaseViewController: UIViewController {
         return [smallMoneyButton: .small, mediumMoneyButton: .medium, bigMoneyButton: .big]
     }
     
-    enum Product: String, CaseIterable {
-        #if targetEnvironment(macCatalyst)
-        case small = "3_donation_monthly_mac"
-        case medium = "6_donation_monthly_mac"
-        case big = "20_donation_monthly_mac"
-        #else
-        case small = "3_donation_monthly"
-        case medium = "6_donation_monthly"
-        case big = "20_donation_monthly"
-        #endif
-
-        static var allProductsSet: Set<String> { Set(allCases.map { $0.rawValue }) }
+    enum Product: String {
+        case small = "3_donation_monthly" // "3_donation_nonconsumable" // "3_donation_consumable"
+        case medium = "6_donation_monthly" // "6_donation_consumable"
+        case big = "20_donation_monthly" // "20_donation_consumable"
+        static let allProductsSet = Set([small.rawValue, medium.rawValue, big.rawValue])
         var emoji: String {
             switch self {
             case .small:
@@ -188,25 +181,21 @@ public class PurchaseViewController: UIViewController {
 
 extension PurchaseViewController: SKProductsRequestDelegate {
     public func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-        DispatchQueue.main.async {
-            response.products.forEach {
-                guard let product = $0.product else {
-                    DDLogWarn("Unrecognized product: \($0)")
-                    return
-                }
-                self.products[product] = $0
-                DDLogInfo("Product \"\($0.localizedTitle)\" (\($0.productIdentifier)):  \($0.price.floatValue)")
+        response.products.forEach {
+            guard let product = $0.product else {
+                DDLogWarn("Unrecognized product: \($0)")
+                return
             }
-            self.refreshMoneyButtons()
-            MBProgressHUD.hide(for: self.view, animated: true)
+            products[product] = $0
+            DDLogInfo("Product \"\($0.localizedTitle)\" (\($0.productIdentifier)):  \($0.price.floatValue)")
         }
+        refreshMoneyButtons()
+        MBProgressHUD.hide(for: self.view, animated: true)
     }
     
     public func request(_ request: SKRequest, didFailWithError error: Error) {
-        DispatchQueue.main.async {
-            DDLogError("Error loading products: \(error.localizedDescription)")
-            MBProgressHUD.hide(for: self.view, animated: true)
-        }
+        DDLogError("Error loading products: \(error.localizedDescription)")
+        MBProgressHUD.hide(for: self.view, animated: true)
     }
 }
 

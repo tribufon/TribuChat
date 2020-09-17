@@ -75,7 +75,7 @@ static CGFloat kOTRConversationCellHeight = 80.0;
     _inboxArchiveControl.selectedSegmentIndex = 0;
     [self updateInboxArchiveFilteringAndShowArchived:NO];
     [_inboxArchiveControl addTarget:self action:@selector(inboxArchiveControlValueChanged:) forControlEvents:UIControlEventValueChanged];
-    self.navigationItem.titleView = _inboxArchiveControl;
+//    self.navigationItem.titleView = _inboxArchiveControl;
     
     ////////// Create TableView /////////////////
     
@@ -132,8 +132,9 @@ static CGFloat kOTRConversationCellHeight = 80.0;
     //If there is any number of accounts launch into default conversation view otherwise onboarding time
     if (!hasAccounts) {
         UINavigationController *welcomeNavController = [onboardingStoryboard instantiateInitialViewController];
-        welcomeNavController.modalPresentationStyle = UIModalPresentationFormSheet;
-        [self presentViewController:welcomeNavController animated:YES completion:nil];
+        welcomeNavController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+        welcomeNavController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        [self presentViewController:welcomeNavController animated:NO completion:nil];
         self.hasPresentedOnboarding = YES;
         return;
     }
@@ -457,7 +458,7 @@ static CGFloat kOTRConversationCellHeight = 80.0;
 //    return UITableViewCellEditingStyleDelete;
 //}
 
-- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (nullable NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath  {
     id <OTRThreadOwner> thread = [self threadForIndexPath:indexPath];
     return [UITableView editActionsForThread:thread deleteActionAlsoRemovesFromRoster:NO connection:OTRDatabaseManager.shared.writeConnection];
 }

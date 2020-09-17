@@ -77,6 +77,10 @@ static NSString *const kSettingsCellIdentifier = @"kSettingsCellIdentifier";
     return self;
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -100,6 +104,9 @@ static NSString *const kSettingsCellIdentifier = @"kSettingsCellIdentifier";
     [self.tableView registerNib:nib forCellReuseIdentifier:[XMPPAccountCell cellIdentifier]];
     
     [self setupVersionLabel];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadSettings:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didLogout:) name:@"Diofon.didLogout" object:nil];
     
     ////// KVO //////
     __weak typeof(self)weakSelf = self;
@@ -145,6 +152,17 @@ static NSString *const kSettingsCellIdentifier = @"kSettingsCellIdentifier";
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
 }
 
+- (void) reloadSettings:(NSNotification*)notification {
+    NSLog(@"Update settings");
+    [self.settingsManager populateSettings];
+    [self.tableView reloadData];
+}
+
+- (void) didLogout:(NSNotification*)notification {
+    NSLog(@"Did logout");
+    [self.navigationController popViewControllerAnimated:NO];
+}
+
 - (OTRXMPPAccount *)accountAtIndexPath:(NSIndexPath *)indexPath
 {
     OTRXMPPAccount *account = [self.viewHandler object:indexPath];
@@ -185,8 +203,9 @@ static NSString *const kSettingsCellIdentifier = @"kSettingsCellIdentifier";
             XMPPAccountCell *accountCell = [tableView dequeueReusableCellWithIdentifier:[XMPPAccountCell cellIdentifier] forIndexPath:indexPath];
             [accountCell setAppearanceWithAccount:account];
             
-            NSMutableString *labelString = [NSMutableString stringWithString:accountCell.accountNameLabel.text];
-            if (xmpp.lastConnectionError) {
+//            NSMutableString *labelString = [NSMutableString stringWithString:accountCell.accountNameLabel.text];
+            NSMutableString *labelString = [NSMutableString stringWithString:@""];
+            if (xmpp.lastConnectionError && xmpp.loginStatus != OTRLoginStatusAuthenticated) {
                 [labelString appendString:@" ❌"];
             } else if (xmpp.serverCheck.getCombinedPushStatus == ServerCheckPushStatusBroken) {
                 if ([OTRBranding shouldShowPushWarning]) {
@@ -209,10 +228,10 @@ static NSString *const kSettingsCellIdentifier = @"kSettingsCellIdentifier";
         return cell;
     }
     OTRSettingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kSettingsCellIdentifier];
-	if (cell == nil)
-	{
-		cell = [[OTRSettingTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kSettingsCellIdentifier];
-	}
+    if (cell == nil)
+    {
+        cell = [[OTRSettingTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kSettingsCellIdentifier];
+    }
     OTRSetting *setting = [self.settingsManager settingAtIndexPath:indexPath];
     setting.delegate = self;
     cell.otrSetting = setting;
@@ -237,7 +256,12 @@ static NSString *const kSettingsCellIdentifier = @"kSettingsCellIdentifier";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectionIndex
 {
     if (sectionIndex == 0) {
-        return [self.viewHandler.mappings numberOfItemsInSection:0]+1;
+        if([self.viewHandler.mappings numberOfItemsInSection:0] > 0) {
+            return [self.viewHandler.mappings numberOfItemsInSection:0];
+        } else {
+            return 1;
+        }
+        //        return [self.viewHandler.mappings numberOfItemsInSection:0]+1;
     }
     return [self.settingsManager numberOfSettingsInSection:sectionIndex];
 }
@@ -296,7 +320,9 @@ static NSString *const kSettingsCellIdentifier = @"kSettingsCellIdentifier";
             [OTRAccountsManager removeAccount:account];
         }];
         
-        NSString * message = [NSString stringWithFormat:@"%@ %@?", DELETE_ACCOUNT_MESSAGE_STRING(), account.username];
+        NSString *accountUsername = [account.username stringByReplacingOccurrencesOfString:@"@chat.tribu.monster" withString:@""];
+        
+        NSString * message = [NSString stringWithFormat:@"\n%@ \"%@\"?", DELETE_ACCOUNT_MESSAGE_STRING(), accountUsername];
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:DELETE_ACCOUNT_TITLE_STRING() message:message preferredStyle:UIAlertControllerStyleAlert];
         [alert addAction:cancelButtonItem];
         [alert addAction:okButtonItem];
@@ -316,7 +342,8 @@ static NSString *const kSettingsCellIdentifier = @"kSettingsCellIdentifier";
 - (void) addAccount:(id)sender {
     UIStoryboard *onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding" bundle:[OTRAssets resourcesBundle]];
     UINavigationController *welcomeNavController = [onboardingStoryboard instantiateInitialViewController];
-    welcomeNavController.modalPresentationStyle = UIModalPresentationFormSheet;
+    welcomeNavController.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    welcomeNavController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentViewController:welcomeNavController animated:YES completion:nil];
 }
 
@@ -434,14 +461,25 @@ static NSString *const kSettingsCellIdentifier = @"kSettingsCellIdentifier";
         {
             case YapDatabaseViewChangeDelete :
             {
-                [self.tableView deleteRowsAtIndexPaths:@[ rowChange.indexPath ]
-                                      withRowAnimation:UITableViewRowAnimationAutomatic];
+                if([rowChange.originalGroup isEqualToString:@"All Accounts"]) {
+                    [self.tableView reloadRowsAtIndexPaths:@[ rowChange.indexPath ]
+                                          withRowAnimation:UITableViewRowAnimationFade];
+                } else {
+                    [self.tableView deleteRowsAtIndexPaths:@[ rowChange.indexPath ]
+                                          withRowAnimation:UITableViewRowAnimationAutomatic];
+                }
                 break;
             }
             case YapDatabaseViewChangeInsert :
             {
-                [self.tableView insertRowsAtIndexPaths:@[ rowChange.newIndexPath ]
-                                      withRowAnimation:UITableViewRowAnimationAutomatic];
+                if([rowChange.finalGroup isEqualToString:@"All Accounts"]) {
+                    [self.tableView reloadRowsAtIndexPaths:@[ rowChange.newIndexPath ]
+                                          withRowAnimation:UITableViewRowAnimationFade];
+                } else {
+                    [self.tableView insertRowsAtIndexPaths:@[ rowChange.newIndexPath ]
+                                          withRowAnimation:UITableViewRowAnimationAutomatic];
+                }
+                
                 break;
             }
             case YapDatabaseViewChangeMove :

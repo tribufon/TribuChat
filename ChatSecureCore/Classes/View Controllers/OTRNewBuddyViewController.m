@@ -54,9 +54,9 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return self.account.username;
-    }
+//    if (section == 0) {
+//        return self.account.username;
+//    }
     return @"";
 }
 
@@ -66,13 +66,12 @@
     
     self.title = ADD_BUDDY_STRING();
     
+    //self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonPressed:)];
+    
+    
+    UIBarButtonItem *qrButton = [[UIBarButtonItem alloc] initWithTitle:QR_CODE_STRING() style:UIBarButtonItemStylePlain target:self action:@selector(qrButtonPressed:)];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(doneButtonPressed:)];
-    NSMutableArray<UIBarButtonItem*> *rightBarButtonItems = @[doneButton].mutableCopy;
-    if ([QRCodeReader isAvailable]) {
-        UIBarButtonItem *qrButton = [[UIBarButtonItem alloc] initWithTitle:QR_CODE_STRING() style:UIBarButtonItemStylePlain target:self action:@selector(qrButtonPressed:)];
-        [rightBarButtonItems insertObject:qrButton atIndex:0];
-    }
-    self.navigationItem.rightBarButtonItems = rightBarButtonItems;
+    self.navigationItem.rightBarButtonItems = @[doneButton];
     
     self.accountNameTextField = [[UITextField alloc] initWithFrame:CGRectZero];
     self.accountNameTextField.placeholder = XMPP_USERNAME_EXAMPLE_STRING();
@@ -200,6 +199,15 @@
     if ([self checkFields]) {
         NSString * newBuddyAccountName = [[self.accountNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] lowercaseString];
         NSString * newBuddyDisplayName = [self.displayNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        
+        if([newBuddyAccountName containsString:@"@"]) {
+            NSArray *buddyAccountParts = [newBuddyAccountName componentsSeparatedByString:@"@"];
+            newBuddyAccountName = [buddyAccountParts firstObject];
+        }
+        
+        if(![[newBuddyAccountName lowercaseString] hasSuffix:@"chat.tribu.monster"]) {
+            newBuddyAccountName = [NSString stringWithFormat:@"%@@chat.tribu.monster", newBuddyAccountName];
+        }
         
         XMPPJID *jid = [XMPPJID jidWithString:newBuddyAccountName];
         if (!jid) { return; }

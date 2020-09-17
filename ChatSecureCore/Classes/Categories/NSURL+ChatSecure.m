@@ -190,6 +190,10 @@
     return [self.absoluteString containsString:@"/i/#"];
 }
 
+-(BOOL) isDioshareLink {
+    return [[self.absoluteString lowercaseString] containsString:@"dioshare.com"];
+}
+
 /** This will give a user a prompt before calling openURL */
 - (void) promptToShowURLFromViewController:(UIViewController*)viewController sender:(id)sender {
     if (!viewController) { return; }
@@ -211,5 +215,13 @@
     
     [viewController presentViewController:alert animated:YES completion:nil];
 }
+
+@end
+
+@implementation UIViewController (ChatSecureURL)
+- (void) promptToShowURL:(NSURL*)url sender:(id)sender {
+    [url promptToShowURLFromViewController:self sender:sender];
+}
+
 
 @end
