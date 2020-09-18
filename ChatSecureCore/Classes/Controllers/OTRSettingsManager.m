@@ -116,12 +116,41 @@
                                                                  description:ALLOW_DB_PASSPHRASE_BACKUP_DESCRIPTION_STRING()
                                                                  settingsKey:kOTRSettingKeyAllowDBPassphraseBackup];
 
-    if ([PushController getPushPreference] != PushPreferenceEnabled) {
-        OTRViewSetting *pushViewSetting = [[OTRViewSetting alloc] initWithTitle:CHATSECURE_PUSH_STRING() description:nil viewControllerClass:[EnablePushViewController class]];
-        pushViewSetting.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        OTRSettingsGroup *pushGroup = [[OTRSettingsGroup alloc] initWithTitle:PUSH_TITLE_STRING() settings:@[pushViewSetting]];
-        [settingsGroups addObject:pushGroup];
-    }
+    [PushController canReceivePushNotifications:^(BOOL canReceive) {
+        if(!canReceive) {
+            OTRViewSetting *pushViewSetting = [[OTRViewSetting alloc] initWithTitle:CHATSECURE_PUSH_STRING() description:nil];
+            pushViewSetting.actionBlock = ^(id sender) {
+                UIViewController *vcSender = (UIViewController *)sender;
+                if (vcSender == nil) { return; }
+                [vcSender showPrivacyHelperForType:DBPrivacyTypeNotifications controller:^(DBPrivateHelperController *vc) {
+                    vc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+                } didPresent:^{} didDismiss:^{} useDefaultSettingPane: NO];
+            };
+            pushViewSetting.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            OTRSettingsGroup *pushGroup = [[OTRSettingsGroup alloc] initWithTitle:PUSH_TITLE_STRING() settings:@[pushViewSetting]];
+            [settingsGroups addObject:pushGroup];
+        }
+    }];
+//    if (!PushController.canReceivePushNotifications) {
+//        NSLog(@"Notifications are disabled: %@", PushController.canReceivePushNotifications ? @"CAN" : @"CANNOT");
+////        OTRViewSetting *pushViewSetting = [[OTRViewSetting alloc] initWithTitle:CHATSECURE_PUSH_STRING() description:nil viewControllerClass:[EnablePushViewController class]];
+////        pushViewSetting.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+////        OTRSettingsGroup *pushGroup = [[OTRSettingsGroup alloc] initWithTitle:PUSH_TITLE_STRING() settings:@[pushViewSetting]];
+////        [settingsGroups addObject:pushGroup];
+//        OTRViewSetting *pushViewSetting = [[OTRViewSetting alloc] initWithTitle:CHATSECURE_PUSH_STRING() description:nil];
+//        pushViewSetting.actionBlock = ^(id sender) {
+//            UIViewController *vcSender = (UIViewController *)sender;
+//            if (vcSender == nil) { return; }
+//            [vcSender showPrivacyHelperForType:DBPrivacyTypeNotifications controller:^(DBPrivateHelperController *vc) {
+//                vc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+//            } didPresent:^{} didDismiss:^{} useDefaultSettingPane: NO];
+//        };
+//        pushViewSetting.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//        OTRSettingsGroup *pushGroup = [[OTRSettingsGroup alloc] initWithTitle:PUSH_TITLE_STRING() settings:@[pushViewSetting]];
+//        [settingsGroups addObject:pushGroup];
+//    } else {
+//        NSLog(@"Notifications are enabled: %@", PushController.canReceivePushNotifications ? @"CAN" : @"CANNOT");
+//    }
 
     
 //    NSArray *chatSettings = @[deletedDisconnectedConversations, fireMsgTime];

@@ -170,7 +170,7 @@ public class ServerCapabilitiesViewController: UIViewController, UITableViewDele
         permissionCell.button.setTitle(FIX_PERMISSIONS_STRING(), for: .normal)
         permissionCell.buttonAction = {  (cell, sender) in
             PushController.setPushPreference(.enabled)
-            PushController.openAppSettings()
+            PushController.registerForPushNotifications()
         }
         return permissionCell
     }

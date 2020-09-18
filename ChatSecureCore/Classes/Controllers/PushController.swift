@@ -616,70 +616,142 @@ open class PushController: NSObject, PushControllerProtocol {
         }
         var pubsubEndpoint: String?
         var pushPermitted = false
-        let group = DispatchGroup()
-        group.enter()
-        DispatchQueue.main.async {
-            PushController.canReceivePushNotifications(completion: { (enabled) in
-                pushPermitted = enabled
-                group.leave()
-            })
-        }
-        group.enter()
-        getPubsubEndpoint { (endpoint, error) in
-            pubsubEndpoint = endpoint
-            group.leave()
-        }
-        group.notify(queue: .main) {
-            let device = storage.thisDevice()
-            let newPushInfo = PushInfo(
-                pushAPIURL: self.apiClient.baseUrl,
-                hasPushAccount: storage.hasPushAccount(),
-                numUsedTokens: storage.numberUsedTokens(),
-                numUnusedTokens: storage.numberUnusedTokens(),
-                pushPermitted: pushPermitted,
-                pubsubEndpoint: pubsubEndpoint,
-                device: device)
-            callbackQueue.async {
-                completion(newPushInfo)
+        
+        PushController.canReceivePushNotifications({ value in
+            pushPermitted = value
+            
+            self.getPubsubEndpoint { (endpoint, error) in
+                pubsubEndpoint = endpoint
+                
+                let device = storage.thisDevice()
+                let newPushInfo = PushInfo(
+                    pushAPIURL: self.apiClient.baseUrl,
+                    hasPushAccount: storage.hasPushAccount(),
+                    numUsedTokens: storage.numberUsedTokens(),
+                    numUnusedTokens: storage.numberUnusedTokens(),
+                    pushPermitted: pushPermitted,
+                    pubsubEndpoint: pubsubEndpoint,
+                    device: device)
+                callbackQueue.async {
+                    completion(newPushInfo)
+                }
             }
-        }
+        })
+        
+//        let group = DispatchGroup()
+//        group.enter()
+//        PushController.canReceivePushNotifications({ value in
+//            pushPermitted = value
+//        })
+//        group.enter()
+//        group.leave()
+//        getPubsubEndpoint { (endpoint, error) in
+//            pubsubEndpoint = endpoint
+//            group.leave()
+//        }
+//        group.notify(queue: DispatchQueue.global(qos: .default)) {
+//
+//        }
     }
     
     @objc public static func registerForPushNotifications() {
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.badge, .alert, .sound], completionHandler: { (granted, error) in
-            DispatchQueue.main.async(execute: {
-                // TODO: Handle push registration error
-                let app = UIApplication.shared
-                NotificationCenter.default.post(name: Notification.Name(rawValue: OTRUserNotificationsChanged), object: app.delegate, userInfo:nil)
+        if #available(iOS 10.0, *) {
+            let center = UNUserNotificationCenter.current()
+            center.requestAuthorization(options: [.badge, .alert, .sound], completionHandler: { (granted, error) in
+                DispatchQueue.main.async(execute: {
+                    // TODO: Handle push registration error
+                    let app = UIApplication.shared
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: OTRUserNotificationsChanged), object: app.delegate, userInfo:nil)
+                    if (granted) {
+                        app.registerForRemoteNotifications()
+                        PushController.setPushPreference(.enabled)
+                    }
+                })
             })
-        })
-        UIApplication.shared.registerForRemoteNotifications()
+        } else {
+            let notificationSettings = UIUserNotificationSettings(types: [.badge, .alert, .sound], categories: nil)
+            UIApplication.shared.registerUserNotificationSettings(notificationSettings)
+        }
     }
     
-    @objc public static func canReceivePushNotifications(completion: @escaping (Bool)->Void) {
-        UNUserNotificationCenter.current?.getNotificationSettings { (settings) in
+    @objc public static func refreshPushSetting() {
+        if #available(iOS 10.0, *) {
             DispatchQueue.main.async {
-                completion(settings.authorizationStatus == .authorized)
+                let center = UNUserNotificationCenter.current()
+                center.getNotificationSettings { (settings) in
+                    if(settings.authorizationStatus == .authorized)
+                    {
+                        PushController.setPushPreference(.enabled)
+                    }
+                    else
+                    {
+                        PushController.setPushPreference(.disabled)
+                    }
+                }
+            }
+        } else {
+            print("Old version of iOS")
+        }
+        
+    }
+    
+//    public static var isPushNotificationEnabled: Bool {
+//        let dispatchGroup = DispatchGroup()
+//        var result: Bool?
+//        dispatchGroup.enter()
+//        if let settings = UIApplication.shared.currentUserNotificationSettings {
+//            result = UIApplication.shared.isRegisteredForRemoteNotifications
+//                && !settings.types.isEmpty
+//            dispatchGroup.leave()
+//        } else {
+//            result = false
+//            dispatchGroup.leave()
+//        }
+//        dispatchGroup.notify(queue: .main) {
+//            print("Result = \(result)")
+//        }
+//
+//        return result!
+//    }
+    
+//    @objc public static func canReceivePushNotifications() -> Bool {
+//        return isPushNotificationEnabled
+//        //        if let settings = UIApplication.shared.currentUserNotificationSettings {
+//        //            let isEnabled = settings.types != UIUserNotificationType()
+//        //            return isEnabled
+//        //        } else {
+//        //            return false
+//        //        }
+//    }
+    
+    @objc public static func canReceivePushNotifications(_ completion: @escaping (Bool) -> ()) {
+        DispatchQueue.main.async {
+            if let settings = UIApplication.shared.currentUserNotificationSettings {
+                let isEnabled = settings.types != UIUserNotificationType()
+                completion(isEnabled)
+            } else {
+                completion(false)
             }
         }
-    }
-    
-    @objc public static func openAppSettings() {
-        guard let appSettings = URL(string: UIApplication.openSettingsURLString) else { return }
-        UIApplication.shared.open(appSettings)
-    }
-}
-
-extension UNUserNotificationCenter {
-    /// XCTest & UNUserNotificationCenter: requires bundle identifier, crashes when accessed
-    /// http://www.openradar.me/27768556
-    static var current: UNUserNotificationCenter? {
-        // Return if this is a unit test
-        if let _ = NSClassFromString("XCTest") {
-            return nil
-        } else {
-            return .current()
-        }
+        // Making this function async to satisfy the iOS 10 way is extremely difficult due to how OTRSettingsManager.populateSettings works
+        /*
+         if #available(iOS 10.0, *) {
+         let center = UNUserNotificationCenter.currentNotificationCenter()
+         center.getNotificationSettingsWithCompletionHandler({ (settings: UNNotificationSettings) in
+         let isEnabled = settings.authorizationStatus != .Authorized
+         dispatch_async(dispatch_get_main_queue(), {
+         completion(canReceive: isEnabled)
+         })
+         })
+         } else {
+         var isEnabled = false
+         if let settings = UIApplication.sharedApplication().currentUserNotificationSettings() {
+         isEnabled = settings.types != .None
+         }
+         dispatch_async(dispatch_get_main_queue(), {
+         completion(canReceive: isEnabled)
+         })
+         }
+         */
     }
 }

@@ -33,12 +33,12 @@ open class EnablePushViewController: UIViewController {
     
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        PushController.canReceivePushNotifications(completion: { (enabled) in
+        PushController.canReceivePushNotifications { (enabled) in
             if enabled {
                 PushController.setPushPreference(.enabled)
                 self.showNextScreen()
             }
-        })
+        }
     }
     
     override open func viewDidLoad() {

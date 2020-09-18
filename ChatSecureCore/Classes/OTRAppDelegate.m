@@ -138,9 +138,9 @@
     [self.window makeKeyAndVisible];
     [TransactionObserver.shared startObserving];
     
-    if ([PushController getPushPreference] == PushPreferenceEnabled) {
+//    if ([PushController getPushPreference] == PushPreferenceEnabled) {
         [PushController registerForPushNotifications];
-    }
+//    }
     
     [self autoLoginFromBackground:NO];
     [self configureBackgroundTasksWithApplication:application];
