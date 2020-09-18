@@ -121,10 +121,15 @@
     if (!self.isMessageIncoming) {
         return @[];
     }
-    id<OTRMessageProtocol> message = self;
+    OTRBaseMessage<OTRMessageProtocol> *message = self;
     NSMutableArray<id<OTRDownloadMessage>> *downloadMessages = [NSMutableArray array];
     [self.downloadableNSURLs enumerateObjectsUsingBlock:^(NSURL * _Nonnull url, NSUInteger idx, BOOL * _Nonnull stop) {
-        id<OTRDownloadMessage> download = [OTRDirectDownloadMessage downloadWithParentMessage:message url:url];
+        OTRBaseMessage<OTRDownloadMessage> *download = [OTRDirectDownloadMessage downloadWithParentMessage:message url:url];
+        
+        // save auto fire timer
+        NSInteger fireTime = [XMPPTimerManager getFireTime:message.messageId];
+        [XMPPTimerManager setFireTime:download.messageId time:fireTime];
+        
         [downloadMessages addObject:download];
     }];
     return downloadMessages;
@@ -280,6 +285,7 @@
     newMessage.mediaItemUniqueId = message.mediaItemUniqueId;
     newMessage.buddyUniqueId = message.buddyUniqueId;
     newMessage.messageSecurityInfo = message.messageSecurityInfo;
+    [newMessage setAutoFireTime:[message getAutoFireTime]];
     return newMessage;
 }
 

@@ -493,6 +493,10 @@
 		F339F3BD251344DF001BA328 /* PincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F339F3AA251344DF001BA328 /* PincodeViewController.swift */; };
 		F339F3BE251344DF001BA328 /* Diochat.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F339F3AB251344DF001BA328 /* Diochat.xcassets */; };
 		F339F3CA25136E33001BA328 /* Pincode.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F339F3C525136E33001BA328 /* Pincode.storyboard */; };
+		F3FDC26D2514BE7A00190716 /* JSQMessagesCollectionViewCell+Timer.h in Sources */ = {isa = PBXBuildFile; fileRef = F3FDC2672514BE7A00190716 /* JSQMessagesCollectionViewCell+Timer.h */; };
+		F3FDC26E2514BE7A00190716 /* JSQMessagesCollectionViewCell+Timer.m in Sources */ = {isa = PBXBuildFile; fileRef = F3FDC26C2514BE7A00190716 /* JSQMessagesCollectionViewCell+Timer.m */; };
+		F3FDC2712514C65E00190716 /* OTRMessageTimerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F3FDC26F2514C65E00190716 /* OTRMessageTimerManager.m */; };
+		F3FDC2722514C65E00190716 /* OTRMessageTimerManager.h in Sources */ = {isa = PBXBuildFile; fileRef = F3FDC2702514C65E00190716 /* OTRMessageTimerManager.h */; };
 		FC71232B8C2603C869639700 /* libPods-ChatSecureCorePods-ChatSecureCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83C35A70D105953D80691D31 /* libPods-ChatSecureCorePods-ChatSecureCore.a */; };
 /* End PBXBuildFile section */
 
@@ -1154,6 +1158,10 @@
 		F339F3AB251344DF001BA328 /* Diochat.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Diochat.xcassets; sourceTree = "<group>"; };
 		F339F3C525136E33001BA328 /* Pincode.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Pincode.storyboard; sourceTree = "<group>"; };
 		F3ABC9C273758A049CBDA652 /* Pods-ChatSecureCorePods-ChatSecureTests.ios_debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatSecureCorePods-ChatSecureTests.ios_debug.xcconfig"; path = "Target Support Files/Pods-ChatSecureCorePods-ChatSecureTests/Pods-ChatSecureCorePods-ChatSecureTests.ios_debug.xcconfig"; sourceTree = "<group>"; };
+		F3FDC2672514BE7A00190716 /* JSQMessagesCollectionViewCell+Timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JSQMessagesCollectionViewCell+Timer.h"; sourceTree = "<group>"; };
+		F3FDC26C2514BE7A00190716 /* JSQMessagesCollectionViewCell+Timer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "JSQMessagesCollectionViewCell+Timer.m"; sourceTree = "<group>"; };
+		F3FDC26F2514C65E00190716 /* OTRMessageTimerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OTRMessageTimerManager.m; sourceTree = "<group>"; };
+		F3FDC2702514C65E00190716 /* OTRMessageTimerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OTRMessageTimerManager.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1714,6 +1722,8 @@
 		D9C528BA235CB580002B213A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F3FDC2702514C65E00190716 /* OTRMessageTimerManager.h */,
+				F3FDC26F2514C65E00190716 /* OTRMessageTimerManager.m */,
 				D9C528BB235CB580002B213A /* PushStorage.swift */,
 				D9C528BC235CB580002B213A /* OTRDatabaseManager.m */,
 				D9C528BD235CB580002B213A /* FileTransferManager.swift */,
@@ -1879,6 +1889,8 @@
 		D9C52940235CB580002B213A /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				F3FDC2672514BE7A00190716 /* JSQMessagesCollectionViewCell+Timer.h */,
+				F3FDC26C2514BE7A00190716 /* JSQMessagesCollectionViewCell+Timer.m */,
 				D9C52941235CB580002B213A /* UIViewController+ChatSecure.swift */,
 				D9C52942235CB580002B213A /* UIViewController+ChatSecure.h */,
 				D9C52943235CB580002B213A /* NSFileManager+ChatSecure.h */,
@@ -2780,6 +2792,10 @@
 				D9C529BA235CB580002B213A /* PurchaseViewController.swift in Sources */,
 				D9C52A4A235CB581002B213A /* OTRBuddyCache.m in Sources */,
 				D9C52AB3235CB581002B213A /* OTRHoldToTalkView.m in Sources */,
+				F3FDC26D2514BE7A00190716 /* JSQMessagesCollectionViewCell+Timer.h in Sources */,
+				F3FDC26E2514BE7A00190716 /* JSQMessagesCollectionViewCell+Timer.m in Sources */,
+				F3FDC2712514C65E00190716 /* OTRMessageTimerManager.m in Sources */,
+				F3FDC2722514C65E00190716 /* OTRMessageTimerManager.h in Sources */,
 				D9C52ADB235CB581002B213A /* UIViewController+ChatSecure.m in Sources */,
 				D9C52AAE235CB581002B213A /* OTRLockButton.m in Sources */,
 				D9C52ACE235CB581002B213A /* OTRPlayPauseProgressView.m in Sources */,

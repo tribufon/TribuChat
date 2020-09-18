@@ -32,6 +32,8 @@
 #import "OTRProtocolManager.h"
 #import "OTRColors.h"
 #import "JSQMessagesCollectionViewCell+ChatSecure.h"
+#import "./../Categories/JSQMessagesCollectioNViewCell+Timer.h"
+#import "./../Controllers/OTRMessageTimerManager.h"
 @import BButton;
 #import "OTRAttachmentPicker.h"
 #import "OTRImageItem.h"
@@ -79,6 +81,8 @@ typedef NS_ENUM(int, OTRDropDownType) {
     JSQMessagesAvatarImage *_warningAvatarImage;
     JSQMessagesAvatarImage *_accountAvatarImage;
     JSQMessagesAvatarImage *_buddyAvatarImage;
+    
+    NSTimer *fireTimer;
 }
 
 @property (nonatomic, strong) OTRYapViewHandler *viewHandler;
@@ -108,6 +112,8 @@ typedef NS_ENUM(int, OTRDropDownType) {
 @property (nonatomic, strong) NSIndexPath *currentIndexPath;
 @property (nonatomic, strong) id currentMessage;
 @property (nonatomic, strong) NSCache *messageSizeCache;
+
+@property (strong, nonatomic) NSIndexPath *selectedIndexPathForMenu;
 
 @end
 
@@ -147,6 +153,12 @@ typedef NS_ENUM(int, OTRDropDownType) {
 - (void) dealloc {
     [self.lastSeenRefreshTimer invalidate];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    if (fireTimer) {
+        [fireTimer invalidate];
+    }
+    
+    // for menu of each cell
+    [self jsq_registerForNotifications:NO];
 }
 
 - (void)viewDidLoad
@@ -243,6 +255,17 @@ typedef NS_ENUM(int, OTRDropDownType) {
         }
     }];
     
+    
+    // for menu of each cell
+    [self jsq_registerForNotifications:YES];
+    
+    
+    // for fire timer
+    [NSOperationQueue.mainQueue addOperationWithBlock:^{
+        fireTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 repeats:YES block:^(NSTimer * _Nonnull timer) {
+            if (self.collectionView) [self.collectionView reloadData];
+        }];
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -674,7 +697,7 @@ typedef NS_ENUM(int, OTRDropDownType) {
             NSDate *lastSeen = [OTRBuddyCache.shared lastSeenDateForBuddy:buddy];
             OTRThreadStatus status = [OTRBuddyCache.shared threadStatusForBuddy:buddy];
             if (!lastSeen) {
-                titleView.subtitleLabel.text = buddy.username;
+                titleView.subtitleLabel.text = @"";
                 return;
             }
             TTTTimeIntervalFormatter *tf = [[TTTTimeIntervalFormatter alloc] init];
@@ -683,7 +706,7 @@ typedef NS_ENUM(int, OTRDropDownType) {
             NSTimeInterval lastSeenInterval = [lastSeen timeIntervalSinceDate:[NSDate date]];
             NSString *labelString = nil;
             if (status == OTRThreadStatusAvailable) {
-                labelString = buddy.username;
+                labelString = @"";
             } else {
                 labelString = [NSString stringWithFormat:@"%@ %@", ACTIVE_STRING(), [tf stringForTimeInterval:lastSeenInterval]];
             }
@@ -692,9 +715,9 @@ typedef NS_ENUM(int, OTRDropDownType) {
         
         // Set the username if nothing else is set.
         // This should be cleared out when buddy is changed
-        if (!titleView.subtitleLabel.text) {
-            titleView.subtitleLabel.text = buddy.username;
-        }
+//        if (!titleView.subtitleLabel.text) {
+//            titleView.subtitleLabel.text = buddy.username;
+//        }
         
         // Show an "Last seen 11 min ago" in title bar after brief delay
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -918,6 +941,31 @@ typedef NS_ENUM(int, OTRDropDownType) {
 - (BOOL) isGroupChat {
     return [self.threadCollection isEqualToString:OTRXMPPRoom.collection];
 }
+
+- (void)jsq_registerForNotifications:(BOOL)registerForNotifications
+{
+    if (registerForNotifications) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didReceiveMenuWillShowNotification:)
+                                                     name:UIMenuControllerWillShowMenuNotification
+                                                   object:nil];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didReceiveMenuWillHideNotification:)
+                                                     name:UIMenuControllerWillHideMenuNotification
+                                                   object:nil];
+    }
+    else {
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:UIMenuControllerWillShowMenuNotification
+                                                      object:nil];
+
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:UIMenuControllerWillHideMenuNotification
+                                                      object:nil];
+    }
+}
+
 
 #pragma - mark Profile Button Methods
 
@@ -1442,7 +1490,7 @@ typedef NS_ENUM(int, OTRDropDownType) {
     //Fixes times when there needs to be two lines (date & knock sent) and doesn't seem to affect one line instances
     cell.cellTopLabel.numberOfLines = 0;
     
-    id <OTRMessageProtocol>message = [self messageAtIndexPath:indexPath];
+    OTRBaseMessage<OTRMessageProtocol>*message = [self messageAtIndexPath:indexPath];
     
     __block OTRXMPPAccount *account = nil;
     [self.connections.ui readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
@@ -1479,18 +1527,83 @@ typedef NS_ENUM(int, OTRDropDownType) {
     
     // Needed for link interaction
     cell.textView.delegate = self;
+    
+    // for Timer and for lock
+    cell.timerDelegate = self;
+    
+    cell.messageBubbleTopLabel.attributedText = [self collectionView:collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:indexPath];
+    
+    NSDate *unlockedDate = NULL;
+    NSNumber *timeSetting = [NSNumber numberWithInteger:[XMPPTimerManager getFireTime:message.messageId]];//[self numberForOTRSettingKey:kOTRSettingKeyFireMsgTimer];
+    
+    if ([message isMessageIncoming]) {
+        NSDictionary* dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
+        if (dict) {
+            unlockedDate = dict[@"date"];
+            timeSetting = dict[@"expire"];
+        }
+        
+    } else {
+        NSDictionary* dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
+        if (dict) {
+            unlockedDate = dict[@"date"];
+            timeSetting = dict[@"expire"];
+        } else {
+            unlockedDate = message.messageDate;
+            
+            timeSetting = [NSNumber numberWithInteger:[XMPPTimerManager getFireTime:message.messageId]];
+            if (timeSetting == nil || timeSetting.integerValue == 0) {
+                timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:@"messageFireTimer"];
+                
+                if (timeSetting == NULL) {
+                    timeSetting = [NSNumber numberWithInt:48*60*60];
+                }
+            }
+            
+            [OTRMessageTimerManager setUnlockTimerOfMessage:message.uniqueId date:unlockedDate expire:timeSetting];
+        }
+    }
+    
+    if (unlockedDate == NULL || timeSetting == NULL) {
+        [cell showLock:YES];
+        
+    } else {
+        [cell showLock:NO];
+        
+        NSTimeInterval t = [self timerIntervalAt:indexPath];
+        if (t < 0) {
+            [self deleteMessageAtIndexPath:indexPath];
+        }
+    }
+    
     return cell;
 }
 
-- (UIContextMenuConfiguration *)collectionView:(UICollectionView *)collectionView contextMenuConfigurationForItemAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point API_AVAILABLE(ios(13.0)) {
-    return [UIContextMenuConfiguration configurationWithIdentifier:nil previewProvider:nil actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
-        UIAction *delete = [UIAction actionWithTitle:DELETE_STRING() image:nil identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
-            [self deleteMessageAtIndexPath:indexPath];
-        }];
-        UIMenu *menu = [UIMenu menuWithTitle:@"" children:@[delete]];
-        return menu;
-    }];
+- (BOOL)collectionView:(JSQMessagesCollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.selectedIndexPathForMenu = indexPath;
+
+    //  textviews are selectable to allow data detectors
+    //  however, this allows the 'copy, define, select' UIMenuController to show
+    //  which conflicts with the collection view's UIMenuController
+    //  temporarily disable 'selectable' to prevent this issue
+    JSQMessagesCollectionViewCell *selectedCell = (JSQMessagesCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    if (selectedCell.textView) {
+        selectedCell.textView.selectable = NO;
+    }
+
+    return YES;
 }
+
+//- (UIContextMenuConfiguration *)collectionView:(UICollectionView *)collectionView contextMenuConfigurationForItemAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point API_AVAILABLE(ios(13.0)) {
+//    return [UIContextMenuConfiguration configurationWithIdentifier:nil previewProvider:nil actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
+//        UIAction *delete = [UIAction actionWithTitle:DELETE_STRING() image:nil identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+//            [self deleteMessageAtIndexPath:indexPath];
+//        }];
+//        UIMenu *menu = [UIMenu menuWithTitle:@"" children:@[delete]];
+//        return menu;
+//    }];
+//}
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
 {
@@ -1516,7 +1629,7 @@ typedef NS_ENUM(int, OTRDropDownType) {
     //   A side effect is that sent messages may not appear in the UI immediately
     [self finishSendingMessage];
     
-    __block id<OTRMessageProtocol> message = nil;
+    __block OTRBaseMessage<OTRMessageProtocol> *message = nil;
     __block OTRXMPPManager *xmpp = nil;
     [self.connections.ui readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
         id<OTRThreadOwner> thread = [self threadObjectWithTransaction:transaction];
@@ -1524,6 +1637,15 @@ typedef NS_ENUM(int, OTRDropDownType) {
         xmpp = [self xmppManagerWithTransaction:transaction];
     }];
     if (!message || !xmpp) { return; }
+    
+    // add auto fire timer
+    NSNumber *timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:@"messageFireTimer"];
+    if (timeSetting == NULL) {
+        timeSetting = [NSNumber numberWithInt:48*60*60];
+    }
+    [message setAutoFireTime:timeSetting.integerValue];
+    //DDLogInfo(@"\n --- auto timer = %d ---\n", [message getAutoFireTime]);
+    
     [xmpp enqueueMessage:message];
 }
 
@@ -1546,20 +1668,20 @@ typedef NS_ENUM(int, OTRDropDownType) {
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    id <OTRMessageProtocol, JSQMessageData> message = [self messageAtIndexPath:indexPath];
-
-    NSNumber *key = @(message.messageHash);
-    NSValue *sizeValue = [self.messageSizeCache objectForKey:key];
-    if (sizeValue != nil) {
-        return [sizeValue CGSizeValue];
-    }
+//    id <OTRMessageProtocol, JSQMessageData> message = [self messageAtIndexPath:indexPath];
+//
+//    NSNumber *key = @(message.messageHash);
+//    NSValue *sizeValue = [self.messageSizeCache objectForKey:key];
+//    if (sizeValue != nil) {
+//        return [sizeValue CGSizeValue];
+//    }
 
     // Although JSQMessagesBubblesSizeCalculator has its own cache, its size is fixed and quite small, so it quickly chokes on scrolling into the past
     CGSize size = [super collectionView:collectionView layout:collectionViewLayout sizeForItemAtIndexPath:indexPath];
     // The height of the first cell might change: on loading additional messages the date label most likely will disappear
-    if (indexPath.row > 0) {
-        [self.messageSizeCache setObject:[NSValue valueWithCGSize:size] forKey:key];
-    }
+//    if (indexPath.row > 0) {
+//        [self.messageSizeCache setObject:[NSValue valueWithCGSize:size] forKey:key];
+//    }
     return size;
 }
 
@@ -1583,8 +1705,16 @@ typedef NS_ENUM(int, OTRDropDownType) {
     NSParameterAssert(xmpp);
     NSParameterAssert(thread);
     if (!xmpp || !thread) { return; }
+    
+    // add auto fire timer
+    NSNumber *timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:@"messageFireTimer"];
+    if (timeSetting == NULL) {
+        timeSetting = [NSNumber numberWithInt:48*60*60];
+    }
+    //[message setAutoFireTime:timeSetting.integerValue];
+    //DDLogInfo(@"\n --- auto timer = %d ---\n", [message getAutoFireTime]);
 
-    [xmpp.fileTransferManager sendWithImage:photo thread:thread];
+    [xmpp.fileTransferManager sendWithImage:photo thread:thread autoFireTime:timeSetting.integerValue];
 }
 
 #pragma - mark OTRAttachmentPickerDelegate Methods
@@ -1717,7 +1847,7 @@ typedef NS_ENUM(int, OTRDropDownType) {
     }
     
     NSError *messageError = [message messageError];
-    if ((messageError && !messageError.isAutomaticDownloadError && !messageError.isUserCanceledError) ||
+    if ((messageError && !messageError.isAutomaticDownloadError && !messageError.isUserCanceledError && !message.isMessageSent) ||
         ![self isMessageTrusted:message]) {
         return [self warningAvatarImage];
     }
@@ -1846,8 +1976,10 @@ typedef NS_ENUM(int, OTRDropDownType) {
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath
 {
+    OTRBaseMessage<OTRMessageProtocol,JSQMessageData> *message = [self messageAtIndexPath:indexPath];
+    
     if ([self showSenderDisplayNameAtIndexPath:indexPath]) {
-        id<OTRMessageProtocol,JSQMessageData> message = [self messageAtIndexPath:indexPath];
+        //id<OTRMessageProtocol,JSQMessageData> message = [self messageAtIndexPath:indexPath];
         
         __block NSString *displayName = nil;
         if ([message isKindOfClass:[OTRXMPPRoomMessage class]]) {
@@ -1876,7 +2008,39 @@ typedef NS_ENUM(int, OTRDropDownType) {
         return [[NSAttributedString alloc] initWithString:displayName];
     }
     
-    return  nil;
+    // for timer
+    NSDate *unlockedDate;
+    NSNumber *timeSetting = [NSNumber numberWithInteger:[XMPPTimerManager getFireTime:message.messageId]];//[self numberForOTRSettingKey:kOTRSettingKeyFireMsgTimer];
+    
+    if ([message isMessageIncoming]) {
+        NSDictionary* dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
+        if (dict) {
+            unlockedDate = dict[@"date"];
+            timeSetting = dict[@"expire"];
+        }
+    } else {
+        NSDictionary* dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
+        if (dict) {
+            unlockedDate = dict[@"date"];
+            timeSetting = dict[@"expire"];
+        } else {
+            unlockedDate = message.messageDate;
+            timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:@"messageFireTimer"];
+            if (timeSetting == NULL) {
+                timeSetting = [NSNumber numberWithInt:48*60*60];
+            }
+        }
+    }
+    
+    if (unlockedDate == NULL || timeSetting == NULL) {
+        return nil;
+    }
+    
+    NSDate* now = [NSDate date];
+    double interval = [now timeIntervalSinceDate:unlockedDate];
+    double t = ((double)timeSetting.intValue > interval) ? ((double)timeSetting.intValue - interval) : 0;
+    NSString *str = [NSString stringWithFormat:@"%.2ld:%.2ld:%.2ld",(NSInteger)t / 60 / 60, ((NSInteger)t / 60) % 60, (NSInteger)t % 60];
+    return [[NSAttributedString alloc] initWithString:str];
 }
 
 /** Currently uses clock for queued, and checkmark for delivered. */
@@ -2015,7 +2179,9 @@ heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath
     if ([self showSenderDisplayNameAtIndexPath:indexPath]) {
         return kJSQMessagesCollectionViewCellLabelHeightDefault;
     }
-    return 0.0f;
+    
+    // for Timer
+    return 21.0f;//0.0f;
 }
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
@@ -2041,6 +2207,9 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
         buddy.lastMessageId = nil;
         [buddy saveWithTransaction:transaction];
     }];
+    
+    // for lock / unlock msg
+    [OTRMessageTimerManager removeUnlockTimerOfMessage:message.uniqueId];
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapAvatarImageView:(UIImageView *)avatarImageView atIndexPath:(NSIndexPath *)indexPath
@@ -2053,8 +2222,13 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
 {
     id <OTRMessageProtocol,JSQMessageData> message = [self messageAtIndexPath:indexPath];
     if (!message.isMediaMessage) {
+        if ([OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId] == nil) {
+            [self setUnlockedAt:indexPath];
+        }
+        
         return;
     }
+    
     __block OTRMediaItem *item = nil;
     [self.connections.ui readWithBlock:^(YapDatabaseReadTransaction *transaction) {
          item = [OTRMediaItem mediaItemForMessage:message transaction:transaction];
@@ -2065,7 +2239,11 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
     }
     
     if ([item isKindOfClass:[OTRImageItem class]]) {
-        [self showImage:(OTRImageItem *)item fromCollectionView:collectionView atIndexPath:indexPath];
+        if ([OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId] == nil) {
+            [self setUnlockedAt:indexPath];
+        } else {
+            [self showImage:(OTRImageItem *)item fromCollectionView:collectionView atIndexPath:indexPath];
+        }
     }
     else if ([item isKindOfClass:[OTRVideoItem class]]) {
         [self showVideo:(OTRVideoItem *)item fromCollectionView:collectionView atIndexPath:indexPath];
@@ -2180,6 +2358,7 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
                 // We can't use finishSendingMessage here because it might
                 // accidentally clear out unsent message text
                 [self scrollToBottomAnimated:YES];
+                [self.collectionView reloadData];
             }
         }
     }];
@@ -2201,6 +2380,12 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
         [[OTRAppDelegate appDelegate] application:[UIApplication sharedApplication] continueUserActivity:activity restorationHandler:^(NSArray * _Nullable restorableObjects) {
             // TODO: restore stuff
         }];
+        return NO;
+    }
+    
+    if ([URL isDioshareLink]) {
+        [[UIApplication sharedApplication] openURL: URL options:@{} completionHandler:nil];
+        
         return NO;
     }
     
@@ -2413,6 +2598,132 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
         UINavigationController *keyNav = [[UINavigationController alloc] initWithRootViewController:vc];
         [self presentViewController:keyNav animated:YES completion:nil];
     }
+}
+
+
+#pragma mark - Notifications
+
+- (void)didReceiveMenuWillShowNotification:(NSNotification *)notification
+{
+    if (!self.selectedIndexPathForMenu) {
+        return;
+    }
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIMenuControllerWillShowMenuNotification
+                                                  object:nil];
+
+    UIMenuController *menu = [notification object];
+    [menu setMenuVisible:NO animated:NO];
+
+    JSQMessagesCollectionViewCell *selectedCell = (JSQMessagesCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:self.selectedIndexPathForMenu];
+    CGRect selectedCellMessageBubbleFrame = [selectedCell convertRect:selectedCell.messageBubbleContainerView.frame toView:self.view];
+
+    [menu setTargetRect:selectedCellMessageBubbleFrame inView:self.view];
+    [menu setMenuVisible:YES animated:YES];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveMenuWillShowNotification:)
+                                                 name:UIMenuControllerWillShowMenuNotification
+                                               object:nil];
+}
+
+- (void)didReceiveMenuWillHideNotification:(NSNotification *)notification
+{
+    if (!self.selectedIndexPathForMenu) {
+        return;
+    }
+
+    //  per comment above in 'shouldShowMenuForItemAtIndexPath:'
+    //  re-enable 'selectable', thus re-enabling data detectors if present
+    JSQMessagesCollectionViewCell *selectedCell = (JSQMessagesCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:self.selectedIndexPathForMenu];
+    selectedCell.textView.selectable = YES;
+    self.selectedIndexPathForMenu = nil;
+}
+
+
+
+// MARK: - JSQCollectionViewCell Timer Delegate
+
+- (void)deleteMessageAt:(NSIndexPath *)indexPath
+{
+    [self deleteMessageAtIndexPath:indexPath];
+    //[self.collectionView reloadData];
+}
+
+- (NSTimeInterval)timerIntervalAt:(NSIndexPath *)indexPath
+{
+    OTRBaseMessage <OTRMessageProtocol> *message = [self messageAtIndexPath:indexPath];
+    
+    NSDate *now = [NSDate date];
+    
+    NSDictionary *dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
+    NSDate *unlockedDate;
+    NSNumber *timeSetting;
+    
+//    NSString *log = [NSString stringWithFormat:@"TIMER: %@\n", message.messageText];
+//    printf(log.UTF8String);
+    
+    if ([message isMessageIncoming]) {
+        if (dict == NULL) {
+            return -1;
+        } else {
+            unlockedDate = dict[@"date"];
+            timeSetting = dict[@"expire"];
+        }
+        
+    } else {
+        NSDictionary* dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
+        
+        if (dict) {
+            unlockedDate = dict[@"date"];
+            timeSetting = dict[@"expire"];
+            
+        } else {
+            unlockedDate = message.messageDate;
+            timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:@"messageFireTimer"];
+            if (timeSetting == NULL) {
+                timeSetting = [NSNumber numberWithInt:48*60*60];
+            }
+        }
+    }
+    
+    double interval = [now timeIntervalSinceDate:unlockedDate];
+    
+    return (double)timeSetting.intValue - interval;
+}
+
+- (NSTimeInterval)setUnlockedAt:(NSIndexPath *)indexPath
+{
+    OTRBaseMessage *message = [self messageAtIndexPath:indexPath];
+    NSDate *now = [NSDate date];
+    NSDate *unlockedDate = now;
+    
+//    NSNumber *timeSetting = [NSNumber numberWithInteger:48*60*60];
+//    if (message.text) {
+//        NSArray *array =[message.text componentsSeparatedByString:@"@"];
+//        if (array && array.lastObject) {
+//            NSString *tt = array.lastObject;
+//            if ([tt integerValue] != 0) {
+//                timeSetting = [NSNumber numberWithInteger:[tt integerValue]];
+//            }
+//        }
+//    }
+    DDLogInfo(@"\n --- auto timer = %d ---\n", [XMPPTimerManager getFireTime:message.messageId]);
+    NSNumber *timeSetting = [NSNumber numberWithInteger:[XMPPTimerManager getFireTime:message.messageId]];//[self numberForOTRSettingKey:kOTRSettingKeyFireMsgTimer];
+    
+    [OTRMessageTimerManager setUnlockTimerOfMessage:message.uniqueId date:unlockedDate expire:timeSetting];
+    double interval = [now timeIntervalSinceDate:unlockedDate];
+    NSInteger max = (NSInteger)timeSetting.intValue;
+    return ((NSTimeInterval)max - interval);
+}
+
+- (NSNumber *) numberForOTRSettingKey:(NSString *)key
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *num = [defaults objectForKey:key];
+    if (num) return num;
+    return [NSNumber numberWithInt:48*60*60+1];
 }
 
 @end

@@ -60,6 +60,14 @@ static Float64 kOTRMessagesMinimumAudioTime = .5;
     [self.view setNeedsUpdateConstraints];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.microphoneButton setImage:[UIImage imageNamed:@"dbph_eyeIcon"] forState:UIControlStateNormal];
+    [self.microphoneButton setTitle:@"" forState:UIControlStateNormal];
+    [self.microphoneButton setImageEdgeInsets: UIEdgeInsetsMake(5, 5, 5, 5)];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -387,9 +395,10 @@ static Float64 kOTRMessagesMinimumAudioTime = .5;
 {
     if ([sender isEqual:self.microphoneButton]) {
         [self.view endEditing:YES];
-        [self addPush2TalkButton];
+        [self showTimeActionSheet];
+        //[self addPush2TalkButton];
         
-        self.inputToolbar.contentView.rightBarButtonItem = self.keyboardButton;
+        //self.inputToolbar.contentView.rightBarButtonItem = self.keyboardButton;
     } else if ([sender isEqual:self.keyboardButton]) {
         [self removePush2TalkButton];
         [self removeTrashViewItems];
@@ -398,6 +407,43 @@ static Float64 kOTRMessagesMinimumAudioTime = .5;
     } else {
         [super didPressAccessoryButton:sender];
     }
+}
+
+- (void)showTimeActionSheet
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+//    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"30 seconds" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        [[NSUserDefaults standardUserDefaults] setObject:@30 forKey:@"messageFireTimer"];
+//        [[NSUserDefaults standardUserDefaults] synchronize];
+//    }];
+//    [alert addAction:action1];
+    
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"5 minutes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[NSUserDefaults standardUserDefaults] setObject:@(5*60) forKey:@"messageFireTimer"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }];
+    [alert addAction:action2];
+    
+    UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"1 hour" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[NSUserDefaults standardUserDefaults] setObject:@(60*60) forKey:@"messageFireTimer"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }];
+    [alert addAction:action3];
+    
+    UIAlertAction *action4 = [UIAlertAction actionWithTitle:@"24 hours" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[NSUserDefaults standardUserDefaults] setObject:@(24*60*60) forKey:@"messageFireTimer"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }];
+    [alert addAction:action4];
+    
+    UIAlertAction *action5 = [UIAlertAction actionWithTitle:@"48 hours" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[NSUserDefaults standardUserDefaults] setObject:@(48*60*60) forKey:@"messageFireTimer"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }];
+    [alert addAction:action5];
+    
+    [self presentViewController:alert animated:true completion:nil];
 }
 
 @end

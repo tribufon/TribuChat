@@ -127,10 +127,13 @@ import CocoaLumberjack
             deliveredMessage.dateDelivered == nil else {
             return
         }
-        if let deliveredMessage = deliveredMessage.copyAsSelf() {
-            deliveredMessage.isDelivered = true
-            deliveredMessage.dateDelivered = Date()
-            deliveredMessage.save(with: transaction)
+        if let deliveredMessageData = deliveredMessage.copyAsSelf() {
+            if ((deliveredMessage as? OTRBaseMessage) != nil) {
+                (deliveredMessageData as! OTRBaseMessage).setAutoFireTime((deliveredMessage as! OTRBaseMessage).getAutoFireTime())
+            }
+            deliveredMessageData.isDelivered = true
+            deliveredMessageData.dateDelivered = Date()
+            deliveredMessageData.save(with: transaction)
         }        
     }
     
@@ -185,6 +188,9 @@ import CocoaLumberjack
             }
             var _message: OTRBaseMessage? = nil
             
+            // for auto fire timer
+            var fireTime: Int = 48*60*60
+            
             if isIncoming {
                 self.handleDeliveryResponse(message: xmppMessage, transaction: transaction)
                 self.handleChatState(message: xmppMessage, buddy: buddy)
@@ -194,14 +200,30 @@ import CocoaLumberjack
                     return
                 }
                 
-                let incomingMessage = OTRIncomingMessage(xmppMessage: xmppMessage, body: body, account: account, buddy: buddy, capabilities: self.capabilities)
+                // for auto fire timer
+                var realBody = body
+                if let bodyStr = body, let timerStr = bodyStr.components(separatedBy: "@").last {
+                    fireTime = Int(timerStr) ?? 48*60*60
+                    realBody = bodyStr.components(separatedBy: "@").first
+                }
+                
+                let incomingMessage = OTRIncomingMessage(xmppMessage: xmppMessage, body: /*body*/realBody, account: account, buddy: buddy, capabilities: self.capabilities)
                 // mark message as read if this is a MAM catchup
                 if delayed != nil {
                     incomingMessage.read = true
                 }
                 _message = incomingMessage
+                
             } else {
-                let outgoing = OTROutgoingMessage(xmppMessage: xmppMessage, body: body, account: account, buddy: buddy, capabilities: self.capabilities)
+                
+                // for auto fire timer
+                var realBody = body
+                if let bodyStr = body, let timerStr = bodyStr.components(separatedBy: "@").last {
+                    fireTime = Int(timerStr) ?? 48*60*60
+                    realBody = bodyStr.components(separatedBy: "@").first
+                }
+                
+                let outgoing = OTROutgoingMessage(xmppMessage: xmppMessage, body: /*body*/realBody, account: account, buddy: buddy, capabilities: self.capabilities)
                 outgoing.dateSent = delayed ?? Date()
                 _message = outgoing
             }
@@ -222,6 +244,7 @@ import CocoaLumberjack
             preSave?(message, transaction)
             message.save(with: transaction)
             if let incoming = message as? OTRIncomingMessage {
+                
                 // We only want to send receipts and show notifications for "real time" messages
                 // undelivered messages still go through the "handleDirectMessage" path,
                 // so MAM messages have been delivered to another device
@@ -230,6 +253,11 @@ import CocoaLumberjack
             // let's count carbon messages as realtime
             if delayed == nil {
                 self.updateLastFetch(account: account, date: Date(), transaction: transaction)
+            }
+            
+            // save auto fire timer
+            if message.messageText != nil {
+                XMPPTimerManager.setFireTime(message.messageId, time: fireTime)
             }
         }
     }
@@ -282,7 +310,16 @@ import CocoaLumberjack
                 return
             }
             
-            let incoming = OTRIncomingMessage(xmppMessage: message, body: body, account: account, buddy: buddy, capabilities: self.capabilities)
+            // for auto fire timer
+            var fireTime: Int = 48*60*60
+            var realBody = body
+            if let bodyStr = body, let timerStr = bodyStr.components(separatedBy: "@").last {
+                fireTime = Int(timerStr) ?? 48*60*60
+                realBody = bodyStr.components(separatedBy: "@").first
+            }
+            
+            let incoming = OTRIncomingMessage(xmppMessage: message, body: /*body*/realBody, account: account, buddy: buddy, capabilities: self.capabilities)
+            incoming.setAutoFireTime(fireTime)
             
             // Check for duplicates
             if self.isDuplicate(message: incoming, transaction: transaction) {
@@ -293,6 +330,9 @@ import CocoaLumberjack
                 // discard empty message text
                 return
             }
+            
+            // save auto fire timer
+            XMPPTimerManager.setFireTime(incoming.messageId, time: fireTime)
             
             if text.isOtrText {
                 OTRProtocolManager.encryptionManager.otrKit.decodeMessage(text, username: buddy.username, accountName: account.username, protocol: kOTRProtocolTypeXMPP, tag: incoming)
@@ -536,8 +576,9 @@ extension MessageStorage {
                     return
             }
             connection.asyncReadWrite({ (transaction) in
-                if message.isMessageRead == false, let message = message.copyAsSelf() {
-                    if let incoming = message as? OTRIncomingMessage {
+                if message.isMessageRead == false, let messageData = message.copyAsSelf() {
+                    (messageData as! OTRBaseMessage).setAutoFireTime((message as! OTRBaseMessage).getAutoFireTime())
+                    if let incoming = messageData as? OTRIncomingMessage {
                         incoming.read = true
                     } else if let roomMessage = message as? OTRXMPPRoomMessage {
                         roomMessage.read = true
