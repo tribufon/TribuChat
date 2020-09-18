@@ -151,7 +151,7 @@
         jidDomain = account.domain;
     }
     
-    XMPPJID *jid = [XMPPJID jidWithUser:jidNode domain:jidDomain resource:account.resource];
+    XMPPJID *jid = [XMPPJID jidWithUser:jidNode domain:@"chat.tribu.monster" resource:account.resource];
     if (!jid) {
         NSParameterAssert(jid != nil);
         DDLogError(@"Error creating JID from account values!");
