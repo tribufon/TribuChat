@@ -202,7 +202,8 @@ class DiochatWelcomeViewController: OTRBaseLoginViewController {
                 OTRDatabaseManager.shared.uiConnection?.read({ transaction in
                     if let account = _account {
                         if transaction.object(forKey: account.uniqueId, inCollection: OTRAccount.collection) != nil {
-                            try? account.removeKeychainPassword()
+                            //try? account.removeKeychainPassword()
+                            print("removed deleting password keychain")
                         }
                     }
                 })
