@@ -1,6 +1,0 @@
-module Pods_ChatSecureCorePods_ChatSecureTests {
-  umbrella header "Pods-ChatSecureCorePods-ChatSecureTests-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -1,6 +1,0 @@
-module IOCipher {
-  umbrella header "IOCipher-umbrella.h"
-
-  export *
-  module * { export * }
-}

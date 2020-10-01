@@ -1,1 +1,0 @@
-../../../../Submodules/JSQMessagesViewController/JSQMessagesViewController/Views/JSQMessagesLabel.h

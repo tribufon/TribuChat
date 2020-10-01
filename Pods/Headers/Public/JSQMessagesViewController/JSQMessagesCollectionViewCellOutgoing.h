@@ -1,1 +1,0 @@
-../../../../Submodules/JSQMessagesViewController/JSQMessagesViewController/Views/JSQMessagesCollectionViewCellOutgoing.h

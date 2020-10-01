@@ -1,6 +1,0 @@
-module VENTouchLock {
-  umbrella header "VENTouchLock-umbrella.h"
-
-  export *
-  module * { export * }
-}

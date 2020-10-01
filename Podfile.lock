@@ -309,7 +309,7 @@ DEPENDENCIES:
   - LumberjackConsole (from `Submodules/LumberjackConsole/LumberjackConsole.podspec`)
   - Mantle (from `Podspecs/Mantle.podspec.json`)
   - MWFeedParser (~> 1.0)
-  - OpenInChrome (~> 0.0)
+  - OpenInChrome
   - OTRAssets (from `OTRAssets.podspec`)
   - OTRKit (from `Submodules/OTRKit/OTRKit.podspec`)
   - ParkedTextField (from `https://github.com/gmertk/ParkedTextField.git`, commit `a3800e3`)
@@ -466,6 +466,6 @@ SPEC CHECKSUMS:
   YapTaskQueue: f3b23875bead71a7ee57b65637ce9c0e98b68c34
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 4676489299844a046675aed0d69100fe56cb8b31
+PODFILE CHECKSUM: 33409fd1e5ae112e2c7ec8c41b479e2a10d6c373
 
 COCOAPODS: 1.9.3

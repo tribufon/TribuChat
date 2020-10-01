@@ -1,6 +1,0 @@
-module TUSafariActivity {
-  umbrella header "TUSafariActivity-umbrella.h"
-
-  export *
-  module * { export * }
-}

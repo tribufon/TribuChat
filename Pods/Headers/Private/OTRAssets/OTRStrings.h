@@ -1,1 +1,0 @@
-../../../../OTRAssets/Strings/OTRStrings.h

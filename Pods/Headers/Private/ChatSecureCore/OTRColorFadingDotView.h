@@ -1,1 +1,0 @@
-../../../../ChatSecure/Classes/Views/OTRColorFadingDotView.h

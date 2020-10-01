@@ -1,1 +1,0 @@
-../../../../Submodules/XMPPFramework/Extensions/XEP-0172/XMPPPresence+XEP_0172.h

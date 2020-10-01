@@ -25,7 +25,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 abstract_target 'ChatSecureCorePods' do
   # User Interface
   pod "Appirater", '~> 2.0'
-  pod 'OpenInChrome', '~> 0.0'
+  pod 'OpenInChrome'
   pod 'JTSImageViewController', '~> 1.4'
   pod 'BButton', '~> 4.0'
   pod 'TUSafariActivity', '~> 1.0'

@@ -1,1 +1,0 @@
-../../../../ChatSecure/Classes/View Controllers/OTRDoubleSettingViewController.h

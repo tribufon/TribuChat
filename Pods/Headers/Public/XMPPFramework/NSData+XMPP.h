@@ -1,1 +1,0 @@
-../../../../Submodules/XMPPFramework/Categories/NSData+XMPP.h

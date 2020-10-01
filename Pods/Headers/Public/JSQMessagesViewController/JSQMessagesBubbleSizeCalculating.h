@@ -1,1 +1,0 @@
-../../../../Submodules/JSQMessagesViewController/JSQMessagesViewController/Layout/JSQMessagesBubbleSizeCalculating.h

@@ -1,6 +1,0 @@
-module CPAProxy {
-  umbrella header "CPAProxy-umbrella.h"
-
-  export *
-  module * { export * }
-}
