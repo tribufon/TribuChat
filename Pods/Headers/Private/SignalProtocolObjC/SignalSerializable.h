@@ -1,1 +1,0 @@
-../../../../Submodules/SignalProtocol-ObjC/Classes/Models/SignalSerializable.h

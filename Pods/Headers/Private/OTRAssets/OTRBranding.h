@@ -1,1 +1,0 @@
-../../../../OTRAssets/OTRBranding.h

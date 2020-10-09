@@ -1,6 +1,0 @@
-module ChatSecure_Push_iOS {
-  umbrella header "ChatSecure-Push-iOS-umbrella.h"
-
-  export *
-  module * { export * }
-}

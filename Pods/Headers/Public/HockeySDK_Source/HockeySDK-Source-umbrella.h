@@ -1,1 +1,0 @@
-../../../Target Support Files/HockeySDK-Source/HockeySDK-Source-umbrella.h

@@ -1,1 +1,0 @@
-../../../../ChatSecure/Classes/Diostuff/DBPrivacyHelper/UIViewController+DBPrivacyHelper.h

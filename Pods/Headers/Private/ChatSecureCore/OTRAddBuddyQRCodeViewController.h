@@ -1,1 +1,0 @@
-../../../../ChatSecure/Classes/View Controllers/Onboarding/OTRAddBuddyQRCodeViewController.h

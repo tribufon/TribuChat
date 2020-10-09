@@ -1,1 +1,0 @@
-../../../../ChatSecure/Classes/Model/Yap Storage/OTRMediaItem+Private.h

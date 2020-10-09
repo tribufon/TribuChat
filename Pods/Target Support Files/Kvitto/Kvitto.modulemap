@@ -1,6 +1,0 @@
-module Kvitto {
-  umbrella header "Kvitto-umbrella.h"
-
-  export *
-  module * { export * }
-}

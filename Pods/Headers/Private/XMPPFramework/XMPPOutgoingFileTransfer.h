@@ -1,1 +1,0 @@
-../../../../Submodules/XMPPFramework/Extensions/FileTransfer/XMPPOutgoingFileTransfer.h

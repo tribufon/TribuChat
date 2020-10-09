@@ -1,1 +1,0 @@
-../../../Target Support Files/XMPPFramework/XMPPFramework-umbrella.h
