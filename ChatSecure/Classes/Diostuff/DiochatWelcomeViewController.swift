@@ -103,6 +103,7 @@ class DiochatWelcomeViewController: OTRBaseLoginViewController {
         }
     
     @objc private func loginAction() {
+        loginButton.isEnabled = false
         processFormLogin(self.nameTextField.text, password: self.passwordTextField.text)
     }
     
@@ -223,8 +224,10 @@ class DiochatWelcomeViewController: OTRBaseLoginViewController {
                     })
                     
                     self.handleError(error!)
+                    self.loginButton.isEnabled = true
                 } else {
                     self.handleSuccess(withNewAccount: account, sender: self.loginButton)
+                    self.loginButton.isEnabled = true
                 }
             }
         }
