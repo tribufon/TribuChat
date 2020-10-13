@@ -143,76 +143,92 @@ class DiochatWelcomeViewController: OTRBaseLoginViewController {
     }
     
     private func processFormLogin(_ username: String?, password: String?) {
-        guard let _username = username,
-            !_username.isEmpty,
-            let _password = password,
-            !_password.isEmpty else { return }
-        
-        print("{\"username\": \(_username), \"password\": \(_password) }")
-        
-        guard let account = OTRXMPPAccount(username: "", accountType: .jabber) else { return }
-        
-        var jidNode = ""
-        var jidDomain = ""
-        let usernameComponents = _username.components(separatedBy: "@")
-        if usernameComponents.count == 2 {
-            jidNode = usernameComponents.first ?? ""
-            jidDomain = usernameComponents.last ?? ""
-        } else {
-            jidNode = _username
-        }
-        
-        let deviceId = getDeviceID()
-        
-        account.rememberPassword = true
-        account.password = _password
-        account.autologin = true
-        account.domain = "chat.tribu.monster"
-        account.port = OTRXMPPAccount.defaultPort()
-        account.resource = deviceId
-        account.disableAutomaticURLFetching = false
+        let serverGroup = DispatchGroup()
+        DispatchQueue.global().async {
 
-        if jidDomain.isEmpty {
-            jidDomain = "chat.tribu.monster"
-        }
-        
-        guard let jid = XMPPJID(user: jidNode, domain: jidDomain, resource: account.resource) else { return }
-        
-        account.username = jid.bare
-        if let jidResource = jid.resource {
-            account.resource = jidResource
-        }
-        account.displayName = jidNode
-        
-        OTRProtocolManager.encryptionManager.otrKit.generatePrivateKey(forAccountName: account.username, protocol: kOTRProtocolTypeXMPP) { [weak self] fingerprint, error in
-
-            if fingerprint != nil {
-                print("Fingerprint for '\(jid.bare)': \(fingerprint?.description)")
+            guard let _username = username,
+                !_username.isEmpty,
+                let _password = password,
+                !_password.isEmpty else { return }
+            
+            print("{\"username\": \(_username), \"password\": \(_password) }")
+            
+            guard let account = OTRXMPPAccount(username: "", accountType: .jabber) else { return }
+            
+            var jidNode = ""
+            var jidDomain = ""
+            let usernameComponents = _username.components(separatedBy: "@")
+            if usernameComponents.count == 2 {
+                jidNode = usernameComponents.first ?? ""
+                jidDomain = usernameComponents.last ?? ""
             } else {
-                print("Error is: \(error?.localizedDescription ?? "Unknown")")
+                jidNode = _username
             }
-        }
-        
-        self.account = account
-        
-        self.loginHandler.performAction(withValidForm: nil, account: account, progress: { (progress, summary) in
-            print("Progress: \(progress/100)")
-        }) { (_account, error) in
-            if error != nil {
-                OTRDatabaseManager.shared.uiConnection?.read({ transaction in
-                    if let account = _account {
-                        if transaction.object(forKey: account.uniqueId, inCollection: OTRAccount.collection) != nil {
-                            //try? account.removeKeychainPassword()
-                            print("removed deleting password from keychain")
+            
+            let deviceId = self.getDeviceID()
+            
+            account.rememberPassword = true
+            account.password = _password
+            account.autologin = true
+            //Fetching from remote XML from which server are the specific credentials
+            serverGroup.enter()
+            ChatServerParser.shared.determineChatServerFor(_username, _password) { (foundServer) in
+                account.domain = foundServer
+                serverGroup.leave()
+            }
+            serverGroup.wait()
+            
+            account.port = OTRXMPPAccount.defaultPort()
+            account.resource = deviceId
+            account.disableAutomaticURLFetching = false
+            
+            if jidDomain.isEmpty {
+                if account.domain != nil{
+                    jidDomain = account.domain!
+                } else {
+                    jidDomain = "chat.tribu.monster"
+                }
+            }
+            
+            guard let jid = XMPPJID(user: jidNode, domain: jidDomain, resource: account.resource) else { return }
+            
+            account.username = jid.bare
+            if let jidResource = jid.resource {
+                account.resource = jidResource
+            }
+            account.displayName = jidNode
+            
+            OTRProtocolManager.encryptionManager.otrKit.generatePrivateKey(forAccountName: account.username, protocol: kOTRProtocolTypeXMPP) { [weak self] fingerprint, error in
+
+                if fingerprint != nil {
+                    print("Fingerprint for '\(jid.bare)': \(fingerprint?.description)")
+                } else {
+                    print("Error is: \(error?.localizedDescription ?? "Unknown")")
+                }
+            }
+            
+            self.account = account
+            
+            self.loginHandler.performAction(withValidForm: nil, account: account, progress: { (progress, summary) in
+                print("Progress: \(progress/100)")
+            }) { (_account, error) in
+                if error != nil {
+                    OTRDatabaseManager.shared.uiConnection?.read({ transaction in
+                        if let account = _account {
+                            if transaction.object(forKey: account.uniqueId, inCollection: OTRAccount.collection) != nil {
+                                //try? account.removeKeychainPassword()
+                                print("removed deleting password from keychain")
+                            }
                         }
-                    }
-                })
-                
-                self.handleError(error!)
-            } else {
-                self.handleSuccess(withNewAccount: account, sender: self.loginButton)
+                    })
+                    
+                    self.handleError(error!)
+                } else {
+                    self.handleSuccess(withNewAccount: account, sender: self.loginButton)
+                }
             }
         }
+        
     }
     
     override func handleSuccess(withNewAccount account: OTRAccount, sender: Any) {
