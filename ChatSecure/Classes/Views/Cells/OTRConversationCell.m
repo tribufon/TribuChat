@@ -107,7 +107,14 @@
     UIFont *currentFont = self.conversationLabel.font;
     CGFloat fontSize = currentFont.pointSize;
     NSError *messageError = lastMessage.messageError;
-    NSString *messageText = lastMessage.messageText;
+    NSString *messageText = [NSString new];
+    
+    if (lastMessage.isMessageRead) {
+        messageText = lastMessage.messageText;
+    } else {
+        messageText = @"New message !";
+    }
+    
     if (!messageText) {
         messageText = @"";
     }
