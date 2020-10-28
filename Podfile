@@ -50,7 +50,7 @@ abstract_target 'ChatSecureCorePods' do
   # Network
   pod 'CocoaAsyncSocket', '~> 7.6.0'
   pod 'ProxyKit/Client', '~> 1.2.0'
-  pod 'GCDWebServer', '~> 3.4'
+  pod 'GCDWebServer', '3.5.3'
   pod 'CPAProxy', :path => 'Submodules/CPAProxy/CPAProxy.podspec'
   pod 'XMPPFramework/Swift', :path => 'Submodules/XMPPFramework/XMPPFramework.podspec'
 

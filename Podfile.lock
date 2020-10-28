@@ -73,7 +73,7 @@ PODS:
     - YapDatabase/SQLCipher (~> 3.1.3)
     - YapTaskQueue/SQLCipher
     - ZXingObjC (~> 3.6)
-  - CocoaAsyncSocket (7.6.3)
+  - CocoaAsyncSocket (7.6.4)
   - CocoaLumberjack (3.5.3):
     - CocoaLumberjack/Core (= 3.5.3)
   - CocoaLumberjack/Core (3.5.3)
@@ -81,8 +81,8 @@ PODS:
     - CocoaLumberjack/Core
   - CPAProxy (1.2.0):
     - CocoaAsyncSocket
-  - DTFoundation/Core (1.7.14)
-  - DTFoundation/DTASN1 (1.7.14):
+  - DTFoundation/Core (1.7.16)
+  - DTFoundation/DTASN1 (1.7.16):
     - DTFoundation/Core
   - FormatterKit (1.9.0):
     - FormatterKit/AddressFormatter (= 1.9.0)
@@ -118,7 +118,7 @@ PODS:
     - GCDWebServer/Core (= 3.5.3)
   - GCDWebServer/Core (3.5.3)
   - HockeySDK-Source (5.1.4)
-  - HTMLReader (2.1.4)
+  - HTMLReader (2.1.5)
   - IOCipher/common (0.1.0):
     - CocoaLumberjack
     - libsqlfs/SQLCipher
@@ -135,10 +135,10 @@ PODS:
     - KissXML/Additions
     - KissXML/Core
   - KissXML/Core (5.3.1)
-  - Kvitto (1.0.3):
+  - Kvitto (1.0.5):
     - DTFoundation/DTASN1 (~> 1.7.13)
-    - Kvitto/Core (= 1.0.3)
-  - Kvitto/Core (1.0.3):
+    - Kvitto/Core (= 1.0.5)
+  - Kvitto/Core (1.0.5):
     - DTFoundation/DTASN1 (~> 1.7.13)
   - KVOController (1.2.0)
   - libidn (1.35)
@@ -146,7 +146,7 @@ PODS:
   - libsqlfs/SQLCipher (1.3.2):
     - libsqlfs/common
     - SQLCipher (>= 3.4.0)
-  - LicensePlist (2.13.0)
+  - LicensePlist (3.0.5)
   - LumberjackConsole (3.3.1):
     - CocoaLumberjack (>= 3.x)
     - NBUCore (>= 2.1.0)
@@ -194,7 +194,7 @@ PODS:
   - ProxyKit/common (1.2.0):
     - CocoaAsyncSocket (~> 7.6)
     - CocoaLumberjack
-  - PureLayout (3.1.5)
+  - PureLayout (3.1.6)
   - QRCodeReaderViewController (4.0.2)
   - SAMKeychain (1.5.3)
   - SignalProtocolC (2.3.2)
@@ -298,7 +298,7 @@ DEPENDENCIES:
   - CocoaAsyncSocket (~> 7.6.0)
   - CocoaLumberjack/Swift (~> 3.5.0)
   - CPAProxy (from `Submodules/CPAProxy/CPAProxy.podspec`)
-  - GCDWebServer (~> 3.4)
+  - GCDWebServer (= 3.5.3)
   - HockeySDK-Source
   - IOCipher/GCDWebServer (from `Submodules/IOCipher/IOCipher.podspec`)
   - JSQMessagesViewController (from `Submodules/JSQMessagesViewController/JSQMessagesViewController.podspec`)
@@ -399,7 +399,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   libsqlfs:
-    :commit: 4456f8a83c7af7dc6b8cf6456dae94fe7979c24c
+    :commit: 0b406595322ae73ee578d94077d45803b359b1f5
     :git: https://github.com/ChatSecure/libsqlfs.git
   Mantle:
     :commit: 9aadbd27b1cc161dca884ec0cef198fa56e83d11
@@ -420,23 +420,23 @@ SPEC CHECKSUMS:
   BButton: ab0f2ed3b998ae73c5188b57d270d81e4a1eeb27
   ChatSecure-Push-iOS: ed51f98bc019be9e2d859604677a21a4ee68422e
   ChatSecureCore: 3dbcb2264d3dbb8613176a2efe1005df1e64e9fe
-  CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
+  CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
   CocoaLumberjack: 2f44e60eb91c176d471fdba43b9e3eae6a721947
   CPAProxy: a99dea60c17d81147c728123138537e815341ea6
-  DTFoundation: 25aa19bb7c6e225b1dfae195604fb8cf1da0ab4c
+  DTFoundation: e7781d9fd2f202bfd451fbbf8cab71ce83b46498
   FormatterKit: 184db51bf120b633693a73624a4cede89ec51a41
   GCDWebServer: c0ab22c73e1b84f358d1e2f74bf6afd1c60829f2
   HockeySDK-Source: 19c81ed3ed02d05d773941e7f935e0fbcb64f47f
-  HTMLReader: 2fc5ccf6a041b7070d9b43b101034cba63d2ae2a
+  HTMLReader: 8056b3418baad09718902a1b39361c63b14a894f
   IOCipher: 89435857693a11d24024cbc3da541549eb36fb0e
   JSQMessagesViewController: eade14c4687901c4e53dec681b8e3021269a2b38
   JTSImageViewController: 1f8ce1cc93dab0d0af8e53badeea7528560cfec9
   KissXML: 5c8e0f2e8b9f071d3e1ae123dec3eb5da615c10c
-  Kvitto: d451f893f84ad669850b7cb7d3f8781363e14232
+  Kvitto: e5c903c656cce6bfebbf337d992184cf03cb4853
   KVOController: d72ace34afea42468329623b3379ab3cd1d286b6
   libidn: e4576a956b797c584c77aaedfc6e3dd639b61bdc
   libsqlfs: b3c1be163c2fba6b041379cfa5861033783ddae9
-  LicensePlist: a5395002c74b45c38bb8661374f5608534f0f5a7
+  LicensePlist: 11c638fa9dc22ddb5771cdf910242ae1ba2684da
   LumberjackConsole: 218fed8e807ba6ce0bedbba06b7b295dc0efaf0c
   Mantle: bdb09649c721dcefc53132f3767f6e40d4d47740
   MaterialComponents: 1aef341d47fbaed37ddb5163a01af94cb6da8506
@@ -450,7 +450,7 @@ SPEC CHECKSUMS:
   OTRKit: 0b36882ef751acebc52f0ad6d8daea421668e95f
   ParkedTextField: 865c835f54b39c611b580e0fe60199538cbc2f67
   ProxyKit: ae9ed36909d0e68b27087eb3ed5aa35c86f8bff0
-  PureLayout: 9b4ad47b2f0388c84ff534af23d96e720c1b875a
+  PureLayout: bd3c4ec3a3819ad387c99ebb72c6b129c3ed4d2d
   QRCodeReaderViewController: e8f27d035b3e72b1d4b1c61ff66458287e3be0ff
   SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
   SignalProtocolC: 051512e9f3abfeb4120c5e9673af9ae0ee370070
@@ -466,6 +466,6 @@ SPEC CHECKSUMS:
   YapTaskQueue: f3b23875bead71a7ee57b65637ce9c0e98b68c34
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 33409fd1e5ae112e2c7ec8c41b479e2a10d6c373
+PODFILE CHECKSUM: 566e886ae5fe8d448f1d703d83850a29395763cf
 
 COCOAPODS: 1.9.3

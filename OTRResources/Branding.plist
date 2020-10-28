@@ -28,6 +28,8 @@
 	<string>https://tribu.monster/i/#</string>
 	<key>pushAPIURL</key>
 	<string>https://push.tribu.monster/api/v1/</string>
+	<key>pushAPIURLDevelopment</key>
+	<string>https://devpush.tribu.monster/api/v1/</string>
 	<key>StagingPushAPIURL</key>
 	<string>https://push.tribu.monster/api/v1/</string>
 	<key>TestflightSignupURL</key>

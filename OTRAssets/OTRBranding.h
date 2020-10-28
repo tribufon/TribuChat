@@ -68,6 +68,9 @@ FOUNDATION_EXPORT NSString *const kOTRSettingKeyLanguage;
 /** Push server URL e.g. https://push.example.com/api/v1/ */
 @property (class, readonly) NSURL* pushAPIURL;
 
+/** Development Push server URL e.g. https://push.example.com/api/v1/ */
+@property (class, readonly) NSURL* pushAPIURLDevelopment;
+
 /** Push staging server URL e.g. https://staging.push.example.com/api/v1/ */
 @property (class, readonly, nullable) NSURL* pushStagingAPIURL;
 

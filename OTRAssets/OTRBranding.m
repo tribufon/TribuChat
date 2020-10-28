@@ -84,6 +84,13 @@ static NSString *const GOOGLE_APP_SCOPE = @"GOOGLE_APP_SCOPE";
     return url;
 }
 
+/** Development Push server URL e.g. https://chatsecure-push.herokuapp.com/api/v1/ */
++ (NSURL *)pushAPIURLDevelopment {
+    NSString *urlString = [[self defaultPlist] objectForKey:@"pushAPIURLDevelopment"];
+    NSURL *url = [NSURL URLWithString:urlString];
+    return url;
+}
+
 /** Push staging server URL e.g. https://chatsecure-push.herokuapp.com/api/v1/ */
 + (NSURL *)pushStagingAPIURL {
     NSString *urlString = [[self defaultPlist] objectForKey:@"StagingPushAPIURL"];

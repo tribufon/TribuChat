@@ -565,6 +565,7 @@
 		92CC68F21F43054E0006CDF8 /* OTRComposeGroupBuddyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OTRComposeGroupBuddyCell.xib; sourceTree = "<group>"; };
 		92DC0F751F442DBA00318E49 /* OTRBuddyInfoCheckableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTRBuddyInfoCheckableCell.swift; sourceTree = "<group>"; };
 		92ED91D520441B92002011FB /* OTRMessagesViewController+SupplementaryViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OTRMessagesViewController+SupplementaryViews.swift"; sourceTree = "<group>"; };
+		99555EAC70131C9944F52A51 /* Pods-ChatSecureCorePods-ChatSecureTests.development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatSecureCorePods-ChatSecureTests.development.xcconfig"; path = "Pods/Target Support Files/Pods-ChatSecureCorePods-ChatSecureTests/Pods-ChatSecureCorePods-ChatSecureTests.development.xcconfig"; sourceTree = "<group>"; };
 		CCD1F8E85C658C8D3865B584 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3FC69ACB90513AD94699AE0 /* Pods-ChatSecureCorePods-ChatSecureTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatSecureCorePods-ChatSecureTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChatSecureCorePods-ChatSecureTests/Pods-ChatSecureCorePods-ChatSecureTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D9040CB01EF1EB050027A862 /* OTRMediaItem+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OTRMediaItem+Private.h"; sourceTree = "<group>"; };
@@ -688,6 +689,7 @@
 		D9FF60212040A9EF003207DC /* AppTheme.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppTheme.h; sourceTree = "<group>"; };
 		D9FF60232040B0E5003207DC /* DefaultTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
 		E509B9597D90E4125440145B /* Pods-ChatSecureCorePods-ChatSecure.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatSecureCorePods-ChatSecure.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChatSecureCorePods-ChatSecure/Pods-ChatSecureCorePods-ChatSecure.debug.xcconfig"; sourceTree = "<group>"; };
+		EEE034D7828678C64208C608 /* Pods-ChatSecureCorePods-ChatSecure.development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatSecureCorePods-ChatSecure.development.xcconfig"; path = "Pods/Target Support Files/Pods-ChatSecureCorePods-ChatSecure/Pods-ChatSecureCorePods-ChatSecure.development.xcconfig"; sourceTree = "<group>"; };
 		F3370B8024E3F0F600B13394 /* OTRMessageTimerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OTRMessageTimerManager.h; sourceTree = "<group>"; };
 		F3370B8124E3F0F600B13394 /* OTRMessageTimerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OTRMessageTimerManager.m; sourceTree = "<group>"; };
 		F373DBE724E15A2600DD6E28 /* ChatSecure-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ChatSecure-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -1544,6 +1546,8 @@
 				1788ADD9CACECB85CAB87B85 /* Pods-ChatSecureCorePods-ChatSecure.release.xcconfig */,
 				D3FC69ACB90513AD94699AE0 /* Pods-ChatSecureCorePods-ChatSecureTests.debug.xcconfig */,
 				8A5E9EFE0CE89B206654875C /* Pods-ChatSecureCorePods-ChatSecureTests.release.xcconfig */,
+				EEE034D7828678C64208C608 /* Pods-ChatSecureCorePods-ChatSecure.development.xcconfig */,
+				99555EAC70131C9944F52A51 /* Pods-ChatSecureCorePods-ChatSecureTests.development.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -2563,6 +2567,179 @@
 			};
 			name = Release;
 		};
+		A1C0F3A3254995CD00279E69 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = NO;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEVELOPMENT=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_STYLE = debugging;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Development;
+		};
+		A1C0F3A4254995CD00279E69 /* Development */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EEE034D7828678C64208C608 /* Pods-ChatSecureCorePods-ChatSecure.development.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				BUNDLE_DISPLAY_NAME_SUFFIX = "";
+				BUNDLE_ID_SUFFIX = "";
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				COCOAPODS_PARALLEL_CODE_SIGN = true;
+				CODE_SIGN_ENTITLEMENTS = ChatSecure/ChatSecure.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 3ZAS2337KY;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"$(inherited)",
+					"SQLITE_HAS_CODEC=1",
+				);
+				INFOPLIST_FILE = ChatSecure/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tribuchat.dev.ios;
+				PRODUCT_NAME = "TribuChat Dev";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "ChatSecure/Classes/Categories/ChatSecure-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Development;
+		};
+		A1C0F3A5254995CD00279E69 /* Development */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 99555EAC70131C9944F52A51 /* Pods-ChatSecureCorePods-ChatSecureTests.development.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 4T8JLQR6GR;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = ChatSecureTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chrisballinger.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "ChatSecureTests/ChatSecureTests-Bridging-Header.h";
+			};
+			name = Development;
+		};
+		A1C0F3A6254995CD00279E69 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = SF3NXKQQ64;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"$(inherited)",
+					"SQLITE_HAS_CODEC=1",
+				);
+				INFOPLIST_FILE = ChatSecureUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.chrisballinger.ChatSecure.ChatSecureUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				TEST_TARGET_NAME = ChatSecure;
+			};
+			name = Development;
+		};
+		A1C0F3A7254995CD00279E69 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 4T8JLQR6GR;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = OTRResources/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = org.chatsecure.OTRResources;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Development;
+		};
 		D93027591BAA381F000CC975 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2614,6 +2791,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6365CF041E2453F6009E213F /* Debug */,
+				A1C0F3A6254995CD00279E69 /* Development */,
 				6365CF051E2453F6009E213F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2623,6 +2801,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6396AFBB1A169D54009F3E6C /* Debug */,
+				A1C0F3A3254995CD00279E69 /* Development */,
 				6396AFBC1A169D54009F3E6C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2632,6 +2811,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6396AFBE1A169D54009F3E6C /* Debug */,
+				A1C0F3A4254995CD00279E69 /* Development */,
 				6396AFBF1A169D54009F3E6C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2641,6 +2821,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6396AFC11A169D54009F3E6C /* Debug */,
+				A1C0F3A5254995CD00279E69 /* Development */,
 				6396AFC21A169D54009F3E6C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2650,6 +2831,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D93027591BAA381F000CC975 /* Debug */,
+				A1C0F3A7254995CD00279E69 /* Development */,
 				D930275A1BAA381F000CC975 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

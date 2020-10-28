@@ -13,6 +13,8 @@ extension OTRProtocolManager {
     #if DEBUG
     /// when OTRBranding.pushStagingAPIURL is nil (during tests) a valid value must be supplied for the integration tests to pass
     private static let pushApiEndpoint: URL = OTRBranding.pushAPIURL ?? URL(string: "http://localhost")!
+    #elseif DEVELOPMENT
+    private static let pushApiEndpoint: URL = OTRBranding.pushAPIURLDevelopment ?? URL(string: "http://localhost")!
     #else
     private static let pushApiEndpoint: URL = OTRBranding.pushAPIURL
     #endif
