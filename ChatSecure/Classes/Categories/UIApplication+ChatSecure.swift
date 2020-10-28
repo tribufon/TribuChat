@@ -132,7 +132,14 @@ extension UIApplication {
         DispatchQueue.main.async {
             var name = SOMEONE_STRING()
             if let jidName = jid {
-                name = jidName
+                let chatUser = jid?.split(separator: "@")
+                
+                if chatUser?.first != nil { // When there is an invitation to chat, only the name will be shown, withouth the chat server
+                    name = String(chatUser!.first!)
+                } else {
+                    name = jidName
+                }
+                
             }
             
             let chatString = WANTS_TO_CHAT_STRING()
