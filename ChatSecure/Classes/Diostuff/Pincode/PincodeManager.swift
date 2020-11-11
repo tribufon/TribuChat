@@ -201,10 +201,9 @@ extension PincodeManager {
     public func isBiometricAuthenticationAvailable() -> Bool {
         var error: NSError? = nil
         
-        if localAuthenticationContext.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            return (error == nil)
-        }
-        return false
+        localAuthenticationContext.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error)
+            
+        return (error == nil)
     }
     
     public func shouldUseBiometrics() -> Bool {
@@ -267,7 +266,9 @@ extension PincodeManager {
     public func evaluate(policy: LAPolicy, with context: LAContext, reason: String, success successBlock:@escaping AuthenticationSuccess, failure failureBlock: @escaping AuthenticationFailure) {
         
         context.evaluatePolicy(policy, localizedReason: reason) { (success, err) in
-            if success { successBlock() }
+            if success {
+                successBlock()
+            }
             else {
                 let errorType = AuthError.errorType(err as! LAError)
                 failureBlock(errorType)

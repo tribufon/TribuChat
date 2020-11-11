@@ -434,6 +434,7 @@ open class AccountDetailViewController: UIViewController, UITableViewDelegate, U
         let toggleView = UISwitch()
         toggleView.isOn = PincodeManager.shared.shouldUseBiometrics()
         toggleView.isEnabled = PincodeManager.shared.hasPin() && PincodeManager.shared.isBiometricAuthenticationAvailable()
+        toggleView.addTarget(self, action: #selector(enableDisableFaceId(_:)), for: .valueChanged)
         
         cell.textLabel?.text = PincodeManager.shared.isFaceIDAvailable() ? "Use Face ID" : "Use Touch ID"
         cell.accessoryView = toggleView
@@ -448,6 +449,16 @@ open class AccountDetailViewController: UIViewController, UITableViewDelegate, U
                 PincodeManager.shared.removePin()
             }
             PincodeManager.shared.willRemovePin()
+        }
+        
+        tableView.reloadData()
+    }
+    
+    @objc func enableDisableFaceId(_ sender: UISwitch) {
+        if sender.isOn {
+            PincodeManager.shared.enableDisableBiometrics(false)
+        } else {
+            PincodeManager.shared.enableDisableBiometrics(true)
         }
         
         tableView.reloadData()
