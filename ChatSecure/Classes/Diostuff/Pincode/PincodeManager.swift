@@ -101,6 +101,7 @@ public enum DefaultMessages : String {
     var completionUponClose: (() -> ())?
     
     var isLocked = false
+    var isBiometricAuthShowing = false
     
     @objc public static let shared = PincodeManager()
     
@@ -121,6 +122,10 @@ public enum DefaultMessages : String {
     @objc public func didBecomeActive() {
         if let _ = (UIApplication.shared.keyWindow?.subviews ?? []).firstIndex(where: { $0 == blurBackground }) {
             blurBackground.removeFromSuperview()
+            guard !isBiometricAuthShowing else {
+                isBiometricAuthShowing = false
+                return
+            }
             lock()
         }
     }
@@ -225,8 +230,17 @@ extension PincodeManager {
             // Fallback on earlier versions
         }
         
+        var authError: NSError? = nil
+        
+        localAuthenticationContext.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &authError)
+        
+        if authError != nil {
+            print (authError)
+            failureBlock(.biometryNotAvailable)
+        } else {
         // evaluate policy
         evaluate(policy: LAPolicy.deviceOwnerAuthenticationWithBiometrics, with: localAuthenticationContext, reason: reasonString, success: successBlock, failure: failureBlock)
+        }
     }
     
     // Passcode authentication
@@ -264,8 +278,9 @@ extension PincodeManager {
 extension PincodeManager {
    
     public func evaluate(policy: LAPolicy, with context: LAContext, reason: String, success successBlock:@escaping AuthenticationSuccess, failure failureBlock: @escaping AuthenticationFailure) {
-        
-        context.evaluatePolicy(policy, localizedReason: reason) { (success, err) in
+        self.isBiometricAuthShowing = true
+        let authenticationContext = LAContext()
+        authenticationContext.evaluatePolicy(policy, localizedReason: reason) { (success, err) in
             if success {
                 successBlock()
             }

@@ -95,14 +95,14 @@ class PincodeViewController: UIViewController {
     }
     
     @IBAction func didTapBiometrics() {
-        PincodeManager.shared.authenticateUserWithBiometrics(success: {
+        PincodeManager.shared.authenticateUserWithBiometrics {
             DispatchQueue.main.async {
                 self.dismiss(animated: true, completion: {
                     NotificationCenter.default.post(name: Notification.Name(rawValue: "reload_contents"), object: nil)
                 })
             }
-        }) { error in
-            print(error.getMessage())
+        } failure: { (error) in
+            print(error)
         }
     }
     
