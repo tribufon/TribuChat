@@ -55,6 +55,10 @@ class PincodeViewController: UIViewController {
             self.dismiss(animated: true, completion: {
                 NotificationCenter.default.post(name: Notification.Name(rawValue: "reload_contents"), object: nil)
             })
+        } else {
+            if PincodeManager.shared.shouldUseBiometrics() {
+                startBiometricAuth()
+            }
         }
     }
     
@@ -95,6 +99,10 @@ class PincodeViewController: UIViewController {
     }
     
     @IBAction func didTapBiometrics() {
+        startBiometricAuth()
+    }
+    
+    private func startBiometricAuth () {
         PincodeManager.shared.authenticateUserWithBiometrics {
             DispatchQueue.main.async {
                 self.dismiss(animated: true, completion: {
