@@ -108,11 +108,12 @@ typedef NS_ENUM(int, OTRDropDownType) {
 @property (nonatomic, strong) id currentMessage;
 @property (nonatomic, strong) NSCache *messageSizeCache;
 
-@property (strong, nonatomic) NSIndexPath *selectedIndexPathForMenu;
+@property (nonatomic) BOOL *isCellHighlighted;
 
 @end
 
 @implementation OTRMessagesViewController
+
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -151,14 +152,15 @@ typedef NS_ENUM(int, OTRDropDownType) {
     if (fireTimer) {
         [fireTimer invalidate];
     }
-    
-    // for menu of each cell
-    [self jsq_registerForNotifications:NO];
 }
 
 - (void)viewDidLoad
 {
+    NSLog(@"viewDidLoad --- OTR");
     [super viewDidLoad];
+    
+    //Setting Cell State
+    self.isCellHighlighted = NO;
     
     self.automaticallyScrollsToMostRecentMessage = YES;
     
@@ -250,15 +252,11 @@ typedef NS_ENUM(int, OTRDropDownType) {
         }
     }];
     
-    
-    // for menu of each cell
-    [self jsq_registerForNotifications:YES];
-    
-    
+    // THE PROBLEM!!!!
     // for fire timer
     [NSOperationQueue.mainQueue addOperationWithBlock:^{
         fireTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 repeats:YES block:^(NSTimer * _Nonnull timer) {
-            if (self.collectionView) [self.collectionView reloadData];
+            if (self.collectionView && !self.isCellHighlighted) [self.collectionView reloadData];
         }];
     }];
 }
@@ -934,31 +932,6 @@ typedef NS_ENUM(int, OTRDropDownType) {
     return [self.threadCollection isEqualToString:OTRXMPPRoom.collection];
 }
 
-- (void)jsq_registerForNotifications:(BOOL)registerForNotifications
-{
-    if (registerForNotifications) {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(didReceiveMenuWillShowNotification:)
-                                                     name:UIMenuControllerWillShowMenuNotification
-                                                   object:nil];
-
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(didReceiveMenuWillHideNotification:)
-                                                     name:UIMenuControllerWillHideMenuNotification
-                                                   object:nil];
-    }
-    else {
-        [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                        name:UIMenuControllerWillShowMenuNotification
-                                                      object:nil];
-
-        [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                        name:UIMenuControllerWillHideMenuNotification
-                                                      object:nil];
-    }
-}
-
-
 #pragma - mark Profile Button Methods
 
 - (void)setupInfoButton {
@@ -1015,7 +988,7 @@ typedef NS_ENUM(int, OTRDropDownType) {
     [self.connections.ui readWithBlock:^(YapDatabaseReadTransaction * _Nonnull transaction) {
         account = [self accountWithTransaction:transaction];
         buddy = [self buddyWithTransaction:transaction];
-    }]; 
+    }];
     if (!account || !buddy || ([buddy isKindOfClass:[OTRXMPPBuddy class]] && [(OTRXMPPBuddy *)buddy pendingApproval])) {
         return;
     }
@@ -1414,6 +1387,7 @@ typedef NS_ENUM(int, OTRDropDownType) {
                                            initWithImageInfo:imageInfo
                                            mode:JTSImageViewControllerMode_Image
                                            backgroundStyle:JTSImageViewControllerBackgroundOption_Blurred];
+    imageViewer.modalPresentationStyle = UIModalPresentationFullScreen;
     
     [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
 }
@@ -1499,7 +1473,7 @@ typedef NS_ENUM(int, OTRDropDownType) {
         cell.textView.textColor = textColor;
     }
     
-	// Do not allow clickable links for Tor accounts to prevent information leakage
+    // Do not allow clickable links for Tor accounts to prevent information leakage
     // Could be better to move this information to the message object to not need to do a database read.
     if ([account isKindOfClass:[OTRXMPPTorAccount class]]) {
         cell.textView.dataDetectorTypes = UIDataDetectorTypeNone;
@@ -1520,71 +1494,80 @@ typedef NS_ENUM(int, OTRDropDownType) {
     // Needed for link interaction
     cell.textView.delegate = self;
     
-    // for Timer and for lock
-    cell.timerDelegate = self;
-    
-    cell.messageBubbleTopLabel.attributedText = [self collectionView:collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:indexPath];
-    
-    NSDate *unlockedDate = NULL;
-    NSNumber *timeSetting = [NSNumber numberWithInteger:[XMPPTimerManager getFireTime:message.messageId]];//[self numberForOTRSettingKey:kOTRSettingKeyFireMsgTimer];
-    
-    if ([message isMessageIncoming]) {
-        NSDictionary* dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
-        if (dict) {
-            unlockedDate = dict[@"date"];
-            timeSetting = dict[@"expire"];
-        }
-        
-    } else {
-        NSDictionary* dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
-        if (dict) {
-            unlockedDate = dict[@"date"];
-            timeSetting = dict[@"expire"];
-        } else {
-            unlockedDate = message.messageDate;
-            
-            timeSetting = [NSNumber numberWithInteger:[XMPPTimerManager getFireTime:message.messageId]];
-            if (timeSetting == nil || timeSetting.integerValue == 0) {
-                timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:@"messageFireTimer"];
-                
-                if (timeSetting == NULL) {
-                    timeSetting = [NSNumber numberWithInt:48*60*60];
-                }
-            }
-            
-            [OTRMessageTimerManager setUnlockTimerOfMessage:message.uniqueId date:unlockedDate expire:timeSetting];
-        }
-    }
-    
-    if (unlockedDate == NULL || timeSetting == NULL) {
-        [cell showLock:YES];
-        
-    } else {
-        [cell showLock:NO];
-        
-        NSTimeInterval t = [self timerIntervalAt:indexPath];
-        if (t < 0) {
-            [self deleteMessageAtIndexPath:indexPath];
-        }
-    }
+//    // for Timer and for lock
+//    cell.timerDelegate = self;
+//
+//    cell.messageBubbleTopLabel.attributedText = [self collectionView:collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:indexPath];
+//
+//    NSDate *unlockedDate = NULL;
+//    NSNumber *timeSetting = [NSNumber numberWithInteger:[XMPPTimerManager getFireTime:message.messageId]];//[self numberForOTRSettingKey:kOTRSettingKeyFireMsgTimer];
+//
+//    if ([message isMessageIncoming]) {
+//        NSDictionary* dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
+//        if (dict) {
+//            unlockedDate = dict[@"date"];
+//            timeSetting = dict[@"expire"];
+//        }
+//
+//    } else {
+//        NSDictionary* dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
+//        if (dict) {
+//            unlockedDate = dict[@"date"];
+//            timeSetting = dict[@"expire"];
+//        } else {
+//            unlockedDate = message.messageDate;
+//
+//            timeSetting = [NSNumber numberWithInteger:[XMPPTimerManager getFireTime:message.messageId]];
+//            if (timeSetting == nil || timeSetting.integerValue == 0) {
+//                timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:@"messageFireTimer"];
+//
+//                if (timeSetting == NULL) {
+//                    timeSetting = [NSNumber numberWithInt:48*60*60];
+//                }
+//            }
+//
+//            [OTRMessageTimerManager setUnlockTimerOfMessage:message.uniqueId date:unlockedDate expire:timeSetting];
+//        }
+//    }
+//
+//    if (unlockedDate == NULL || timeSetting == NULL) {
+//        [cell showLock:YES];
+//
+//    } else {
+//        [cell showLock:NO];
+//
+//        NSTimeInterval t = [self timerIntervalAt:indexPath];
+//        if (t < 0) {
+//            [self deleteMessageAtIndexPath:indexPath];
+//        }
+//    }
     
     return cell;
 }
 
-- (BOOL)collectionView:(JSQMessagesCollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    self.selectedIndexPathForMenu = indexPath;
+- (UIContextMenuConfiguration *)collectionView:(UICollectionView *)collectionView contextMenuConfigurationForItemAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point API_AVAILABLE(ios(13.0)) {
+    return [UIContextMenuConfiguration configurationWithIdentifier:nil previewProvider:nil actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
+        UIAction *delete = [UIAction actionWithTitle:DELETE_STRING() image:nil identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+            [self deleteMessageAtIndexPath:indexPath];
+        }];
+        
+        UIAction *copy = [UIAction actionWithTitle:COPY_STRING() image:nil identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+            //id<JSQMessageData> messageData = [collectionView.dataSource collectionView:collectionView messageDataForItemAtIndexPath:indexPath];
+            id<JSQMessageData> messageData = [self collectionView:collectionView messageDataForItemAtIndexPath:indexPath];
+                    [[UIPasteboard generalPasteboard] setString:[messageData text]];
+        }];
+        
+        UIMenu *menu = [UIMenu menuWithTitle:@"" children:@[delete,copy]];
+        return menu;
+    }];
+}
 
-    //  textviews are selectable to allow data detectors
-    //  however, this allows the 'copy, define, select' UIMenuController to show
-    //  which conflicts with the collection view's UIMenuController
-    //  temporarily disable 'selectable' to prevent this issue
-    JSQMessagesCollectionViewCell *selectedCell = (JSQMessagesCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    if (selectedCell.textView) {
-        selectedCell.textView.selectable = NO;
-    }
+- (void)collectionView:(UICollectionView *)collectionView willDisplayContextMenuWithConfiguration:(UIContextMenuConfiguration *)configuration animator:(id<UIContextMenuInteractionAnimating>)animator {
+    self.isCellHighlighted = YES;
+}
 
-    return YES;
+- (void)collectionView:(UICollectionView *)collectionView willEndContextMenuInteractionWithConfiguration:(UIContextMenuConfiguration *)configuration animator:(id<UIContextMenuInteractionAnimating>)animator {
+    self.isCellHighlighted = NO;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
@@ -1640,30 +1623,30 @@ typedef NS_ENUM(int, OTRDropDownType) {
 
 - (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
 {
-    if (action == @selector(delete:)) {
-        [self deleteMessageAtIndexPath:indexPath];
-    }
-    else {
-        [super collectionView:collectionView performAction:action forItemAtIndexPath:indexPath withSender:sender];
-    }
+if (action == @selector(delete:)) {
+    [self deleteMessageAtIndexPath:indexPath];
+}
+else {
+    [super collectionView:collectionView performAction:action forItemAtIndexPath:indexPath withSender:sender];
+}
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    id <OTRMessageProtocol, JSQMessageData> message = [self messageAtIndexPath:indexPath];
-//
-//    NSNumber *key = @(message.messageHash);
-//    NSValue *sizeValue = [self.messageSizeCache objectForKey:key];
-//    if (sizeValue != nil) {
-//        return [sizeValue CGSizeValue];
-//    }
+    id <OTRMessageProtocol, JSQMessageData> message = [self messageAtIndexPath:indexPath];
+
+    NSNumber *key = @(message.messageHash);
+    NSValue *sizeValue = [self.messageSizeCache objectForKey:key];
+    if (sizeValue != nil) {
+        return [sizeValue CGSizeValue];
+    }
 
     // Although JSQMessagesBubblesSizeCalculator has its own cache, its size is fixed and quite small, so it quickly chokes on scrolling into the past
     CGSize size = [super collectionView:collectionView layout:collectionViewLayout sizeForItemAtIndexPath:indexPath];
     // The height of the first cell might change: on loading additional messages the date label most likely will disappear
-//    if (indexPath.row > 0) {
-//        [self.messageSizeCache setObject:[NSValue valueWithCGSize:size] forKey:key];
-//    }
+    if (indexPath.row > 0) {
+        [self.messageSizeCache setObject:[NSValue valueWithCGSize:size] forKey:key];
+    }
     return size;
 }
 
@@ -2340,7 +2323,6 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
                 // We can't use finishSendingMessage here because it might
                 // accidentally clear out unsent message text
                 [self scrollToBottomAnimated:YES];
-                [self.collectionView reloadData];
             }
         }
     }];
@@ -2411,7 +2393,7 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
         [self.jidForwardingHeaderView setNeedsLayout];
         [self.jidForwardingHeaderView layoutIfNeeded];
         int height = [self.jidForwardingHeaderView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 1;
-        self.jidForwardingHeaderView.frame = CGRectMake(0, self.topLayoutGuide.length, self.view.frame.size.width, height);
+        self.jidForwardingHeaderView.frame = CGRectMake(0, 0, self.view.frame.size.width, height);
         [self.view bringSubviewToFront:self.jidForwardingHeaderView];
         self.additionalContentInset = UIEdgeInsetsMake(height, 0, 0, 0);
     }
@@ -2568,46 +2550,6 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
 }
 
 
-#pragma mark - Notifications
-
-- (void)didReceiveMenuWillShowNotification:(NSNotification *)notification
-{
-    if (!self.selectedIndexPathForMenu) {
-        return;
-    }
-
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIMenuControllerWillShowMenuNotification
-                                                  object:nil];
-
-    UIMenuController *menu = [notification object];
-    [menu setMenuVisible:NO animated:NO];
-
-    JSQMessagesCollectionViewCell *selectedCell = (JSQMessagesCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:self.selectedIndexPathForMenu];
-    CGRect selectedCellMessageBubbleFrame = [selectedCell convertRect:selectedCell.messageBubbleContainerView.frame toView:self.view];
-
-    [menu setTargetRect:selectedCellMessageBubbleFrame inView:self.view];
-    [menu setMenuVisible:YES animated:YES];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didReceiveMenuWillShowNotification:)
-                                                 name:UIMenuControllerWillShowMenuNotification
-                                               object:nil];
-}
-
-- (void)didReceiveMenuWillHideNotification:(NSNotification *)notification
-{
-    if (!self.selectedIndexPathForMenu) {
-        return;
-    }
-
-    //  per comment above in 'shouldShowMenuForItemAtIndexPath:'
-    //  re-enable 'selectable', thus re-enabling data detectors if present
-    JSQMessagesCollectionViewCell *selectedCell = (JSQMessagesCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:self.selectedIndexPathForMenu];
-    selectedCell.textView.selectable = YES;
-    self.selectedIndexPathForMenu = nil;
-}
-
 
 
 // MARK: - JSQCollectionViewCell Timer Delegate
@@ -2627,9 +2569,6 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
     NSDictionary *dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
     NSDate *unlockedDate;
     NSNumber *timeSetting;
-    
-//    NSString *log = [NSString stringWithFormat:@"TIMER: %@\n", message.messageText];
-//    printf(log.UTF8String);
     
     if ([message isMessageIncoming]) {
         if (dict == NULL) {
@@ -2694,3 +2633,6 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
 }
 
 @end
+
+
+

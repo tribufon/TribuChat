@@ -242,6 +242,8 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
 
 - (BOOL)respondsToSelector:(SEL)aSelector
 {
+    NSString *actionSelector = NSStringFromSelector(aSelector);
+    //NSLog(@"respondsToSelector in JSQMessagesCollectionViewCell, %s ----\n",actionSelector);
     if ([jsqMessagesCollectionViewCellActions containsObject:NSStringFromSelector(aSelector)]) {
         return YES;
     }
@@ -250,6 +252,7 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    NSLog(@"touchesBegan in JSQMessagesCollectionViewCell");
 }
 
 - (void)forwardInvocation:(NSInvocation *)anInvocation

@@ -14,9 +14,11 @@
 {
     if (action == @selector(delete:)) {
         return YES;
+    } else {
+        return NO;
     }
     
-    return [super canPerformAction:action withSender:sender];
+    //return [super canPerformAction:action withSender:sender];
 }
 
 - (void)delete:(id)sender
@@ -24,7 +26,6 @@
     [self performSelectorOnParentCollectionView:@selector(delete:)
                                      withSender:sender];
 }
-
 
 // See issue https://github.com/jessesquires/JSQMessagesViewController/issues/569
 // and issue https://github.com/jessesquires/JSQMessagesViewController/issues/483

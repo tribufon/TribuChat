@@ -177,7 +177,7 @@ JSQMessagesKeyboardControllerDelegate>
 
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
-
+    
     self.inputToolbar.delegate = self;
     self.inputToolbar.contentView.textView.placeHolder = [NSBundle jsq_localizedStringForKey:@"new_message"];
 
@@ -263,6 +263,7 @@ JSQMessagesKeyboardControllerDelegate>
 
 - (void)viewDidLoad
 {
+    NSLog(@"viewDIdLoad --- JSQMessagesViewController");
     [super viewDidLoad];
 
     [[[self class] nib] instantiateWithOwner:self options:nil];
@@ -623,7 +624,7 @@ JSQMessagesKeyboardControllerDelegate>
     cell.layer.rasterizationScale = [UIScreen mainScreen].scale;
     cell.layer.shouldRasterize = YES;
     [self collectionView:collectionView accessibilityForCell:cell indexPath:indexPath message:messageItem];
-
+    NSLog([messageItem text]);
     return cell;
 }
 
@@ -679,50 +680,27 @@ JSQMessagesKeyboardControllerDelegate>
     return CGSizeMake([collectionViewLayout itemWidth], kJSQMessagesLoadEarlierHeaderViewHeight);
 }
 
+
+
 #pragma mark - Collection view delegate
 
-- (BOOL)collectionView:(JSQMessagesCollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    //  disable menu for media messages
-    id<JSQMessageData> messageItem = [collectionView.dataSource collectionView:collectionView messageDataForItemAtIndexPath:indexPath];
-    if ([messageItem isMediaMessage]) {
-        return NO;
-    }
-
-    self.selectedIndexPathForMenu = indexPath;
-
-    //  textviews are selectable to allow data detectors
-    //  however, this allows the 'copy, define, select' UIMenuController to show
-    //  which conflicts with the collection view's UIMenuController
-    //  temporarily disable 'selectable' to prevent this issue
-    JSQMessagesCollectionViewCell *selectedCell = (JSQMessagesCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    selectedCell.textView.selectable = NO;
-
-    return YES;
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(indexPath);
 }
 
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
-{
-    if (action == @selector(copy:) || action == @selector(delete:)) {
-        return YES;
-    }
-
-    return NO;
-}
-
-- (void)collectionView:(JSQMessagesCollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
-{
-    if (action == @selector(copy:)) {
-        id<JSQMessageData> messageData = [collectionView.dataSource collectionView:collectionView messageDataForItemAtIndexPath:indexPath];
-        [[UIPasteboard generalPasteboard] setString:[messageData text]];
-    }
-    else if (action == @selector(delete:)) {
-        [collectionView.dataSource collectionView:collectionView didDeleteMessageAtIndexPath:indexPath];
-
-        [collectionView deleteItemsAtIndexPaths:@[indexPath]];
-        [collectionView.collectionViewLayout invalidateLayout];
-    }
-}
+//- (void)collectionView:(JSQMessagesCollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
+//{
+//    if (action == @selector(copy:)) {
+//        id<JSQMessageData> messageData = [collectionView.dataSource collectionView:collectionView messageDataForItemAtIndexPath:indexPath];
+//        [[UIPasteboard generalPasteboard] setString:[messageData text]];
+//    }
+//    else if (action == @selector(delete:)) {
+//        [collectionView.dataSource collectionView:collectionView didDeleteMessageAtIndexPath:indexPath];
+//
+//        [collectionView deleteItemsAtIndexPaths:@[indexPath]];
+//        [collectionView.collectionViewLayout invalidateLayout];
+//    }
+//}
 
 #pragma mark - Collection view delegate flow layout
 
@@ -758,7 +736,10 @@ JSQMessagesKeyboardControllerDelegate>
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView
  didTapCellAtIndexPath:(NSIndexPath *)indexPath
-         touchLocation:(CGPoint)touchLocation { }
+         touchLocation:(CGPoint)touchLocation
+{
+    NSLog(@"Did tap cell at --- JSQMController---\n");
+}
 
 #pragma mark - Input toolbar delegate
 

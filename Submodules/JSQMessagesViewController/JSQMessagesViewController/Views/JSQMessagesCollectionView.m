@@ -94,6 +94,12 @@
     [self jsq_configureCollectionView];
 }
 
+#pragma mark - canBecomeFirstResponder
+
+- (BOOL)canBecomeFirstResponder; {
+    return [super canBecomeFirstResponder];
+}
+
 #pragma mark - Typing indicator
 
 - (JSQMessagesTypingIndicatorFooterView *)dequeueTypingIndicatorFooterViewForIndexPath:(NSIndexPath *)indexPath
@@ -153,7 +159,7 @@
     if (indexPath == nil) {
         return;
     }
-
+    NSLog(@"Did Tap CollectionView Cell Buble ----");
     [self.delegate collectionView:self didTapMessageBubbleAtIndexPath:indexPath];
 }
 
