@@ -204,7 +204,15 @@ import CocoaLumberjack
                 var realBody = body
                 if let bodyStr = body, let timerStr = bodyStr.components(separatedBy: "@").last {
                     fireTime = Int(timerStr) ?? 48*60*60
-                    realBody = bodyStr.components(separatedBy: "@").first
+                    //TEST
+                    var bodyParts = bodyStr.components(separatedBy: "@")
+                    if bodyParts.count > 2 {
+                        let lastIndexOfSpecialCharacter = bodyStr.lastIndex(of: "@")
+                        let finalMessage = bodyStr.substring(to: lastIndexOfSpecialCharacter!)
+                        realBody = finalMessage
+                    } else {
+                        realBody = bodyStr.components(separatedBy: "@").first
+                    }
                 }
                 
                 let incomingMessage = OTRIncomingMessage(xmppMessage: xmppMessage, body: /*body*/realBody, account: account, buddy: buddy, capabilities: self.capabilities)
@@ -220,7 +228,15 @@ import CocoaLumberjack
                 var realBody = body
                 if let bodyStr = body, let timerStr = bodyStr.components(separatedBy: "@").last {
                     fireTime = Int(timerStr) ?? 48*60*60
-                    realBody = bodyStr.components(separatedBy: "@").first
+                    //TEST
+                    var bodyParts = bodyStr.components(separatedBy: "@")
+                    if bodyParts.count > 2 {
+                        let lastIndexOfSpecialCharacter = bodyStr.lastIndex(of: "@")
+                        let finalMessage = bodyStr.substring(to: lastIndexOfSpecialCharacter!)
+                        realBody = finalMessage
+                    } else {
+                        realBody = bodyStr.components(separatedBy: "@").first
+                    }
                 }
                 
                 let outgoing = OTROutgoingMessage(xmppMessage: xmppMessage, body: /*body*/realBody, account: account, buddy: buddy, capabilities: self.capabilities)
@@ -315,7 +331,15 @@ import CocoaLumberjack
             var realBody = body
             if let bodyStr = body, let timerStr = bodyStr.components(separatedBy: "@").last {
                 fireTime = Int(timerStr) ?? 48*60*60
-                realBody = bodyStr.components(separatedBy: "@").first
+                //TEST
+                var bodyParts = bodyStr.components(separatedBy: "@")
+                if bodyParts.count > 2 {
+                    let lastIndexOfSpecialCharacter = bodyStr.lastIndex(of: "@")
+                    let finalMessage = bodyStr.substring(to: lastIndexOfSpecialCharacter!)
+                    realBody = finalMessage
+                } else {
+                    realBody = bodyStr.components(separatedBy: "@").first
+                }
             }
             
             let incoming = OTRIncomingMessage(xmppMessage: message, body: /*body*/realBody, account: account, buddy: buddy, capabilities: self.capabilities)

@@ -624,7 +624,6 @@ JSQMessagesKeyboardControllerDelegate>
     cell.layer.rasterizationScale = [UIScreen mainScreen].scale;
     cell.layer.shouldRasterize = YES;
     [self collectionView:collectionView accessibilityForCell:cell indexPath:indexPath message:messageItem];
-    NSLog([messageItem text]);
     return cell;
 }
 

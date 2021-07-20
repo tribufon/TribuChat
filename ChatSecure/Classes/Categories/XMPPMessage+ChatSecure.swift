@@ -18,6 +18,7 @@ public class XMPPTimerManager: NSObject {
         }
         
         newVal[messageID] = time
+        newVal["prevTimerVal"] = time
         
         UserDefaults.standard.set(newVal, forKey: "XMPPFireTimerManager")
         UserDefaults.standard.synchronize()
@@ -27,9 +28,12 @@ public class XMPPTimerManager: NSObject {
     @objc public static func getFireTime(_ messageID: String) -> Int {
         if let val = UserDefaults.standard.value(forKey: "XMPPFireTimerManager"),
             let dict = (val as? [String: Any]),
-            let res = (dict[messageID] as? Int)
+            let res = (dict[messageID] as? Int),
+            let prevTimeVal = (dict["prevTimerVal"] as? Int)
         {
-            return res
+            if (res != 0) {
+                return res
+            }else { return prevTimeVal }
         }
         return 0
     }

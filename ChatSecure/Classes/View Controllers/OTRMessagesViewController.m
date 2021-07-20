@@ -1494,53 +1494,54 @@ typedef NS_ENUM(int, OTRDropDownType) {
     // Needed for link interaction
     cell.textView.delegate = self;
     
-//    // for Timer and for lock
-//    cell.timerDelegate = self;
-//
-//    cell.messageBubbleTopLabel.attributedText = [self collectionView:collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:indexPath];
-//
-//    NSDate *unlockedDate = NULL;
-//    NSNumber *timeSetting = [NSNumber numberWithInteger:[XMPPTimerManager getFireTime:message.messageId]];//[self numberForOTRSettingKey:kOTRSettingKeyFireMsgTimer];
-//
-//    if ([message isMessageIncoming]) {
-//        NSDictionary* dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
-//        if (dict) {
-//            unlockedDate = dict[@"date"];
-//            timeSetting = dict[@"expire"];
-//        }
-//
-//    } else {
-//        NSDictionary* dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
-//        if (dict) {
-//            unlockedDate = dict[@"date"];
-//            timeSetting = dict[@"expire"];
-//        } else {
-//            unlockedDate = message.messageDate;
-//
-//            timeSetting = [NSNumber numberWithInteger:[XMPPTimerManager getFireTime:message.messageId]];
-//            if (timeSetting == nil || timeSetting.integerValue == 0) {
-//                timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:@"messageFireTimer"];
-//
-//                if (timeSetting == NULL) {
-//                    timeSetting = [NSNumber numberWithInt:48*60*60];
-//                }
-//            }
-//
-//            [OTRMessageTimerManager setUnlockTimerOfMessage:message.uniqueId date:unlockedDate expire:timeSetting];
-//        }
-//    }
-//
-//    if (unlockedDate == NULL || timeSetting == NULL) {
-//        [cell showLock:YES];
-//
-//    } else {
-//        [cell showLock:NO];
-//
-//        NSTimeInterval t = [self timerIntervalAt:indexPath];
-//        if (t < 0) {
-//            [self deleteMessageAtIndexPath:indexPath];
-//        }
-//    }
+    // for Timer and for lock
+    cell.timerDelegate = self;
+
+    cell.messageBubbleTopLabel.attributedText = [self collectionView:collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:indexPath];
+
+    NSDate *unlockedDate = NULL;
+    NSNumber *timeSetting = [NSNumber numberWithInteger:[XMPPTimerManager getFireTime:message.messageId]];//[self numberForOTRSettingKey:kOTRSettingKeyFireMsgTimer];
+
+    if ([message isMessageIncoming]) {
+        NSDictionary* dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
+        if (dict) {
+            unlockedDate = dict[@"date"];
+            timeSetting = dict[@"expire"];
+            NSLog(@"Unlcok Date %@ and TimeSetting %@",unlockedDate,timeSetting);
+        }
+
+    } else {
+        NSDictionary* dict = [OTRMessageTimerManager getUnlockTimerOfMessage:message.uniqueId];
+        if (dict) {
+            unlockedDate = dict[@"date"];
+            timeSetting = dict[@"expire"];
+        } else {
+            unlockedDate = message.messageDate;
+
+            timeSetting = [NSNumber numberWithInteger:[XMPPTimerManager getFireTime:message.messageId]];
+            if (timeSetting == nil || timeSetting.integerValue == 0) {
+                timeSetting = [[NSUserDefaults standardUserDefaults] objectForKey:@"messageFireTimer"];
+
+                if (timeSetting == NULL) {
+                    timeSetting = [NSNumber numberWithInt:48*60*60];
+                }
+            }
+
+            [OTRMessageTimerManager setUnlockTimerOfMessage:message.uniqueId date:unlockedDate expire:timeSetting];
+        }
+    }
+
+    if (unlockedDate == NULL || timeSetting == NULL) {
+        [cell showLock:YES];
+
+    } else {
+        [cell showLock:NO];
+
+        NSTimeInterval t = [self timerIntervalAt:indexPath];
+        if (t < 0) {
+            [self deleteMessageAtIndexPath:indexPath];
+        }
+    }
     
     return cell;
 }
@@ -2606,6 +2607,7 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
     NSDate *unlockedDate = now;
     
 //    NSNumber *timeSetting = [NSNumber numberWithInteger:48*60*60];
+    NSNumber *timeSetting = [NSNumber numberWithInteger:[XMPPTimerManager getFireTime:message.messageId]];//[self numberForOTRSettingKey:kOTRSettingKeyFireMsgTimer];
 //    if (message.text) {
 //        NSArray *array =[message.text componentsSeparatedByString:@"@"];
 //        if (array && array.lastObject) {
@@ -2615,9 +2617,9 @@ heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
 //            }
 //        }
 //    }
-    DDLogInfo(@"\n --- auto timer = %d ---\n", [XMPPTimerManager getFireTime:message.messageId]);
-    NSNumber *timeSetting = [NSNumber numberWithInteger:[XMPPTimerManager getFireTime:message.messageId]];//[self numberForOTRSettingKey:kOTRSettingKeyFireMsgTimer];
-    
+//    DDLogInfo(@"\n --- auto timer = %d ---\n", [XMPPTimerManager getFireTime:message.messageId]);
+//    NSNumber *timeSetting = [NSNumber numberWithInteger:[XMPPTimerManager getFireTime:message.messageId]];//[self numberForOTRSettingKey:kOTRSettingKeyFireMsgTimer];
+//    
     [OTRMessageTimerManager setUnlockTimerOfMessage:message.uniqueId date:unlockedDate expire:timeSetting];
     double interval = [now timeIntervalSinceDate:unlockedDate];
     NSInteger max = (NSInteger)timeSetting.intValue;
